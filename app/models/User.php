@@ -8,7 +8,7 @@
 
         //Login User
         public function login($username, $password){
-            $this->db->query('SELECT * FROM teacher WHERE username = :username');
+            $this->db->query('SELECT * FROM users WHERE username = :username');
             $this->db->bind(':username', $username);
 
             $row = $this->db->single();
@@ -23,7 +23,7 @@
 
         // Find user by username
         public function findUserByUsername($username){
-            $this->db->query('SELECT * FROM teacher WHERE username = :username');
+            $this->db->query('SELECT * FROM users WHERE username = :username');
             // Bind value
             $this->db->bind(':username', $username);
 
@@ -39,7 +39,7 @@
 
         //Get User by ID
         public function getUserById($id){
-            $this->db->query('SELECT * FROM teacher WHERE id = :id');
+            $this->db->query('SELECT * FROM users WHERE id = :id');
             $this->db->bind(':id', $id);
 
             $row = $this->db->single();

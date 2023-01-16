@@ -1,98 +1,169 @@
+body {
+  font-family: poppins, sans-serif;
+  margin: 0;
 
-  body {
-    font-family: poppins, sans-serif;
-    margin: 0;
-  }
+}
 
-  a{
-    color: #2b8ced;
-  }
-  
+a {
+  color: #000D2F;
+}
 
-  .input-group {
-    margin: 10px 0px 10px 0px;
-  }
-  
-  .input-group input {
-    height: 30px;
-    width: 93%;
-    padding: 5px 10px;
-    font-size: 16px;
-    border-radius: 5px;
-    border: 1px solid gray;
-    margin-bottom: 15px;
-  }
-  button {
-    padding: 12px 223px 12px 223px;
-    font-size: 15px;
-    color: white;
-    background: #2b8ced;
-    border: none;
-    border-radius: 5px;
-  }
-  button:hover {
-    cursor: pointer;
-  }
-  .error {
-    width: 92%; 
-    margin: 0px auto; 
-    padding: 17px; 
-    border: 1px solid #a94442; 
-    color: #a94442; 
-    border-radius: 5px; 
-  }
-  .success {
-    color: #3c763d; 
-    background: #dff0d8; 
-    border: 1px solid #3c763d;
-    margin-bottom: 20px;
-  }
 
-  .fa-solid, .fa-eye{
-    margin-left: -27px; 
-    cursor: pointer;
-    color: gray;
-  }
+.input-group {
+  margin: 10px 0px;
+}
 
-  ul{
-    list-style-type: none;
-    margin: 0;
-  }
+.input-group input {
+  height: 30px;
+  width: 95%;
+  padding: 5px 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid gray;
+  margin-bottom: 10px;
+}
 
-  li{
-    display: inline-block;
-    
-  }
+.input-group select{
+  height: 30px;
+  width: 100%;
+  padding: 5px 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid gray;
+  margin-bottom: 10px;
+}
 
-  .loginPageImg{
-    height: 700px;
-    /*width: 520px;*/
-    margin-left: -50px;
-  }
+.btn button {
+  color: red;
+  font-size: small;
+}
 
-  .login{
-    vertical-align: top;
-    text-align: left;
-    margin:75px 0  0 250px;
-  }
+.btn button:hover {
+  cursor: pointer;
+}
 
- .logo{
-    height: 120px;
- }
+.error {
+  color: red;
+  font-size: small;
+}
 
-  .btn{
-    padding: 12px 220px 12px 220px;
-  }
+.success {
+  color: #3c763d;
+  background: #dff0d8;
+  border: 1px solid #3c763d;
+  margin-bottom: 20px;
+}
 
-  .admin{
-    padding-top: 250px;
-    text-align: center;
-  }
+.fa-solid,
+.fa-eye {
+  margin-left: -27px;
+  cursor: pointer;
+  color: gray;
+}
 
-  .fa-gear{
-    color: #2b8ced;
-  }
+ul {
+  list-style-type: none;
+  margin: 0;
+}
 
-  .fa-user-xmark{
-    color: red
-  }
+li {
+  display: inline-block;
+
+}
+
+.loginPageImg {
+  height: 700px;
+  /*width: 520px;*/
+  margin-left: -50px;
+}
+
+.login {
+  vertical-align: top;
+  text-align: left;
+  margin: 75px 0 0 250px;
+}
+
+.logo {
+  height: 120px;
+}
+
+.btn {
+  padding: 12px 220px 12px 220px;
+}
+
+/* Register*/
+
+.right {
+  width: 50%;
+  left: 50%;
+}
+
+.left {
+  width: 50%;
+  left: 0;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  margin: 0 10%;
+  background-color: rgba(215, 226, 255, 0.6);
+  padding: 0px 5%;
+  border-radius: 20px;
+}
+
+.frm {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #EEF3FF;
+  height: 100%;
+}
+
+.radio {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 10%;
+}
+
+.radio div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.reg-btn {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+.reg-btn button {
+  width: 200px;
+  padding: 12px 0;
+  font-size: 15px;
+  color: white;
+  background: #000D2F;
+  border: none;
+  border-radius: 5px;
+}
+
+.reg-btn input {
+  width: 100%;
+  padding: 12px 0;
+  font-size: 15px;
+  color: white;
+  background: #000D2F;
+  border: none;
+  border-radius: 5px;
+}
+
+.reg-btn button:hover {
+  cursor: pointer;
+}
+
+.lgmsg{
+  text-align: center;
+  margin: 10px 0;
+}

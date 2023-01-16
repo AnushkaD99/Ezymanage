@@ -1,128 +1,73 @@
 <?php require_once APPROOT . '/views/inc/header.php'; ?>
-<div class="sidebar">
-        <ul>
-            <li>
-                <a href="<?php echo URLROOT; ?>/teachers/index" class="active"><i class="fa-solid fa-house"></i><span></span>Home</a>
-            </li>
-            <li>
-                <a href="#"><i class="fa-solid fa-file-invoice-dollar"></i><span>Paysheet</span></a>
-            </li>
-            <li>
-                <a href="#"><i class="fa-solid fa-file-lines"></i><span>Karyasadanaya</span></a>
-            </li>
-            <li>
-                <a href="<?php echo URLROOT; ?>/teachers/leaveForm"><i class="fa-solid fa-file"></i><span>Leave Form</span></a>
-            </li>
-            <li>
-                <a href="#"><i class="fa-brands fa-wpforms"></i><span>Report Issue</span></a>
-            </li>
-            <li>
-                <a href="#"><i class="fa-solid fa-eye"></i><span>School Details</span></a>
-            </li>
-            <li>
-                <a href="#"><i class="fa-solid fa-calendar-plus"></i><span>Appointments</span></a>
-            </li>
-            <li>
-                <a href="#"><i class="fa-solid fa-angles-up"></i><span>Promotions</span></a>
-            </li>
-            <li>
-                <a href="#"><i class="fa-sharp fa-solid fa-file-circle-plus"></i><span>Salary Increment Form</span></a>
-            </li>
-            <li>
-                <a href="#"><i class="fa-solid fa-arrows-rotate"></i><span>Transfers</span></a li>
-            <li>
-                <a href="#"><i class="fa-solid fa-circle-user"></i><span>Profile</span></a>
-            </li>
-        </ul>
-        <div class="logout">
-            <hr>
-            <a href="logout.php"><i class="fa-solid fa-sign-out"></i><span>Logout</span></a>
+    <div class="container">
+        <!-- Start navbar -->
+        <?php require_once APPROOT . '/views/inc/navbar.php'; ?>
+        <!-- Start sidebar -->
+        <div class="sidebar">
+            <ul>
+                <li>
+                    <a href="<?php echo URLROOT; ?>/teachers/index" class="active"><i class="fa-solid fa-house"></i><span class="link">Home</span></a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa-solid fa-file-invoice-dollar"></i><span class="link">Paysheet</span></a>
+                </li>
+                <li>
+                    <a href="<?php echo URLROOT; ?>/teachers/leaveForm"><i class="fa-solid fa-file-lines"></i><span class="link">Karyasadanaya</span></a>
+                </li>
+                <li>
+                    <a href="Leave_form.php"><i class="fa-solid fa-file"></i><span class="link">Leave Form</span></a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa-brands fa-wpforms"></i><span class="link">Report Issue</span></a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa-solid fa-eye"></i><span class="link">School Details</span></a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa-solid fa-calendar-plus"></i><span class="link">Appointments</span></a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa-solid fa-angles-up"></i><span class="link">Promotions</span></a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa-sharp fa-solid fa-file-circle-plus"></i><span class="link">Salary Increment Form</span></a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa-solid fa-arrows-rotate"></i><span class="link">Transfers</span></a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa-solid fa-circle-user"></i><span class="link">Profile</span></a>
+                </li>
+            </ul>
+          <div class="logout">
+              <hr>
+              <a href="../logout.php"><i class="fa-solid fa-sign-out"></i><span class="link">Logout</span></a>
+          </div>
         </div>
-    </div>
-
-    <!-- //Navigation bar -->
-    <div class="content">
-        <div class="navbar">
-            <div class="navbar__left">
-                <div class="nav-icon">
-                    <i class="fa-solid fa-bars"></i>
+        <!-- End sidebar -->
+        <div class="main">
+            <div class="main-single">
+                <div class="main-single-up">
+                    <table>
+                        <tr>
+                            <td><img src="<?php echo URLROOT; ?>/img/logo.png" alt="logo"></td>
+                        </tr>
+                        <tr>
+                            <td>Hey<span id="userName">Anushka,<?php //echo $data['userName'] ?></span></td>
+                        </tr>
+                        <tr>
+                            <td>Welcome to Ezymanage!</td>
+                        </tr>
+                    </table>
                 </div>
-                <div class="logo">
-                    <img src="<?php echo URLROOT; ?>/img/logo.png" alt="logo">
-                </div>
-            </div>
-            <div class="navbar__right">
-                <ul>
-                    <li>
-                        <a href="#">
-                            <i class="fa-solid fa-bell"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fa-solid fa-circle-user"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span id="userName"><?php //echo $Username ?></span><br>
-                            <span id="designation">Teacher</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="container">
-            <!-- <div class="left">
-                <div class="topic">
-                    <h1>LEAVE FORM</h1>
-                </div>
-                <div class="forum">
-                    <span class="forum-topic">Application For Leave</span>
-                    <form action="" method="POST">
-                        <div class="forum_box">
-                            <div class="forum_con">
-                                <label for="reason">Reason for leave :</label><br>
-                                <textarea id="reason" name="reason" required></textarea><br>
-                                <label for="commencing_date">Date of commencing date :</label><br>
-                                <input type="date" id="commencing_date" name="commencing_date" required>
-                                <span class="error"><?php //echo $commencing_dateErr ?></span>
-                                <label for="resuming_date">Date of resuming duties :</label><br>
-                                <input type="date" id="resuming_date" name="resuming_date" required>
-                                <span class="error"><?php //echo $resuming_dateErr ?></span>
-                                <label for="total_leaves">Number of days leave applied for :</label>
-                                <span class="error"><?php //echo $intervalErr ?></span><br>
-                                <div class="leave">
-                                    <div class="leave_t">
-                                        <label for="casual">Casual :</label>
-                                        <input type="number" id="casual" name="casual" min="0" max="42" placeholder="0">
-                                    </div>
-                                    <div class="leave_t">
-                                        <label for="medical">Medical :</label>
-                                        <input type="number" id="medical" name="medical" min="0" max="42" placeholder="0">
-                                    </div>
-                                    <div class="leave_t">
-                                        <label for="other">Other :</label>
-                                        <input type="number" id="other" name="other" min="0" max="42" placeholder="0">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <input class="submit-btn" type="submit">
-                    </form>
-                </div>
-            </div>
-            <div class="right">
-                <div class="card">
-                    <h3>LATEST APPLICATION STATUS</h3>
-                    <div class="status-bt">
-                        <span>Pending ...</span>
-                        <a href="Leave_view.php?leave_id=<?php echo $last_id;?>">
-                            <button>View</button>
-                        </a>
+                <div class="main-single-down-left">
+                    <div class="card-button1-set">
+                        <div class="card-button1"><a href="">School Details</a></div>
+                        <div class="card-button1"><a href="">Principal Details</a></div>
+                        <div class="card-button1"><a href="">Teacher Details</a></div>
                     </div>
                 </div>
-                <div class="card">
+                <div class="main-single-down-right">
                     <div class="month">
                         <i class="fas fa-angle-left prev"></i>
                         <div class="date">
@@ -141,25 +86,27 @@
                         <div>Sat</div>
                     </div>
                     <div class="days"></div>
-                </div>
-                <div class="card">
-                    <h3>Remaining Leave Details</h3>
-                    <div class="details">
-                        <div class="details-card">
-                            <span>Casual Leave</span>
-                            <span class="num">42</span>
-                        </div>
-                        <div class="details-card">
-                            <span>Medical Leave</span>
-                            <span class="num">42</span>
-                        </div>
-                        <div class="details-card">
-                            <span>Other Leave</span>
-                            <span class="num">42</span>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
+                </div>    
+            </div>
         </div>
     </div>
+    <script>
+        let sidebar = document.querySelector(".sidebar");
+        let navbar = document.querySelector(".navbar");
+        let link = document.querySelector(".link");
+        let container = document.querySelector(".container");
+        let sidebarBtn = document.querySelector(".fa-bars");
+        sidebarBtn.onclick = function() {
+            sidebar.classList.toggle("active");
+            navbar.classList.toggle("active");
+            link.classList.toggle("active");
+            container.classList.toggle("active");
+            if (sidebar.classList.contains("active")) {
+                // sidebarBtn.classList.replace("bx-menu", "bx-menu-alt-right");
+                // link.style.display = 'none';
+            } else
+                // sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
+                // link.style.display = '';
+        }
+    </script>
 <?php require APPROOT . '/views/inc/footer.php'; ?>   

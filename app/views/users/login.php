@@ -1,32 +1,33 @@
-<?php require APPROOT . '/views/inc/header.php'; ?>
-<ul>
-	<li class="image">
-		<img class="loginPageImg" src="<?php echo URLROOT; ?>/img/loginpage.png">
-	</li>
-	<li class="login">	
-	    <img class="logo" src="<?php echo URLROOT; ?>/img/logo.png">
-	    <h1>Sign in to Ezymanage</h1>
-	    <!-- <p>New User? <a href="Registration/Registration.php">Sign Up</a> now</p> -->
-	    <br>
-	    <form method="POST" action="<?php echo URLROOT; ?>/users/login">
-  	    <!--<?php include('errors.php'); ?>-->
-  	    <div class="input-group">
-            <lable for="Username">Username :</label>
-  		    <input type="text" name="username" placeholder="Username" >
-  	    </div>
-  	    <div class="input-group">
-            <lable for="Password">Password :</label>
-  		    <input type="password" name="password" placeholder="Password" id="id_password">
-		    <i class="fa-solid fa-eye" id="togglePassword"></i>
-  	    </div>
-  	    <div class="input-group">
-  		    <button type="submit" name="login_user" class="loginbtn">Sign In</button>
-  	    </div>
-	    <div class="input-group">
-		    <?php echo $data['username_err']; echo $data['password_err']; ?>
-	    </div>  
-    </li>
-</ul>
+<?php require APPROOT . '/views/inc/loginHeader.php'; ?>
+<div class="frm">
+	<div class="left">
+        <img src="<?php echo URLROOT; ?>/img/loginpage.svg" alt="">
+    </div>
+    <div class="right">
+        <div class="container">
+            <h2>Login to Ezymanage</h2>
+            <p>New User? <a href="registration.php"><strong>Sign Up</strong></a> now</p>
+            <form action="" method="POST">
+                <div class="input-group">
+                    <lable for="fullname">User Name : <sup>*</sup></lable>
+                    <input type="text" name="username" placeholder="Username" required>
+                    <span class="err"><?php //echo $usernameErr ?></span>
+                </div>
+                <div class="input-group">
+                    <lable for="fullname">Password : <sup>*</sup></lable>
+                    <input type="password" name="password" placeholder="Password" id="id_password" required>
+                    <span class="err"><?php //echo $passwordErr ?></span>
+                </div>
+                <span class="error"><?php //echo $loginErr ?></span>
+                <div class="reg-btn">
+                    <input type="submit" value="Login" class="loginbtn">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 <script>
   const togglePassword = document.querySelector('#togglePassword');
   const password = document.querySelector('#id_password');
@@ -38,5 +39,7 @@
  
     this.classList.toggle('fa-eye-slash');
 });
+
 </script>
+
 <?php require APPROOT . '/views/inc/footer.php'; ?>

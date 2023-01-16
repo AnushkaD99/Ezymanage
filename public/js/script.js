@@ -80,14 +80,3 @@ document.querySelector(".next").addEventListener("click", () => {
 });
 
 renderCalendar();
-
-//--------------------------//
-let sidebar = document.querySelector(".sidebar");
-let sidebarBtn = document.querySelector(".nav-icon");
-sidebarBtn.onclick = function () {
-  sidebar.classList.toggle("active");
-  if (sidebar.classList.contains("active")) {
-    sidebarBtn.classList.replace("bx-menu", "bx-menu-alt-right");
-  } else
-    sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
-}

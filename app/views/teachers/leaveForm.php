@@ -1,5 +1,5 @@
 <?php require_once APPROOT . '/views/inc/header.php'; ?>
-    <!-- <div class="sidebar">
+    <div class="sidebar">
         <ul>
             <li>
                 <a href="<?php echo URLROOT; ?>/teachers/index"><i class="fa-solid fa-house"></i><span></span>Home</a>
@@ -38,7 +38,7 @@
             <hr>
             <a href="logout.php"><i class="fa-solid fa-sign-out"></i><span>Logout</span></a>
         </div>
-    </div> -->
+    </div>
 
     <!-- //Navigation bar -->
     <div class="content">
@@ -65,7 +65,7 @@
                     </li>
                     <li>
                         <a href="#">
-                            <span id="userName"><?php //echo $Username ?></span><br>
+                            <span id="userName"><?php //echo $_SESSION('username') ?></span><br>
                             <span id="designation">Teacher</span>
                         </a>
                     </li>

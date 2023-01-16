@@ -15,6 +15,7 @@
                 $data =[
                     'username' => trim($_POST['username']),
                     'password' => trim($_POST['password']),
+                    'designation' => '',
                     'username_err' => '',
                     'password_err' => ''
                 ];
@@ -72,8 +73,33 @@
         public function createUserSession($user){
             $_SESSION['user_id'] = $user->id;
             $_SESSION['user_name'] = $user->username;
-            // $_SESSION['user_email'] = $user->email;
-            redirect('teachers/index');
+            $_SESSION['user_email'] = $user->email;
+            $_SESSION['user_designation'] = $user->designation;
+            switch ($user->designation) {
+                case 'Teacher':
+                    redirect('teachers/index');
+                    break;
+                case 'Principal':
+                    redirect('principals/index');
+                    break;
+                case 'Director':
+                    redirect('directors/index');
+                    break;
+                case 'Clerk-School':
+                    redirect('schoolClerks/index');
+                    break;
+                case 'Clerk-Salary':
+                    redirect('salaryClerks/index');
+                    break;
+                case 'Clerk-Transfer':
+                    redirect('transferClerks/index');
+                    break;
+                case 'Admin':
+                    redirect('adminclerks/index');
+                    break;
+            }
+
+            //redirect('adminclerks/index');
         }
 
         public function logout(){
