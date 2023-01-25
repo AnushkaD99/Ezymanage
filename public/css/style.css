@@ -83,6 +83,19 @@ body {
   color: var(--white);
 }
 /*Close Btn3*/
+
+/* Start full-Btn */
+.fullBtn {
+  background-color: var(--blue);
+  color: var(--white);
+  border: none;
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  width: 100%;
+  text-align: center;
+}
+
 /* Start btn-view */
 .btn-view {
   background-color: var(--blue);
@@ -100,6 +113,26 @@ body {
   border: 1px solid #000;
   padding: 1rem;
   border-radius: 10px;
+}
+
+.backBtn-circle{
+  background-color: var(--blue);
+  color: var(--white);
+  border: none;
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  width: fit-content;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+.main-topic{
+  font-weight: 600;
+  color: var(--black);
+  text-align: center;
 }
 
 /*Close common Css*/
@@ -346,6 +379,7 @@ body {
     "main-editprofile-dp main-editprofile-personal"
     "main-editprofile-other main-editprofile-other";
   padding: 2rem 10rem;
+  border-radius: 25px;
 }
 
 .main-editprofile-dp{
@@ -389,12 +423,13 @@ body {
   margin: 1rem 0;
 }
 
-.main-editprofile-other-left{
-  grid-area: main-editprofile-other-left;
+.main-editprofile-left{
+  grid-area: main-editprofile-left;
+  font-weight: bold;
 }
 
-.main-editprofile-other-right{
-  grid-area: main-editprofile-other-right;
+.main-editprofile-right{
+  grid-area: main-editprofile-right;
 }
 
 .textBox{
@@ -404,6 +439,13 @@ body {
   border-radius: 10px;
   padding: 0px 10px;
   background-color: #ffffff;
+}
+
+.user{
+  width: 1fr;
+  height: auto;
+  border-radius: 50%;
+  width: 150px;
 }
 /*Main-Close-Edit-Profile*/
 
@@ -432,35 +474,35 @@ body {
   grid-area: main-viewDetails-details;
 }
 
-/* .main-viewDetails-details table td{
+.view-table td{
  padding: 0 5rem;
  margin: 50px;
-} */
+}
 
-.main-viewDetails-details table {
+.view-table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
   width: 100%;
   margin-top: 1rem;
 }
 
-.main-viewDetails-details td, th {
+.view-table td, th {
   border: 1px solid #dddddd;
   text-align: left;
   padding: 10px;
 }
 
-.main-viewDetails-details tr:nth-child(even) {
+.view-table tr:nth-child(even) {
   background-color: #dddddd;
 }
 
-#schools{
+/* #schools{
   display: none;
 }
 
 #principals{
   display: none;
-}
+} */
 /*Close Main-view Details*/
 
 /*Main-Main-Col -2*/
@@ -489,33 +531,89 @@ body {
 /*Close Main-Main-Col -2*/
 
 /*SingleCol*/
-.single-col{
-  padding: 1rem;
+.singlecol{
+  padding: 2rem;
   background-color: var(--gray);
   border-radius: 25px;
 }
 
 .row{
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 0.3fr 1fr;
   grid-template-areas:
     "row-lable row-data";
-  grid-gap: 1rem;
+  padding: 0.5rem;
 }
 
 .row-lable{
   grid-area: row-lable;
   padding: 0.5rem;
+  font-weight: bold;
 }
 
 .row-data{
   grid-area: row-data;
   padding: 0.5rem;
   background-color: var(--white);
+  border-radius: 10px;
 }
+
+/* .img{
+  text-align: center;
+} */
 /*
 /* Close main */
-
+/***************************************************/
+.upload{
+  width: 140px;
+  position: relative;
+  margin: auto;
+  text-align: center;
+}
+.upload img{
+  border-radius: 50%;
+  border: 8px solid #DCDCDC;
+  width: 125px;
+  height: 125px;
+}
+.upload .rightRound{
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: #00B4FF;
+  width: 32px;
+  height: 32px;
+  line-height: 33px;
+  text-align: center;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+}
+.upload .leftRound{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: red;
+  width: 32px;
+  height: 32px;
+  line-height: 33px;
+  text-align: center;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+}
+.upload .fa{
+  color: white;
+}
+.upload input{
+  position: absolute;
+  transform: scale(2);
+  opacity: 0;
+}
+.upload input::-webkit-file-upload-button, .upload input[type=submit]{
+  cursor: pointer;
+}
+/***************************************************/
 
 @media only screen and (max-width: 600px) {
   .container {

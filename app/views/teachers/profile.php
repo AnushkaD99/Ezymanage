@@ -4,27 +4,45 @@
         <?php require_once APPROOT . '/views/inc/navbar.php'; ?>
         <!-- Start sidebar -->
         <div class="sidebar">
-            <ul>
-                <li>
-                    <a href="<?php echo URLROOT; ?>/adminclerks/index"><i class="fa-solid fa-house"></i><span class="link">Home</span></a>
-                </li>
-                <li>
-                    <a href="<?php echo URLROOT; ?>/adminclerks/viewDetails"><i class="fa-solid fa-eye"></i><span class="link">View</span></a>
-                </li>
-                <li>
-                    <a href="<?php echo URLROOT; ?>/adminclerks/volunteers"><i class="fa-solid fa-handshake-angle"></i><span class="link">Volunteers</span></a>
-                </li>
-                <li>
-                    <a href="<?php echo URLROOT; ?>/adminclerks/verifyDetails"><i class="fa-solid fa-user-check"></i><span class="link">Verify Details</span></a>
-                </li>
-                <li>
-                    <a href="<?php echo URLROOT; ?>/adminclerks/profile"  class="active"><i class="fa-solid fa-circle-user"></i><span class="link">Profile</span></a>
-                </li>
-            </ul>
-          <div class="logout">
-              <hr>
-              <a href="../logout.php"><i class="fa-solid fa-sign-out"></i><span class="link">Logout</span></a>
-          </div>
+        <ul>
+            <li>
+                <a href="<?php echo URLROOT; ?>/teachers/index"><i class="fa-solid fa-house"></i><span class="link">Home</span></a>
+            </li>
+            <li>
+                <a href="<?php echo URLROOT; ?>/teachers/paysheet"><i class="fa-solid fa-file-invoice-dollar"></i><span class="link">Paysheet</span></a>
+            </li>
+            <li>
+                <a href="<?php echo URLROOT; ?>/teachers/Karyasadanaya"><i class="fa-solid fa-file-lines"></i><span class="link">Karyasadanaya</span></a>
+            </li>
+            <li>
+                <a href="<?php echo URLROOT; ?>/teachers/leaveForm"><i class="fa-solid fa-file"></i><span class="link">Leave Form</span></a>
+            </li>
+            <li>
+                <a href="<?php echo URLROOT; ?>/teachers/report_issue"><i class="fa-brands fa-wpforms"></i><span class="link">Report Issue</span></a>
+            </li>
+            <li>
+                <a href="<?php echo URLROOT; ?>/teachers/school_details"><i class="fa-solid fa-eye"></i><span class="link">School Details</span></a>
+            </li>
+            <li>
+                <a href="<?php echo URLROOT; ?>/teachers/appointments"><i class="fa-solid fa-calendar-plus"></i><span class="link">Appointments</span></a>
+            </li>
+            <li>
+                <a href="<?php echo URLROOT; ?>/teachers/promotions"><i class="fa-solid fa-angles-up"></i><span class="link">Promotions</span></a>
+            </li>
+            <li>
+                <a href="<?php echo URLROOT; ?>/teachers/salary_increment"><i class="fa-sharp fa-solid fa-file-circle-plus"></i><span class="link">Salary Increment Form</span></a>
+            </li>
+            <li>
+                <a href="<?php echo URLROOT; ?>/teachers/transfers"><i class="fa-solid fa-arrows-rotate"></i><span class="link">Transfers</span></a>
+            </li>
+            <li>
+                <a href="<?php echo URLROOT; ?>/teachers/profile" class="active"><i class="fa-solid fa-circle-user"></i><span class="link">Profile</span></a>
+            </li>
+        </ul>
+        <div class="logout">
+            <hr>
+            <a href="../logout.php"><i class="fa-solid fa-sign-out"></i><span class="link">Logout</span></a>
+        </div>
         </div>
         <!-- End sidebar -->
         <div class="main">
@@ -97,10 +115,10 @@
                     </div>
                     <div class="main-editprofile-block">
                         <div class="main-editprofile-left">
-                            Zonal :
+                            School :
                         </div>
                         <div class="main-editprofile-right">
-                            <input type="text" name="zonal" class="textBox" value="<?php echo $data['users']->zonal ?>">
+                            <input type="text" name="zonal" class="textBox" value="<?php echo $data['users']->school ?>">
                         </div> 
                     </div>
                     <div class="main-editprofile-block">

@@ -6,19 +6,22 @@
         <div class="sidebar">
             <ul>
                 <li>
-                    <a href="<?php echo URLROOT; ?>/adminclerks/index"><i class="fa-solid fa-house"></i><span class="link">Home</span></a>
+                    <a href="<?php echo URLROOT; ?>/directors/index"><i class="fa-solid fa-house"></i><span class="link">Home</span></a>
                 </li>
                 <li>
-                    <a href="<?php echo URLROOT; ?>/adminclerks/viewDetails" class="active"><i class="fa-solid fa-eye"></i><span class="link">View</span></a>
+                    <a href="<?php echo URLROOT; ?>/directors/viewDetails"  class="active"><i class="fa-solid fa-eye"></i><span class="link">View</span></a>
                 </li>
                 <li>
-                    <a href="<?php echo URLROOT; ?>/adminclerks/volunteers"><i class="fa-solid fa-handshake-angle"></i><span class="link">Volunteers</span></a>
+                    <a href="<?php echo URLROOT; ?>/directors/appointments"><i class="fa-solid fa-calendar-plus"></i><span class="link">Appointments</span></a>
                 </li>
                 <li>
-                    <a href="<?php echo URLROOT; ?>/adminclerks/verifyDetails"><i class="fa-solid fa-user-check"></i><span class="link">Verify Details</span></a>
+                    <a href="<?php echo URLROOT; ?>/directors/school_management"><i class="fa-solid fa-chalkboard-user"></i><span class="link">School Management</span></a>
                 </li>
                 <li>
-                    <a href="<?php echo URLROOT; ?>/adminclerks/profile"><i class="fa-solid fa-circle-user"></i><span class="link">Profile</span></a>
+                    <a href="<?php echo URLROOT; ?>/directors/projects"><i class="fa-solid fa-building"></i><span class="link">School Projects</span></a>
+                </li>
+                <li>
+                    <a href="<?php echo URLROOT; ?>/directors/profile"><i class="fa-solid fa-circle-user"></i><span class="link">Profile</span></a>
                 </li>
             </ul>
           <div class="logout">
@@ -28,55 +31,55 @@
         </div>
         <!-- End sidebar -->
         <div class="main">
-            <h1 class="main-topic">Teacher Details</h1>
+            <h1 class="main-topic">Principal Details</h1>
             <div class="singlecol">
                 <div class="border-box">
                     <div class="row">
                             <div class="row-lable">Full Name</div>
-                            <div class="row-data"><?php echo $data['teachers']->fullName; ?></div>
+                            <div class="row-data"><?php echo $data['principals']->fullName; ?></div>
                     </div>
                     <div class="row">
                             <div class="row-lable">Name with initials</div>
-                            <div class="row-data"><?php echo $data['teachers']->nameWithInitials; ?></div>
+                            <div class="row-data"><?php echo $data['principals']->nameWithInitials; ?></div>
                     </div>
                     <div class="row">
                             <div class="row-lable">Emloyee Number</div>
-                            <div class="row-data"><?php echo $data['teachers']->id; ?></div>
+                            <div class="row-data"><?php echo $data['principals']->id; ?></div>
                     </div>
                     <div class="row">
                             <div class="row-lable">NIC</div>
-                            <div class="row-data"><?php echo $data['teachers']->NIC; ?></div>
+                            <div class="row-data"><?php echo $data['principals']->NIC; ?></div>
                     </div>
                     <div class="row">
                             <div class="row-lable">Address</div>
-                            <div class="row-data"><?php echo $data['teachers']->address; ?></div>
+                            <div class="row-data"><?php echo $data['principals']->address; ?></div>
                     </div>
                     <div class="row">
                             <div class="row-lable">Birthday</div>
-                            <div class="row-data"><?php echo $data['teachers']->bday; ?></div>
+                            <div class="row-data"><?php echo $data['principals']->bday; ?></div>
                     </div>
                     <div class="row">
                             <div class="row-lable">School</div>
-                            <div class="row-data"><?php echo $data['teachers']->school; ?></div>
+                            <div class="row-data"><?php echo $data['principals']->school; ?></div>
                     </div>
                     <div class="row">
                             <div class="row-lable">Designation</div>
-                            <div class="row-data"><?php echo $data['teachers']->designation; ?></div>
+                            <div class="row-data"><?php echo $data['principals']->designation; ?></div>
                     </div>
                     <div class="row">
                             <div class="row-lable">Current Grade</div>
-                            <div class="row-data"><?php echo $data['teachers']->currentGrade; ?></div>
+                            <div class="row-data"><?php echo $data['principals']->currentGrade; ?></div>
                     </div>
                     <div class="row">
                             <div class="row-lable">Email</div>
-                            <div class="row-data"><?php echo $data['teachers']->email; ?></div>
+                            <div class="row-data"><?php echo $data['principals']->email; ?></div>
                     </div>
                     <div class="row">
                             <div class="row-lable">Contact Number</div>
-                            <div class="row-data"><?php echo $data['teachers']->contactNumber; ?></div>
+                            <div class="row-data"><?php echo $data['principals']->contactNumber; ?></div>
                     </div>
                 </div>
-                <div class="backBtn-circle"><i class="fa-solid fa-angle-left"></i> Back</div>
+                <a href="<?php echo URLROOT; ?>/directors/viewDetails"><div class="backBtn-circle"><i class="fa-solid fa-angle-left"></i> Back</div></a>
             </div>
         </div>
     </div>

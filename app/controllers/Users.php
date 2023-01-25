@@ -98,8 +98,6 @@
                     redirect('adminclerks/index');
                     break;
             }
-
-            //redirect('adminclerks/index');
         }
 
         public function logout(){

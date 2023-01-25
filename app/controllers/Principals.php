@@ -1,23 +1,94 @@
-<?php
-    class Teachers extends Controller {
+<?php    
+    class Principals extends Controller {
         public function __construct(){
             if(!isLoggedIn()){
                 redirect('users/login');
             }
 
-            $this->teacherModel = $this->model('Teacher');
+            $this->principalModel = $this->model('Principal');
             $this->userModel = $this->model('User');
         }
 
         public function index(){
-            // Get teachers
-            //$teachers = $this->teacherModel->getTeachers();
-
             $data = [
-                //'teachers' => $teachers
+              'title' => 'Ezymanage',
             ];
+           
+            $this->view('principals/index', $data);
+        }
 
-            $this->view('teachers/index', $data);
+        public function viewDetails(){
+            // Get Details
+            $schools = $this->principalModel->getSchoolDeatail();
+            $principals = $this->principalModel->getPrincipalDeatail();
+            $teachers = $this->principalModel->getTeacherDeatail();
+    
+            $data = [
+                'schools' => $schools,
+                'principals' => $principals,
+                'teachers' => $teachers
+            ];
+    
+            $this->view('principals/viewDetails', $data);
+        }
+    
+        public function viewMoreSchoolDetails($id){
+            // Get school details
+            $schools = $this->principalModel->getSchoolById($id);
+    
+            $data = [
+                'schools' => $schools,
+            ];
+    
+            $this->view('principals/viewMoreSchoolDetails', $data);
+        }
+    
+        public function viewMorePrincipalDetails($id){
+            // Get school details
+            $principals = $this->principalModel->getPrincipalById($id);
+    
+            $data = [
+                'principals' => $principals,
+            ];
+    
+            $this->view('principals/viewMorePrincipalDetails', $data);
+        }
+    
+        public function viewMoreTeacherDetails($id){
+            // Get school details
+            $teachers = $this->principalModel->getTeacherById($id);
+    
+            $data = [
+                'teachers' => $teachers,
+            ];
+    
+            $this->view('principals/viewMoreTeacherDetails', $data);
+        }
+    
+        public function profile(){
+            // Get teachers
+            $id = $_SESSION['user_id'];
+            $users = $this->principalModel->getUser($id);
+    
+            $data = [
+                'users' => $users
+                
+            ];
+    
+            $this->view('principals/profile', $data);
+        }
+    
+        public function editProfile(){
+            // Get teachers
+            $id = $_SESSION['user_id'];
+            $users = $this->principalModel->updateprofile($id);
+    
+            $data = [
+                'users' => $users
+                
+            ];
+    
+            $this->view('principals/editProfile', $data);
         }
 
         public function leaveForm(){
@@ -71,22 +142,22 @@
             
                 if(empty($data['reason_err']) && empty($data['commencing_date_err']) && empty($data['resuming_date_err']) && empty($data['leavetype_err'])){
                     // Validated
-                    if($this->teacherModel->submitLeaveForm($data)){
-                        redirect('teachers/LeaveForm');
+                    if($this->principalModel->submitLeaveForm($data)){
+                        redirect('principals/LeaveForm');
                     } else {
                         die('Something went wrong');
                     }
                 }
                 else {
                     // Load view with errors
-                    $this->view('teachers/leaveForm', $data);
+                    $this->view('principals/leaveForm', $data);
                 }
 
 
 
                 // if($data['reason'] != null && $data['commencing_date'] != null && $data['resuming_date'] != null){
                 //     //$sql = "INSERT INTO leave_details (reason, commencing_date, resuming_date, casual, medical, other, userId, submitted_date) VALUES ('$reason', '$commencing_date', '$resuming_date', '$casual', '$medical', '$other', '$Userid', '$submittedDate')";
-                //     if ($this->teacherModel->submitLeaveForm($data)) {
+                //     if ($this->principalModel->submitLeaveForm($data)) {
                 //         echo "<script> alert(\"New record created successfully!\"); </script>";
                 //         redirect('posts');
                 //     } else {
@@ -97,7 +168,7 @@
 
             }else {
                 // Get leave details
-                $leave_details = $this->teacherModel->getLeaveDeatail();
+                $leave_details = $this->principalModel->getLeaveDeatail();
 
                 // Init data
                 $data = [
@@ -117,14 +188,14 @@
                     'leave_details' => $leave_details,
                 ];
                 // Load view
-                $this->view('teachers/leaveForm', $data);
+                $this->view('principals/leaveForm', $data);
             }
         }
 
         public function LeaveView($id){
             // Get Leave Details
-            $leave = $this->teacherModel->getLeaveById($id);
-            $leave_details = $this->teacherModel->getLeaveDeatail();
+            $leave = $this->principalModel->getLeaveById($id);
+            $leave_details = $this->principalModel->getLeaveDeatail();
 
             $data = [
                 'leave' => $leave,
@@ -251,15 +322,15 @@
                     && empty($data['Indicators5_err'])
                     && empty($data['Problems5_err'])){
                     //validated
-                    if($this->teacherModel->addKaryasadanaya($data)){
+                    if($this->principalModel->addKaryasadanaya($data)){
                         flash('karyasadanaya_message', 'Karyasadanaya Added');
-                        redirect('teachers/Karyasadanaya');
+                        redirect('principals/Karyasadanaya');
                     } else {
                         die('Something went wrong');
                     }
                 } else {
                     //load view with errors
-                    $this->view('teachers/Karyasadanaya', $data);
+                    $this->view('principals/Karyasadanaya', $data);
                 }
             }else{
                 //init data
@@ -302,20 +373,7 @@
                 ];
 
                 //load view
-                $this->view('teachers/Karyasadanaya', $data);
+                $this->view('principals/Karyasadanaya', $data);
             }
-        }
-
-        public function profile(){
-            // Get teachers
-            $id = $_SESSION['user_id'];
-            $users = $this->teacherModel->getUser($id);
-
-            $data = [
-                'users' => $users
-                
-            ];
-
-            $this->view('teachers/profile', $data);
         }
     }

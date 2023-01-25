@@ -6,19 +6,22 @@
         <div class="sidebar">
             <ul>
                 <li>
-                    <a href="<?php echo URLROOT; ?>/adminclerks/index"><i class="fa-solid fa-house"></i><span class="link">Home</span></a>
+                    <a href="<?php echo URLROOT; ?>/directors/index"><i class="fa-solid fa-house"></i><span class="link">Home</span></a>
                 </li>
                 <li>
-                    <a href="<?php echo URLROOT; ?>/adminclerks/viewDetails" class="active"><i class="fa-solid fa-eye"></i><span class="link">View</span></a>
+                    <a href="<?php echo URLROOT; ?>/directors/viewDetails"  class="active"><i class="fa-solid fa-eye"></i><span class="link">View</span></a>
                 </li>
                 <li>
-                    <a href="<?php echo URLROOT; ?>/adminclerks/volunteers"><i class="fa-solid fa-handshake-angle"></i><span class="link">Volunteers</span></a>
+                    <a href="<?php echo URLROOT; ?>/directors/appointments"><i class="fa-solid fa-calendar-plus"></i><span class="link">Appointments</span></a>
                 </li>
                 <li>
-                    <a href="<?php echo URLROOT; ?>/adminclerks/verifyDetails"><i class="fa-solid fa-user-check"></i><span class="link">Verify Details</span></a>
+                    <a href="<?php echo URLROOT; ?>/directors/school_management"><i class="fa-solid fa-chalkboard-user"></i><span class="link">School Management</span></a>
                 </li>
                 <li>
-                    <a href="<?php echo URLROOT; ?>/adminclerks/profile"><i class="fa-solid fa-circle-user"></i><span class="link">Profile</span></a>
+                    <a href="<?php echo URLROOT; ?>/directors/projects"><i class="fa-solid fa-building"></i><span class="link">School Projects</span></a>
+                </li>
+                <li>
+                    <a href="<?php echo URLROOT; ?>/directors/profile"><i class="fa-solid fa-circle-user"></i><span class="link">Profile</span></a>
                 </li>
             </ul>
           <div class="logout">
@@ -58,13 +61,13 @@
                             <tr>
                                 <td> <?php echo $school->id; ?></td>
                                 <td> <?php echo $school->name; ?></td>
-                                <td> <a href="<?php echo URLROOT; ?>/adminclerks/viewMoreSchoolDetails/<?php echo $school->id; ?>" class="btn3">More</a></td>
+                                <td> <a href="<?php echo URLROOT; ?>/directors/viewMoreSchoolDetails/<?php echo $school->id; ?>" class="btn3">More</a></td>
                             </tr>
                             <?php endforeach; ?>
                         </table>
                     </div>
                     <div id="principals">
-                        <table>
+                        <table class="view-table">
                             <h3>Principal Details</h3>
                             <form action="">
                                 <input type="text" placeholder="Search" >
@@ -79,13 +82,13 @@
                             <tr>
                                 <td> <?php echo $principal->id; ?></td>
                                 <td> <?php echo $principal->fullName; ?></td>
-                                <td> <a href="<?php echo URLROOT; ?>/adminclerks/viewMorePrincipalDetails/<?php echo $principal->id; ?>" class="btn3">More</a></td>
+                                <td> <a href="<?php echo URLROOT; ?>/directors/viewMorePrincipalDetails/<?php echo $principal->id; ?>" class="btn3">More</a></td>
                             </tr>
                             <?php endforeach; ?>
                         </table>
                     </div>
                     <div id="teachers">
-                        <table>
+                        <table class="view-table">
                             <h3>Teacher Details</h3>
                             <form action="">
                                 <input type="text" placeholder="Search" >
@@ -100,7 +103,7 @@
                             <tr>
                                 <td> <?php echo $teacher->id; ?></td>
                                 <td> <?php echo $teacher->fullName; ?></td>
-                                <td> <a href="<?php echo URLROOT; ?>/adminclerks/viewMoreTeacherDetails/<?php echo $teacher->id; ?>" class="btn3">More</a></td>
+                                <td> <a href="<?php echo URLROOT; ?>/directors/viewMoreTeacherDetails/<?php echo $teacher->id; ?>" class="btn3">More</a></td>
                             </tr>
                             <?php endforeach; ?>
                         </table>

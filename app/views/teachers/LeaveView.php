@@ -11,7 +11,7 @@
                 <a href="<?php echo URLROOT; ?>/teachers/Karyasadanaya"><i class="fa-solid fa-file-lines"></i><span class="link">Karyasadanaya</span></a>
             </li>
             <li>
-                <a href="<?php echo URLROOT; ?>/teachers/leaveForm" class="active"><i class="fa-solid fa-file"></i><span class="link">Leave Form</span></a>
+                <a href="<?php echo URLROOT; ?>/teachers/leaveForm"  class="active"><i class="fa-solid fa-file"></i><span class="link">Leave Form</span></a>
             </li>
             <li>
                 <a href="<?php echo URLROOT; ?>/teachers/report_issue"><i class="fa-brands fa-wpforms"></i><span class="link">Report Issue</span></a>
@@ -51,39 +51,65 @@
                 </div>
                 <div class="forum">
                     <span class="forum-topic">Application For Leave</span>
-                    <form action="" method="POST">
-                        <div class="forum_box">
-                            <div class="forum_con">
-                                <label for="reason">Reason for leave :</label><br>
-                                <textarea id="reason" name="reason" required></textarea><br>
-                                <label for="commencing_date">Date of commencing date :</label><br>
-                                <input type="date" id="commencing_date" name="commencing_date" required>
-                                <span class="error"><?php echo $data['commencing_date_err'] ?></span>
-                                <label for="resuming_date">Date of resuming duties :</label><br>
-                                <input type="date" id="resuming_date" name="resuming_date" required>
-                                <span class="error"><?php echo $data['resuming_date_err'] ?></span>
-                                <!-- <label for="total_leaves">Number of days leave applied for :</label> -->
-                                <span class="error"><?php echo $data['interval_err'] ?></span><br>
-                                <div class="leave">
-                                <lable for="leavetype">Leave type :</lable></br>
-                                <select id="leavetype" name="leavetype">
-                                    <option value="Casual">Casual</option>
-                                    <option value="Medical">Medical</option>
-                                    <option value="Other">Other</option>
-                                </select>
-                                <span class="error"><?php echo $data['leavetype_err']; ?></span>
+                    <div class="view">
+                        <div class="for um_box">
+                            <div class="forum_view-top">
+                                <div>
+                                    <span class="title">Form No :</span>
+                                    <span><?php echo $data['leave']->leave_id ?></span>
+                                </div>
+                                <div>
+                                    <span class="title">Submitted date :</span>
+                                    <span><?php echo $data['leave']->submitted_date ?></span>
                                 </div>
                             </div>
+                            <div class="forum_view">
+                                <span class="title">Name:</span>
+                                <div class="spc"><?php echo $_SESSION['user_name']?></div>
+                            </div>
+                            <div class="forum_view">
+                                <span class="title">Designation :</span>
+                                <div class="spc">Teacher</div>
+                            </div>
+                            <!-- <div class="forum_view">
+                                <span class="title">Date of First Appointment:</span>
+                                <div class="spc"><?php echo $_SESSION['user_name'] ?></div>
+                            </div> -->
+                            <div class="forum_view">
+                                <span class="title">Date of Commencing leave :</span>
+                                <div class="spc"><?php echo $data['leave']->commencing_date ?></div>
+                            </div>
+                            <div class="forum_view">
+                                <span class="title">Date of resuming duties :</span>
+                                <div class="spc"><?php echo $data['leave']->resuming_date ?></div>
+                            </div>
+                            <div class="forum_view">
+                                <span class="title">Leave type :</span>
+                                <div class="spc"><?php echo $data['leave']->leave_type ?></div>
+                            </div>
+                            <!-- <div class="forum_view">
+                                <span class="title">Number of days leave appplied for :</span>
+                                <div class="spc"><?php echo $interval ?></div>
+                            </div> -->
+                            <div class="forum_view">
+                                <span class="title">Reason for leave :</span>
+                                <div class="spc"><?php echo $data['leave']->reason ?></div>
+                            </div>
+                            <!-- <div class="forum_view">
+                                <span class="title">Principal's approvement :</span>
+                                <div class="spc"><?php echo $Username ?></div>
+                            </div> -->
+                            <div class="forum_view">
+                                <a href="<?php echo URLROOT; ?>/teachers/LeaveForm"><button class="submit-btn">Back</button></a>
+                            </div>
                         </div>
-                        <input class="submit-btn" type="submit">
-                    </form>
+                    </div>
                 </div>
             </div>
             <div class="right">
                 <div class="card">
                     <h3>LATEST APPLICATION STATUS</h3>
-                    <div class="status-bt">
-                        <table>
+                    <table>
                             <tr>
                                 <th>Commencing Date</th>
                                 <th>Resuming_Date</th>
@@ -100,44 +126,6 @@
                             </tr>
                             <?php endforeach; ?>
                         </table>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="month">
-                        <i class="fas fa-angle-left prev"></i>
-                        <div class="date">
-                            <h1>Calender</h1>
-                            <span></span>
-                        </div>
-                        <i class="fas fa-angle-right next"></i>
-                    </div>
-                    <div class="weekdays">
-                        <div>Sun</div>
-                        <div>Mon</div>
-                        <div>Tue</div>
-                        <div>Wed</div>
-                        <div>Thu</div>
-                        <div>Fri</div>
-                        <div>Sat</div>
-                    </div>
-                    <div class="days"></div>
-                </div>
-                <div class="card">
-                    <h3>Remaining Leave Details</h3>
-                    <div class="details">
-                        <div class="details-card">
-                            <span>Casual Leave</span>
-                            <span class="num">42</span>
-                        </div>
-                        <div class="details-card">
-                            <span>Medical Leave</span>
-                            <span class="num">42</span>
-                        </div>
-                        <div class="details-card">
-                            <span>Other Leave</span>
-                            <span class="num">42</span>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

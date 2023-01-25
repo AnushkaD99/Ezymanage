@@ -68,6 +68,17 @@
             $this->view('adminclerks/viewMoreTeacherDetails', $data);
         }
 
+        public function volunteers(){
+            // Get teachers
+            $volunteers = $this->adminClerkModel->getVolunteerDetail();
+
+            $data = [
+                'volunteers' => $volunteers
+            ];
+
+            $this->view('adminclerks/volunteers', $data);
+        }
+
         // public function show($id){
         //     $post = $this->postModel->getPostById($id);
         //     $user = $this->userModel->getUserById($post->user_id);
@@ -82,13 +93,27 @@
 
         public function profile(){
             // Get teachers
-            //$teachers = $this->teacherModel->getTeachers();
+            $id = $_SESSION['user_id'];
+            $users = $this->adminClerkModel->getUser($id);
 
             $data = [
-                //'teachers' => $teachers
+                'users' => $users
                 
             ];
 
             $this->view('adminclerks/profile', $data);
+        }
+
+        public function editProfile(){
+            // Get teachers
+            $id = $_SESSION['user_id'];
+            $users = $this->adminClerkModel->updateprofile($id);
+
+            $data = [
+                'users' => $users
+                
+            ];
+
+            $this->view('adminclerks/editProfile', $data);
         }
     }
