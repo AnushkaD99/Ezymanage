@@ -113,7 +113,7 @@
     }
 
     public function getLeaveDeatail(){
-        $this->db->query('SELECT * FROM leave_details WHERE userId = :id ORDER BY leave_id DESC LIMIT 5');
+        $this->db->query('SELECT * FROM leave_details WHERE userId = :id ORDER BY id DESC LIMIT 5');
         $this->db->bind(':id', $_SESSION['user_id']);
 
         $results = $this->db->resultSet();
@@ -121,7 +121,7 @@
     }
 
     public function getLeaveById($id){
-        $this->db->query('SELECT * FROM leave_details WHERE leave_id = :id');
+        $this->db->query('SELECT * FROM leave_details WHERE id = :id');
         $this->db->bind(':id', $id);
   
         $row = $this->db->single();
@@ -158,6 +158,66 @@
         } else {
             return false;
         }
+    }
+
+    //School mangement
+    //Leave management
+    public function getLeaves(){
+        $this->db->query('SELECT teacher.nameWithInitials as name,
+        teacher.designation as designation,
+        teacher.school as school,
+        leave_details.id as leave_id,
+        leave_details.commencing_date as commencing_date,
+        leave_details.resuming_date as resuming_date,
+        leave_details.reason as reason,
+        leave_details.leave_type as leave_type
+         FROM leave_details INNER JOIN teacher ON leave_details.userId = teacher.id WHERE leave_details.status = "Pending"');
+
+        $results = $this->db->resultSet();
+        return $results;
+    }
+
+    public function updateStatus($data){
+      $table = $data['title'];
+      $this->db->query("UPDATE $table SET status = :status WHERE id = :id");
+      // Bind values
+      $this->db->bind(':status', $data['status']);
+      $this->db->bind(':id', $data['form_id']);
+
+      // Execute
+      if($this->db->execute()){
+        return true;
+      } else {
+          return false;
+      }
+    }
+
+    //Karyasadanaya
+    public function getKaryasadana(){
+      $this->db->query('SELECT teacher.nameWithInitials as name,
+      teacher.designation as designation,
+      teacher.school as school,
+      karyasadana.id as karyasadana_id,
+      karyasadana.submittedDate as submitted_date
+       FROM karyasadana INNER JOIN teacher ON karyasadana.userId = teacher.id WHERE karyasadana.status = "Pending"');
+
+      $results = $this->db->resultSet();
+      return $results;
+    }
+
+    //Issues
+    public function getIssues(){
+      $this->db->query('SELECT teacher.nameWithInitials as name,
+      teacher.designation as designation,
+      teacher.school as school,
+      issues.id as issue_id,
+      issues.submitted_date as submitted_date,
+      issues.issue_cat as issue_cat,
+      issues.issue as issue
+       FROM issues INNER JOIN teacher ON issues.user_id = teacher.id WHERE issues.issue_type="School" && issues.status = "Pending"');
+
+      $results = $this->db->resultSet();
+      return $results;
     }
     
   }

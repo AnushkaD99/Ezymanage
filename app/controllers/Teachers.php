@@ -41,6 +41,7 @@
                     'total_leaves_err' => '',
                     'interval_err' => '',
                     'leavetype_err' => '',
+                    'approval' => 'Pending',
                     // 'date1' => strtotime('commencing_date'),
                     // 'date2' => strtotime('resuming_date'),
                 ];
@@ -48,6 +49,13 @@
                 // function calInterval(){
                 //     $interval = $data['date2'] - $data['date1'];
                 //     $interval = $interval / (60 2 60 2 24);
+                //     return $interval;
+                // }
+                // function calculateDifference() {
+                //     $startDate = $date['commencing_date'];
+                //     $endDate = $data['resuming_date'];
+                //     $difference = $this->model->getDateDifference($startDate, $endDate);
+                //     $interval = $difference->format('%a days');
                 //     return $interval;
                 // }
 
@@ -71,13 +79,18 @@
             
                 if(empty($data['reason_err']) && empty($data['commencing_date_err']) && empty($data['resuming_date_err']) && empty($data['leavetype_err'])){
                     // Validated
-                    if($this->teacherModel->submitLeaveForm($data)){
+                    $startDate = $data['resuming_date'];
+                    $endDate = $data['commencing_date'];
+                    $difference = $this->teacherModel->getDateDifference($startDate, $endDate);
+                    $interval = $difference->format('%a days');
+                    if($this->teacherModel->submitLeaveForm($data, $interval)){
                         redirect('teachers/LeaveForm');
                     } else {
                         die('Something went wrong');
                     }
                 }
                 else {
+                    die('Something went wrong');
                     // Load view with errors
                     $this->view('teachers/leaveForm', $data);
                 }
@@ -115,6 +128,7 @@
                     'interval_err' => '',
                     'leavetype_err' => '',
                     'leave_details' => $leave_details,
+                    'approval' => ''
                 ];
                 // Load view
                 $this->view('teachers/leaveForm', $data);
@@ -140,9 +154,11 @@
                 // Sanitize POST data
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
+                $karyasadana_details = $this->teacherModel->getKaryasadanaDeatail();
                 // Init data
                 $data = [
                     'title' => 'Karyasadanaya',
+                    'userId' => $_SESSION['user_id'],
                     'start_date' => trim($_POST['start_date']),
                     'end_date' => trim($_POST['end_date']),
                     'tasks1' => trim($_POST['tasks1']),
@@ -177,6 +193,8 @@
                     'tasks5_err' => '',
                     'Indicators5_err' => '',
                     'Problems5_err' => '',
+                    'submittedDate' => date("Y-m-d"),
+                    'karyasadana_details' => $karyasadana_details
                 ];
 
                 //validate
@@ -262,9 +280,13 @@
                     $this->view('teachers/Karyasadanaya', $data);
                 }
             }else{
+                // Get leave details
+                $karyasadana_details = $this->teacherModel->getKaryasadanaDeatail();
+
                 //init data
                 $data = [
                     'title' => 'Karyasadanaya',
+                    'userId' => '',
                     'start_date' => '',
                     'end_date' => '',
                     'tasks1' => '',
@@ -299,6 +321,7 @@
                     'tasks5_err' => '',
                     'Indicators5_err' => '',
                     'Problems5_err' => '',
+                    'karyasadana_details' => $karyasadana_details
                 ];
 
                 //load view
@@ -306,16 +329,126 @@
             }
         }
 
+        public function karyasadanaya_view($id){
+            // Get Leave Details
+            $karyasadana = $this->teacherModel->getKaryasadanaById($id);
+            $karyasadana_details = $this->teacherModel->getKaryasadanaDeatail();
+
+            $data = [
+                'karyasadana' => $karyasadana ,
+                'karyasadana_details' => $karyasadana_details,
+            ];
+
+            $this->view('teachers/karyasadanaya_view', $data);
+        }
+
+        // public function school_details(){
+        //     // Get school details
+        //     $school = $_SESSION['user_school'];
+        //     // $school = $this->teacherModel->getSchoolName($id);
+        //     $schools = $this->teacherModel->getSchoolDetails($school);
+
+        //     $data = [
+        //         'schools' => $schools,
+        //     ];
+
+        //     $this->view('adminclerks/school_details', $data);
+        // }
+
         public function profile(){
             // Get teachers
             $id = $_SESSION['user_id'];
             $users = $this->teacherModel->getUser($id);
+            //$_SESSION['user_school'] = $users['school'];
 
             $data = [
-                'users' => $users
+                'users' => $users,
+                //'user_school' => $_SESSION['user_school']
                 
             ];
 
             $this->view('teachers/profile', $data);
         }
+
+        public function paysheet(){
+            // Get teachers
+            //$teachers = $this->teacherModel->getTeachers();
+
+            $data = [
+                //'teachers' => $teachers
+            ];
+
+            $this->view('teachers/paysheet', $data);
+        }
+
+        public function report_issue(){
+            //process form
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                //sanitize post data
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                $submitted_issues = $this->teacherModel->getSubmittedIssues($_SESSION['user_id']);
+
+                $data = [
+                    'issue_type' => trim($_POST['issue_type']),
+                    'description' => trim($_POST['description']),
+                    'issue_cat' => trim($_POST['issue_cat']),
+                    'description_err' => '',
+                    'issue_cat_err' => '',
+                    'user_id' => $_SESSION['user_id'],
+                    'submitted_date' => date('Y-m-d'),
+                    'submitted_issues' => $submitted_issues,
+                ];
+
+                //validate description
+                if(empty($data['description'])){
+                    $data['description_err'] = '*Please enter description';
+                }
+
+                //validate description
+                if(empty($data['issue_cat'])){
+                    $data['issue_cat_err'] = '*Please choose ant issue category';
+                }
+
+                //make sure errors are empty
+                if(empty($data['description_err']) && empty($data['issue_cat_err'])){
+                    //validated
+                    if($this->teacherModel->addIssue($data)){
+                        flash('issue_message', 'Issue Added');
+                        redirect('teachers/report_issue');
+                    } else {
+                        die('Something went wrong');
+                    }
+                } else {
+                    //load view with errors
+                    $this->view('teachers/report_issue', $data);
+                }
+            } else {
+                $submitted_issues = $this->teacherModel->getSubmittedIssues($_SESSION['user_id']);
+                //init data
+                $data = [
+                    'issue_type' => '',
+                    'description' => '',
+                    'issue_cat' => '',
+                    'description_err' => '',
+                    'issue_cat_err' => '',
+                    'user_id' => '',
+                    'submitted_date' => '',
+                    'submitted_issues' => $submitted_issues
+                ];
+
+                //load view
+                $this->view('teachers/report_issue', $data);
+            }
+        }
+
+        public function appointments(){
+
+            $data = [
+                //'teachers' => $teachers
+            ];
+
+            $this->view('teachers/appointments', $data);
+        }
+
+        
     }

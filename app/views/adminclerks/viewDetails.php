@@ -23,7 +23,7 @@
             </ul>
           <div class="logout">
               <hr>
-              <a href="../logout.php"><i class="fa-solid fa-sign-out"></i><span class="link">Logout</span></a>
+              <a href="<?php echo URLROOT; ?>/users/logout"><i class="fa-solid fa-sign-out"></i><span class="link">Logout</span></a>
           </div>
         </div>
         <!-- End sidebar -->
@@ -31,19 +31,14 @@
             <h1>View Details</h1>
             <div class="main-viewDetails">
                 <div class="main-viewDetails-buttons">
-                    <div class="main-viewDetails-buttons-left btn3">
-                        <a href="" >Teachers</a>
-                    </div>
-                    <div class="main-viewDetails-buttons-center btn3">
-                        <a href="" id="principalBtn">Principals</a>
-                    </div>
-                    <div class="main-viewDetails-buttons-right btn3">
-                        <a href="" id="schoolBtn">Schools</a>
-                    </div>
+                    <div class="main-viewDetails-buttons-left select-btn active" id="select-btn1">Teachers</div>
+                    <div class="main-viewDetails-buttons-center select-btn" id="select-btn2">Principals</div>
+                    <div class="main-viewDetails-buttons-right select-btn" id="select-btn3">Schools</div>
                 </div>
                 <div class="main-viewDetails-details">
+                    <!-- Schools -->
                     <div id="schools">
-                        <table class="view-table">
+                        <table id="table-customize">
                         <h3>School Details</h3>
                             <form action="">
                                 <input type="text" placeholder="Search" >
@@ -52,19 +47,21 @@
                             <tr>
                                 <th>School Reg.No</th>
                                 <th>Name</th>
-                                <th></th>
+                                <th>View more details</th>
                             </tr>
                             <?php foreach($data['schools'] as $school) : ?>
                             <tr>
                                 <td> <?php echo $school->id; ?></td>
                                 <td> <?php echo $school->name; ?></td>
-                                <td> <a href="<?php echo URLROOT; ?>/adminclerks/viewMoreSchoolDetails/<?php echo $school->id; ?>" class="btn3">More</a></td>
+                                <td id="center"> <a href="<?php echo URLROOT; ?>/adminclerks/viewMoreSchoolDetails/<?php echo $school->id; ?>" class="btn3">More</a></td>
                             </tr>
                             <?php endforeach; ?>
                         </table>
                     </div>
+
+                    <!-- Principal -->
                     <div id="principals">
-                        <table>
+                        <table id="table-customize">
                             <h3>Principal Details</h3>
                             <form action="">
                                 <input type="text" placeholder="Search" >
@@ -73,19 +70,21 @@
                             <tr>
                                 <th>Emp No</th>
                                 <th>Name</th>
-                                <th></th>
+                                <th>View more details</th>
                             </tr>
                             <?php foreach($data['principals'] as $principal) : ?>
                             <tr>
                                 <td> <?php echo $principal->id; ?></td>
                                 <td> <?php echo $principal->fullName; ?></td>
-                                <td> <a href="<?php echo URLROOT; ?>/adminclerks/viewMorePrincipalDetails/<?php echo $principal->id; ?>" class="btn3">More</a></td>
+                                <td id="center"> <a href="<?php echo URLROOT; ?>/adminclerks/viewMorePrincipalDetails/<?php echo $principal->id; ?>" class="btn3">More</a></td>
                             </tr>
                             <?php endforeach; ?>
                         </table>
                     </div>
+
+                    <!-- Teacher -->
                     <div id="teachers">
-                        <table>
+                        <table id="table-customize">
                             <h3>Teacher Details</h3>
                             <form action="">
                                 <input type="text" placeholder="Search" >
@@ -94,13 +93,13 @@
                             <tr>
                                 <th>Emp No</th>
                                 <th>Name</th>
-                                <th></th>
+                                <th>View more details</th>
                             </tr>
                             <?php foreach($data['teachers'] as $teacher) : ?>
                             <tr>
                                 <td> <?php echo $teacher->id; ?></td>
                                 <td> <?php echo $teacher->fullName; ?></td>
-                                <td> <a href="<?php echo URLROOT; ?>/adminclerks/viewMoreTeacherDetails/<?php echo $teacher->id; ?>" class="btn3">More</a></td>
+                                <td id="center"> <a href="<?php echo URLROOT; ?>/adminclerks/viewMoreTeacherDetails/<?php echo $teacher->id; ?>" class="btn3">More</a></td>
                             </tr>
                             <?php endforeach; ?>
                         </table>
@@ -110,47 +109,43 @@
         </div>
     </div>
     <script>
-        let sidebar = document.querySelector(".sidebar");
-        let navbar = document.querySelector(".navbar");
-        let link = document.querySelector(".link");
-        let container = document.querySelector(".container");
-        let sidebarBtn = document.querySelector(".fa-bars");
-        sidebarBtn.onclick = function() {
-            sidebar.classList.toggle("active");
-            navbar.classList.toggle("active");
-            link.classList.toggle("active");
-            container.classList.toggle("active");
-            if (sidebar.classList.contains("active")) {
-                // sidebarBtn.classList.replace("bx-menu", "bx-menu-alt-right");
-                // link.style.display = 'none';
-            } else
-                // sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
-                // link.style.display = '';
-        }
-
-        var schools = document.getElementById("schools");
-        var principals = document.getElementById("principals");
         var teachers = document.getElementById("teachers");
-        var schoolBtn = document.getElementByIdr("schoolBtn");
-        var principalBtn = document.getElementById("principalBtn");
-        var teacherBtn = document.getElementById("teacherBtn");
+        var principals = document.getElementById("principals");
+        var schools = document.getElementById("schools");
 
-        schoolBtn.onclick = function(){
-            teachers.style.display = 'none';
+        var btn1 = document.getElementById("select-btn1");
+        var btn2 = document.getElementById("select-btn2");
+        var btn3 = document.getElementById("select-btn3");
+
+        btn1.onclick = function(){
+            teachers.style.display = 'contents';
             principals.style.display = 'none';
-            schools.style.display = 'contents';
+            schools.style.display = 'none';
         }
 
-        principalBtn.onclick = function(){
+        btn2.onclick = function(){
             teachers.style.display = 'none';
             principals.style.display = 'contents';
             schools.style.display = 'none';
         }
 
-        teacherBtn.onclick = function(){
-            teachers.style.display = 'contents';
+        btn3.onclick = function(){
+            teachers.style.display = 'none';
             principals.style.display = 'none';
-            schools.style.display = 'none';
+            schools.style.display = 'contents';
         }
+
+        const buttons = document.querySelectorAll('.select-btn');
+
+        buttons.forEach(button => {
+            button.addEventListener('click', function() {
+                buttons.forEach(btn => {
+                    btn.classList.remove('active');
+                    });
+                this.classList.add('active');
+            });
+        });
+
+
     </script>
 <?php require APPROOT . '/views/inc/footer.php'; ?>   

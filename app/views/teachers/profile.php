@@ -41,7 +41,7 @@
         </ul>
         <div class="logout">
             <hr>
-            <a href="../logout.php"><i class="fa-solid fa-sign-out"></i><span class="link">Logout</span></a>
+            <a href="<?php echo URLROOT; ?>/users/logout"><i class="fa-solid fa-sign-out"></i><span class="link">Logout</span></a>
         </div>
         </div>
         <!-- End sidebar -->
@@ -137,7 +137,7 @@
                             <input type="text" name="nic" class="textBox" value="<?php echo $data['users']->NIC ?>">
                         </div>
                     </div>
-                    <a href="<?php echo URLROOT; ?>/adminclerks/editProfile"><div class="fullBtn">Edit Profile</div></a>
+                    <a href="<?php echo URLROOT; ?>/teachers/editProfile"><div class="fullBtn">Edit Profile</div></a>
                 </div>
             </div>
         </div>

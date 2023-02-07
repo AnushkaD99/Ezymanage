@@ -84,6 +84,30 @@ body {
 }
 /*Close Btn3*/
 
+/*view-Btn*/
+.view-btn {
+  background-color: var(--blue);
+  color: var(--white);
+  border: none;
+  border-radius: 10px;
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
+  text-align: center;
+  width: fit-content;
+}
+/*Close view-Btn*/
+
+/*row-space*/
+.row-space{
+  border-collapse:separate;
+  border-spacing:0 10px;
+}
+
+.space{
+  height: 2rem;
+}
+
+
 /* Start full-Btn */
 .fullBtn {
   background-color: var(--blue);
@@ -133,6 +157,58 @@ body {
   font-weight: 600;
   color: var(--black);
   text-align: center;
+}
+
+/*submit-Btn*/
+.submit-btn {
+  background-color: var(--blue);
+  color: var(--white);
+  border: none;
+  border-radius: 25px;
+  padding: 1rem;
+  font-size: 1rem;
+  width: 100%;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+/*dashed -line*/
+.dashed_line{
+  border: 1px dashed; 
+}
+
+/*center*/
+
+#center{
+  text-align: center;
+  justify-content: center;
+}
+
+/*tables*/
+#table-customize{
+  border-collapse: collapse;
+  width: 100%;
+  border-bottom: 3px solid var(--blue);
+  box-shadow: 2px 2px 9px #DDDDDD;
+}
+
+#table-customize td {
+  border: 1px solid #DDDDDD;
+  padding: 8px;
+}
+
+#table-customize th {
+  border: 1px solid #FFFFFF;
+  padding-left: 8px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: var(--blue);
+  color: #FFFFFF;
+}
+
+#table-customize tr:nth-child(odd) {
+  background-color: #EEEEEE;
 }
 
 /*Close common Css*/
@@ -466,6 +542,7 @@ body {
   grid-area: main-viewDetails-buttons;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 5rem;
   grid-template-areas:
     "main-viewDetails-buttons-left main-viewDetails-buttons-center main-viewDetails-buttons-right";
 }
@@ -496,13 +573,10 @@ body {
   background-color: #dddddd;
 }
 
-/* #schools{
+#personal{
   display: none;
 }
 
-#principals{
-  display: none;
-} */
 /*Close Main-view Details*/
 
 /*Main-Main-Col -2*/
@@ -613,6 +687,90 @@ body {
 .upload input::-webkit-file-upload-button, .upload input[type=submit]{
   cursor: pointer;
 }
+
+/*2-col-main*/
+
+.main-2col{
+  display: grid;
+  grid-template-columns: 1fr 0.8fr;
+  grid-template-areas:
+    "main-2col-left main-2col-right";
+  grid-gap: 1rem;
+}
+
+.main-2col-left{
+  grid-area: main-2col-left;
+  padding: 1rem;
+}
+
+.main-2col-right{
+  grid-area: main-2col-right;
+  padding: 1rem;
+  border-radius: 25px;
+}
+
+.content{
+  padding: 3rem;
+  background-color: var(--gray);
+  border-radius: 25px;
+  margin: 1rem;
+}
+
+.tittle{
+  text-align: center;
+}
+.sub-content{
+  margin-left: 20px;
+}
+
+table{
+
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.align-right{
+  text-align: right;
+}
+
+.border-box textarea{
+  width: 100%;
+  height: 100px;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: #ffffff;
+  margin-top: 1rem;
+}
+
+.border-box input, .border-box select{
+  width: 100%;
+  height: 50px;
+  border: none;
+  border-radius: 10px;
+  padding: 0px 10px;
+  background-color: #ffffff;
+}
+
+.col-2-btn{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    "2col-btn-left 2col-btn-right";
+  grid-gap: 2rem;
+}
+
+.col-2-btn-left{
+  grid-area: 2col-btn-left;
+}
+
+.col-2-btn-right{
+  grid-area: 2col-btn-right;
+}
+
+
+/*end of 2-col-main*/
+
 /***************************************************/
 
 @media only screen and (max-width: 600px) {
@@ -674,9 +832,10 @@ body {
 .form-group input[type="password"] {
   width: 100%;
 }
+
 /******************************/
 
-/* @media only screen and (max-width: 600px) {
+@media only screen and (max-width: 600px) {
 .container {
     grid-template-columns: 1fr;
     grid-template-rows: auto;
@@ -691,9 +850,9 @@ body {
 .main {
     grid-area: main;
 }
-} */
+}
 
-/* @media only screen and (max-width: 600px) {
+@media only screen and (max-width: 600px) {
 .sidebar a {
     font-size: 0.8rem;
     padding: 0.5rem 0;
@@ -701,7 +860,7 @@ body {
 .sidebar i {
     font-size: 0.8rem;
 }
-} */
+}
 /******************************************************************
  * {
    padding: 0;
@@ -1161,4 +1320,72 @@ td {
   text-align: left;
   padding: 10px 0;
 
+}
+
+/**** Karyasadana view styles ****/
+
+.karyasadanaya-full{
+  display: grid;
+  height: 100vh;
+  grid-template-columns: 1fr 0.5fr;
+  grid-template-rows: 0.2fr 1fr;
+  grid-template-areas:
+    "up-left up-right"
+    "bottom bottom";
+}
+
+.up-left{
+  grid-area: up-left;
+}
+
+.up-right{
+  grid-area: up-right;
+}
+
+.bottom{
+  grid-area: bottom;
+}
+
+
+#frm2{
+  display: none;
+}
+
+#frm3{
+  display: none;
+}
+
+#frm4{
+  display: none;
+}
+
+#frm5{
+  display: none;
+}
+
+#principals{
+  display: none;
+}
+
+#schools{
+  display: none;
+}
+
+/*Select Button */
+.select-btn {
+  background-color: var(--white);
+  color: var(--black);
+  border: 1px solid var(--black);
+  border-radius: 25px;
+  padding: 1rem;
+  font-size: 1rem;
+  width: 100%;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.select-btn.active {
+  background-color: var(--blue);
+  color: var(--white);
+  border: none;
 }

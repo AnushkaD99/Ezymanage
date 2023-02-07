@@ -376,4 +376,45 @@
                 $this->view('principals/Karyasadanaya', $data);
             }
         }
+
+        //School Management
+        public function school_management(){
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                //sanitize post data
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                $leaves = $this->principalModel->getLeaves();
+                $karyasadana = $this->principalModel->getKaryasadana();
+                $issues = $this->principalModel->getIssues();
+                $data = [
+                    'title' => trim($_POST['title']),
+                    'leaves' => $leaves,
+                    'karyasadana' => $karyasadana,
+                    'issues' => $issues,
+                    'form_id' => trim($_POST['form_id']),
+                    'status' => trim($_POST['status']),
+                    'leave_id_err' => '',
+                ];
+
+                if($this->principalModel->updateStatus($data)){
+                    redirect('principals/school_management');
+                } else {
+                    die('Something went wrong');
+                }
+            }else{
+                $leaves = $this->principalModel->getLeaves();
+                $karyasadana = $this->principalModel->getKaryasadana();
+                $issues = $this->principalModel->getIssues();
+                $data = [
+                    'title' => '',
+                    'leaves' => $leaves,
+                    'karyasadana' => $karyasadana,
+                    'issues' => $issues,
+                    'leave_id' => '',
+                    'status' => '',
+                    'leave_id_err' => '',
+                ];
+                $this->view('principals/school_management', $data);
+            }
+        
+        }
     }
