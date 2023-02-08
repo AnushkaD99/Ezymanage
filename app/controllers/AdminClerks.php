@@ -21,7 +21,55 @@
         }
 
         public function viewDetails(){
-            // Get teachers
+            //form process
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                //sanitize post data
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+                //funtions
+                $schools = $this->adminClerkModel->getSchoolDeatail();
+                $principals = $this->adminClerkModel->getPrincipalDeatail();
+                $teachers = $this->adminClerkModel->getTeacherDeatail();
+
+                //init data
+                $data = [
+                    'schools' => $schools,
+                    'principals' => $principals,
+                    'teachers' => $teachers,
+                    'search' => trim($_POST['search']),
+                ];
+
+                if(empty($data['search'])){
+                    $schools = $this->adminClerkModel->getSchoolDeatail();
+                    $principals = $this->adminClerkModel->getPrincipalDeatail();
+                    $teachers = $this->adminClerkModel->getTeacherDeatail();
+                }else{
+                    $schools = $this->adminClerkModel->searchSchools($data);
+                    $principals = $this->adminClerkModel->searchPrincipals($data);
+                    $teachers = $this->adminClerkModel->searchTeachers($data);
+                }
+
+                //load view
+                $this->view('adminclerks/viewDetails', $data);
+            } else {
+                $schools = $this->adminClerkModel->getSchoolDeatail();
+                $principals = $this->adminClerkModel->getPrincipalDeatail();
+                $teachers = $this->adminClerkModel->getTeacherDeatail();
+
+                //init data
+                $data = [
+                    'schools' => $schools,
+                    'principals' => $principals,
+                    'teachers' => $teachers,
+                    'search' => '',
+                    'schools_err' => '',
+                ];
+
+                //load view
+                $this->view('adminclerks/viewDetails', $data);
+            }
+
+            
             $schools = $this->adminClerkModel->getSchoolDeatail();
             $principals = $this->adminClerkModel->getPrincipalDeatail();
             $teachers = $this->adminClerkModel->getTeacherDeatail();
@@ -78,18 +126,6 @@
 
             $this->view('adminclerks/volunteers', $data);
         }
-
-        // public function show($id){
-        //     $post = $this->postModel->getPostById($id);
-        //     $user = $this->userModel->getUserById($post->user_id);
-      
-        //     $data = [
-        //       'post' => $post,
-        //       'user' => $user
-        //     ];
-      
-        //     $this->view('posts/show', $data);
-        // }
 
         public function profile(){
             // Get teachers
@@ -210,10 +246,18 @@
                     $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
 
                     //rename image
-                    move_uploaded_file($data['image_tmp'], 'public/img/uploads/'.$data['dp']);
+                    $target_dir = "D:/installed apps/XAMPP/htdocs/Ezymanage/public/img/uploads/";
+                    $img_name = basename("$id.".pathinfo($_FILES["fileImg"]["name"],PATHINFO_EXTENSION));
+                    $target_file = $target_dir . basename("$id.".pathinfo($_FILES["fileImg"]["name"],PATHINFO_EXTENSION));
+                    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
                     //register user
-                    if($this->adminClerkModel->updateprofile($data)){
-                        //flash('register_success', 'You are registered and can log in');
+                    if($this->adminClerkModel->updateprofile($data, $img_name)){
+                        if (move_uploaded_file($_FILES["fileImg"]["tmp_name"], $target_file)) {
+                            echo "The file " . basename($_FILES["fileImg"]["name"]) . " has been uploaded.";
+                        } else {
+                            echo "Sorry, there was an error uploading your file.";
+                        }
+                        flash('update_success');
                         redirect('adminclerks/profile');
                     } else {
                         die('Something went wrong');

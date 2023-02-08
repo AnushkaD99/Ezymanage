@@ -202,7 +202,7 @@
                 'leave_details' => $leave_details,
             ];
 
-            $this->view('teachers/LeaveView', $data);
+            $this->view('principals/LeaveView', $data);
         }
 
         public function Karyasadanaya(){

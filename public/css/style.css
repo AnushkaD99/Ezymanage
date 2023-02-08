@@ -5,6 +5,7 @@
   --background: #EEF3FF;
   --black: black;
   --white: white;
+  --normal-text: 15px;
 }
 
 * {
@@ -1388,4 +1389,37 @@ td {
   background-color: var(--blue);
   color: var(--white);
   border: none;
+}
+
+/*adminclerk styles*/
+.search-bar{
+  margin: auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.search-tab{
+  width: 50%;
+  height: 50px;
+  border: none;
+  border-radius: 25px 0px 0px 25px;
+  padding: 0px 5rem;
+  background-color: #ffffff;
+}
+
+.search-btn{
+  background-color: var(--blue);
+  color: var(--white);
+  height: 50px;
+  border: none;
+  border-radius: 0 25px 25px 0;
+  padding: 0.5rem 2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  width: fit-content;
+}
+
+.fa-search{
+  margin-right: 10px;
 }

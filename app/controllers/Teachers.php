@@ -442,12 +442,64 @@
         }
 
         public function appointments(){
+            //process form
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                //sanitize post data
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                //$submitted_appointments = $this->teacherModel->getSubmittedAppointments($_SESSION['user_id']);
 
-            $data = [
-                //'teachers' => $teachers
-            ];
+                $data = [
+                    'reason' => trim($_POST['reason']),
+                    'date' => trim($_POST['date']),
+                    'start_time' => trim($_POST['start_time']),
+                    'end_time' => trim($_POST['end_time']),
+                    'reason_err' => '',
+                    'date_err' => '',
+                    'start_time_err' => '',
+                    'end_time_err' => '',
+                    'user_id' => $_SESSION['user_id'],
+                    'submitted_date' => date('Y-m-d'),
+                    //'submitted_appointments' => $submitted_appointments,
+                ];
 
-            $this->view('teachers/appointments', $data);
+                //validate description
+                if(empty($data['reason'])){
+                    $data['reason_err'] = '*Please enter reason';
+                }
+
+                //make sure errors are empty
+                if(empty($data['reason_err'])){
+                    //validated
+                    if($this->teacherModel->addAppointment($data)){
+                        flash('appointment_message', 'Appointment Added');
+                        redirect('teachers/appointments');
+                    } else {
+                        die('Something went wrong');
+                    }
+                } else {
+                    //load view with errors
+                    $this->view('teachers/appointments', $data);
+                }
+            } else {
+                //$submitted_appointments = $this->teacherModel->getSubmittedAppointments($_SESSION['user_id']);
+                //init data
+                $data = [
+                    'reason' => '',
+                    'date' => '',
+                    'start_time' => '',
+                    'end_time' => '',
+                    'reason_err' => '',
+                    'date_err' => '',
+                    'start_time_err' => '',
+                    'end_time_err' => '',
+                    'user_id' => $_SESSION['user_id'],
+                    'submitted_date' => date('Y-m-d'),
+                    //'submitted_appointments' => $submitted_appointments
+                ];
+
+                //load view
+                $this->view('teachers/appointments', $data);
+            }
         }
 
         

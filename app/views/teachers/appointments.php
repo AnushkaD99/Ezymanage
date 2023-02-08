@@ -58,11 +58,11 @@
                             <div class="border-box">
                                 <label for="reason">Reason for appointment</label><br>
                                 <textarea name="reason" placeholder="Reason"></textarea><br>
-                                <?php //echo $reasonErr; ?>
+                                <?php //echo $reason_err; ?>
                                 <div class="space"></div>
                                 <label for="date">Appointment Required Date :</label><br>
                                 <input type="date" name="date">
-                                <?php //echo $dateErr; ?>
+                                <?php //echo $date_err; ?>
                                 <div class="space"></div>
                                 <label for="Problems1">Appointment Required Time :</label><br>
                                 <table>
@@ -72,7 +72,7 @@
                                         <td><input type="time" name="end_time"></td>
                                     </tr>
                                 </table>
-                                <?php //echo $dateErr; ?>
+                                <?php //echo $date_err; ?>
                             </div>
                             <input type="submit" value="Submit" class="submit-btn">
                         </div>

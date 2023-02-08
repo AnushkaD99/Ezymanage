@@ -157,4 +157,24 @@
             return $results;
         }
 
+    //Appointment page**********************************************************************************************
+        //add appointment
+        public function addAppointment($data){
+            $this->db->query('INSERT INTO appointment(userId, date, start_time, end_time, reason, submitted_date) VALUES (:user_id, :date, :start_time, :end_time, :reason, :submitted_date)');
+            // Bind values
+            $this->db->bind(':user_id', $data['user_id']);
+            $this->db->bind(':date', $data['date']);
+            $this->db->bind(':start_time', $data['start_time']);
+            $this->db->bind(':end_time', $data['end_time']);
+            $this->db->bind(':reason', $data['reason']);
+            $this->db->bind(':submitted_date', $data['submitted_date']);
+
+            // Execute
+            if($this->db->execute()){
+                return true;
+            } else {
+                return false;
+            }
+        }
+
     }

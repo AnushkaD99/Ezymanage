@@ -32,7 +32,7 @@
             <div class="main-editprofile">
                 <div class="main-editprofile-dp">
                     <div class="img">
-                        <img src="<?php echo URLROOT; ?>/img/uploads/download.png" alt="user" class="user"><br>
+                        <img src="<?php echo URLROOT; ?>/img/uploads/<?php echo $data['users']->dp ?>" alt="user" class="user"><br>
                         <b>User Name : </b><?php echo $data['users']->username ?>
                     </div>
                 </div>

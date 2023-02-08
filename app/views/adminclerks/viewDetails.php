@@ -39,11 +39,15 @@
                     <!-- Schools -->
                     <div id="schools">
                         <table id="table-customize">
+                            <div class="space"></div>
                         <h3>School Details</h3>
-                            <form action="">
-                                <input type="text" placeholder="Search" >
-                                <button type="submit"><i class="fa-solid fa-search"></i></button>
-                            </form>
+                            <div class="search-bar">
+                                <form action="" method="POST">
+                                    <input type="text" placeholder="Search by school registration number or school name" class="search-tab" name="search">
+                                    <button type="submit" class="search-btn"><i class="fa-solid fa-search"></i>Search</button>
+                                </form>
+                            </div>
+                            <br>
                             <tr>
                                 <th>School Reg.No</th>
                                 <th>Name</th>
@@ -63,10 +67,13 @@
                     <div id="principals">
                         <table id="table-customize">
                             <h3>Principal Details</h3>
-                            <form action="">
-                                <input type="text" placeholder="Search" >
-                                <button type="submit"><i class="fa-solid fa-search"></i></button>
-                            </form>
+                            <div class="search-bar">
+                                <form action="" method="POST">
+                                    <input type="text" placeholder="Search by school employee number or name" class="search-tab" name="search">
+                                    <button type="submit" class="search-btn"><i class="fa-solid fa-search"></i>Search</button>
+                                </form>
+                            </div>
+                            <br>
                             <tr>
                                 <th>Emp No</th>
                                 <th>Name</th>
@@ -86,10 +93,13 @@
                     <div id="teachers">
                         <table id="table-customize">
                             <h3>Teacher Details</h3>
-                            <form action="">
-                                <input type="text" placeholder="Search" >
-                                <button type="submit"><i class="fa-solid fa-search"></i></button>
-                            </form>
+                            <div class="search-bar">
+                                <form action="" method="POST">
+                                    <input type="text" placeholder="Search by school employee number or name" class="search-tab" name="search">
+                                    <button type="submit" class="search-btn"><i class="fa-solid fa-search"></i>Search</button>
+                                </form>
+                            </div>
+                            <br>
                             <tr>
                                 <th>Emp No</th>
                                 <th>Name</th>

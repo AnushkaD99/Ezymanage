@@ -6,8 +6,9 @@
       $this->db = new Database;
     }
 
+    //without search
     public function getSchoolDeatail(){
-      $this->db->query('SELECT * FROM schools ORDER BY id DESC');
+      $this->db->query('SELECT * FROM schools');
 
       $results = $this->db->resultSet();
 
@@ -15,7 +16,7 @@
     }
 
     public function getPrincipalDeatail(){
-      $this->db->query('SELECT * FROM principal ORDER BY id DESC');
+      $this->db->query('SELECT * FROM principal');
 
       $results = $this->db->resultSet();
 
@@ -23,7 +24,43 @@
     }
 
     public function getTeacherDeatail(){
-      $this->db->query('SELECT * FROM teacher ORDER BY id DESC');
+      $this->db->query('SELECT * FROM teacher');
+
+      $results = $this->db->resultSet();
+
+      return $results;
+    }
+
+    //with search
+    public function searchSchools($data){
+      $this->db->query('SELECT * FROM schools WHERE id LIKE :id OR name LIKE :name');
+      //bind values
+      $this->db->bind(':id', $data['search']);
+      $this->db->bind(':name', $data['search']);
+
+      $results = $this->db->resultSet();
+
+      return $results;
+    }
+
+    public function searchPrincipals($data){
+      $this->db->query('SELECT * FROM principal WHERE id LIKE :id OR fullName LIKE :name');
+
+      //bind values
+      $this->db->bind(':id', $data['search']);
+      $this->db->bind(':name', $data['search']);
+
+      $results = $this->db->resultSet();
+
+      return $results;
+    }
+
+    public function searchTeachers($data){
+      $this->db->query('SELECT * FROM teacher WHERE id LIKE :id OR fullName LIKE :name');
+
+      //bind values
+      $this->db->bind(':id', $data['search']);
+      $this->db->bind(':name', $data['search']);
 
       $results = $this->db->resultSet();
 
@@ -82,13 +119,13 @@
       return $row;
     }
 
-    public function updateprofile($data){
+    public function updateprofile($data, $img_name){
       $this->db->query('UPDATE users INNER JOIN admin ON users.username = admin.username
       SET users.full_name = :full_name,
       users.designation = :designation,
       users.email = :email,
       users.password = :password,
-      users.dp = :id,
+      users.dp = :url,
       admin.nameWithInitials = :nameWithInitials,
       admin.address = :address,
       admin.birthDay = :birthday,
@@ -102,6 +139,7 @@
       $this->db->bind(':designation', $data['designation']);
       $this->db->bind(':email', $data['email']);
       $this->db->bind(':password', $data['password']);
+      $this->db->bind(':url', $img_name);
       $this->db->bind(':nameWithInitials', $data['name_with_initials']);
       $this->db->bind(':address', $data['address']);
       $this->db->bind(':birthday', $data['birthday']);

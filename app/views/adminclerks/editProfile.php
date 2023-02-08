@@ -38,7 +38,7 @@
                           <b>User Name : </b><input type="text" name="emp.num" class="textBox" value="<?php echo $data['users']->username ?>">
                         </div> -->
                         <div class="upload">
-                            <img src="<?php echo $data['users']->dp ?>" id = "image" alt="user">
+                            <img src="<?php echo URLROOT; ?>/img/uploads/<?php echo $data['users']->dp ?>" id = "image" alt="user">
 
                             <div class="rightRound" id = "upload">
                                 <input type="file" name="fileImg" id = "fileImg" accept=".jpg, .jpeg, .png">
