@@ -5,6 +5,7 @@
   --background: #EEF3FF;
   --black: black;
   --white: white;
+  --reject: #DA6E60;
   --normal-text: 15px;
 }
 
@@ -191,6 +192,7 @@ body {
   width: 100%;
   border-bottom: 3px solid var(--blue);
   box-shadow: 2px 2px 9px #DDDDDD;
+  font-size: 14px;
 }
 
 #table-customize td {
@@ -318,6 +320,7 @@ body {
   width: calc(100% - 300px);
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
   overflow: hidden;
+  z-index: 1;
 }
 
 .navbar.active {
@@ -519,8 +522,7 @@ body {
 }
 
 .user{
-  width: 1fr;
-  height: auto;
+  height: 150px;
   border-radius: 50%;
   width: 150px;
 }
@@ -542,10 +544,10 @@ body {
 .main-viewDetails-buttons{
   grid-area: main-viewDetails-buttons;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-gap: 5rem;
   grid-template-areas:
-    "main-viewDetails-buttons-left main-viewDetails-buttons-center main-viewDetails-buttons-right";
+    "main-viewDetails-buttons-1 main-viewDetails-buttons-2 main-viewDetails-buttons-3 main-viewDetails-buttons-4 main-viewDetails-buttons-5";
 }
 
 .main-viewDetails-details{
@@ -1364,25 +1366,25 @@ td {
   display: none;
 }
 
-#principals{
-  display: none;
-}
-
-#schools{
-  display: none;
-}
-
 /*Select Button */
 .select-btn {
   background-color: var(--white);
   color: var(--black);
   border: 1px solid var(--black);
-  border-radius: 25px;
+  border-radius: 15px;
   padding: 1rem;
   font-size: 1rem;
+  font-weight: bold;
   width: 100%;
   text-align: center;
   margin-top: 1rem;
+  cursor: pointer;
+}
+
+.select-btn:hover {
+  background-color: var(--blue);
+  color: var(--white);
+  border: none;
 }
 
 .select-btn.active {
@@ -1393,14 +1395,27 @@ td {
 
 /*adminclerk styles*/
 .search-bar{
-  margin: auto;
   width: 100%;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 0.3fr;
+  grid-template-areas:
+    "form add" ;
   justify-content: center;
+  align-items: center;
+
+
+}
+
+.form{
+  grid-area: form;
+}
+
+.add{
+  grid-area: add;
 }
 
 .search-tab{
-  width: 50%;
+  width: 70%;
   height: 50px;
   border: none;
   border-radius: 25px 0px 0px 25px;
@@ -1423,3 +1438,55 @@ td {
 .fa-search{
   margin-right: 10px;
 }
+
+.approve-btn {
+  background-color: var(--blue);
+  color: var(--white);
+  border: none;
+  border-radius: 10px;
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
+  text-align: center;
+  width: fit-content;
+}
+
+/*Reject Button */
+.reject-btn {
+  background-color: var(--reject);
+  color: var(--white);
+  border: none;
+  border-radius: 10px;
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
+  text-align: center;
+  width: fit-content;
+}
+
+/*Dropdown Button */
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+/* .dropdown:hover .dropbtn {background-color: #3e8e41;} */

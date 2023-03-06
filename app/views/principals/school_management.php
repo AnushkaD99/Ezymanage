@@ -95,7 +95,7 @@
                             <td><?php echo $leave_details->reason ?></td>
                             <form action="" method="POST">
                             <input type="hidden" name="title" value="leave_details">
-                            <input type="hidden" name="form_id" value="<?php echo $leave_details->leave_id ?>">
+                            <input type="hidden" name="form_id" value="<?php echo $leave_details->id ?>">
                             <td><input type="submit" name="status" class="approve-btn" value="Appprove"></td>
                             <td><input type="submit" name="status" class="reject-btn" value="Reject"></td>
                             </form>

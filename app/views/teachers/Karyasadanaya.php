@@ -70,13 +70,13 @@
                                     <h4>1. Process: Teaching</h4>
                                     <label for="tasks1">1.1 Resource support and training needs expected from the school to accomplish tasks :</label><br>
                                     <textarea id="tasks1" name="tasks1"></textarea><br>
-                                    <?php //echo $tasks1Err; ?>
+                                    <span class="error"><?php echo $data['tasks1_err']; ?></span><br>
                                     <label for="indicators">1.2 Karya sadana Indicators :</label><br>
                                     <textarea id="Indicators1" name="Indicators1"></textarea><br>
-                                    <?php //echo $Indicators1Err; ?>
+                                    <span class="error"><?php echo $data['Indicators1_err']; ?></span><br>
                                     <label for="Problems1">1.3 Tasks performed and problems encountered :</label><br>
                                     <textarea id="Problems1" name="Problems1"></textarea><br>
-                                    <?php //echo $Problems1Err; ?>
+                                    <span class="error"><?php echo $data['Problems1_err']; ?></span><br>
                                 </div>
                                 <div class="submit-btn" id="nxt1">Next</div>
                             </div>
@@ -89,13 +89,13 @@
                                     <h4>2. Process : Extracurricular activities</h4>
                                     <label for="tasks2">2.1 Resource support and training needs expected from the school to accomplish tasks :</label><br>
                                     <textarea id="tasks2" name="tasks2"></textarea><br>
-                                    <?php //echo $tasks2Err; ?>
+                                    <span class="error"><?php echo $data['tasks2_err']; ?></span><br>
                                     <label for="indicators2">2.2 Karya sadana Indicators :</label><br>
                                     <textarea id="Indicators2" name="Indicators2"></textarea><br>
-                                    <?php //echo $Indicators2Err; ?>
+                                    <span class="error"><?php echo $data['Indicators2_err']; ?></span><br>
                                     <label for="Problems2">2.3 Tasks performed and problems encountered :</label><br>
                                     <textarea id="Problems2" name="Problems2"></textarea><br>
-                                    <?php //echo $Problems2Err; ?>
+                                    <span class="error"><?php echo $data['Problems2_err']; ?></span><br>
                                 </div>
                                 <div class="col-2-btn">
                                     <div class="2col-btn-left submit-btn" id="bck1">>Previous</div>
@@ -111,13 +111,13 @@
                                         <h4>3. Process : Student Welfare and Guidance</h4>
                                         <label for="tasks3">3.1 Resource support and training needs expected from the school to accomplish tasks :</label><br>
                                         <textarea id="tasks3" name="tasks3"></textarea><br>
-                                        <?php //echo $tasks3Err; ?>
+                                        <span class="error"><?php echo $data['tasks3_err']; ?></span><br>
                                         <label for="indicators3">3.2 Karya sadana Indicators :</label><br>
                                         <textarea id="Indicators3" name="Indicators3"></textarea><br>
-                                        <?php //echo $Indicators3Err; ?>
+                                        <span class="error"><?php echo $data['Indicators3_err']; ?></span><br>
                                         <label for="Problems3">3.3 Tasks performed and problems encountered :</label><br>
                                         <textarea id="Problems3" name="Problems3"></textarea><br>
-                                        <?php //echo $Problems3Err; ?>
+                                        <span class="error"><?php echo $data['Problems3_err']; ?></span><br>
                                 </div>
                                 <div class="col-2-btn">
                                     <div class="2col-btn-left submit-btn" id="bck2">Previous</div>
@@ -133,13 +133,13 @@
                                 <h4>4. Process : Special services for the school</h4>
                                     <label for="tasks4">4.1 Resource support and training needs expected from the school to accomplish tasks :</label><br>
                                     <textarea id="tasks4" name="tasks4"></textarea><br>
-                                    <?php //echo $tasks4Err; ?>
+                                    <span class="error"><?php echo $data['tasks4_err']; ?></span><br>
                                     <label for="indicators4">4.2 Karya sadana Indicators :</label><br>
                                     <textarea id="indicators4" name="Indicators4"></textarea><br>
-                                    <?php //echo $Indicators4Err; ?>
+                                    <span class="error"><?php echo $data['Indicators4_err']; ?></span><br>
                                     <label for="tasks4">4.3 Tasks performed and problems encountered :</label><br>
                                     <textarea id="tasks4" name="Problems4"></textarea><br>
-                                    <?php //echo $Problems4Err; ?>
+                                    <span class="error"><?php echo $data['Problems4_err']; ?></span><br>
                                 </div>
                                 <div class="col-2-btn">
                                     <div class="2col-btn-left submit-btn" id="bck3">Previous</div>
@@ -155,13 +155,13 @@
                                     <h4>5. Process : School community relations</h4>
                                     <label for="tasks5">5.1 Resource support and training needs expected from the school to accomplish tasks :</label><br>
                                     <textarea id="tasks5" name="tasks5"></textarea><br>
-                                    <?php //echo $tasks5Err; ?>
+                                    <span class="error"><?php echo $data['tasks5_err']; ?></span><br>
                                     <label for="indicators5">5.2 Karya sadana Indicators :</label><br>
                                     <textarea id="indicators5" name="Indicators5"></textarea><br>
-                                    <?php //echo $Indicators5Err; ?>
+                                    <span class="error"><?php echo $data['Indicators5_err']; ?></span><br>
                                     <label for="Problems5">5.3 Tasks performed and problems encountered :</label><br>
                                     <textarea id="Problems5" name="Problems5"></textarea><br>
-                                    <?php //echo $Problems5Err; ?>
+                                    <span class="error"><?php echo $data['Problems5_err']; ?></span><br>
                                 </div>
                                 <div class="col-2-btn">
                                     <div class="2col-btn-left submit-btn" id="bck4">Previous</div>

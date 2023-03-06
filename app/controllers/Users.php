@@ -71,9 +71,9 @@
             }
         }
         public function createUserSession($user){
-            $_SESSION['user_id'] = $user->id;
+            $_SESSION['user_id'] = $user->emp_no;
             $_SESSION['user_name'] = $user->username;
-            $_SESSION['user_email'] = $user->email;
+            //$_SESSION['user_email'] = $user->email;
             $_SESSION['user_designation'] = $user->designation;
             switch ($user->designation) {
                 case 'Teacher':
@@ -85,14 +85,14 @@
                 case 'Director':
                     redirect('directors/index');
                     break;
-                case 'Clerk-School':
+                case 'Clerk School':
                     redirect('schoolClerks/index');
                     break;
-                case 'Clerk-Salary':
+                case 'Clerk Salary':
                     redirect('salaryClerks/index');
                     break;
-                case 'Clerk-Transfer':
-                    redirect('transferClerks/index');
+                case 'Clerk Transfer':
+                    redirect('transferclerks/index');
                     break;
                 case 'Admin':
                     redirect('adminclerks/index');

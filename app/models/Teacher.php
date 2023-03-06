@@ -121,6 +121,42 @@
             return $row;
         }
 
+        public function updateprofile($data, $img_name){
+            $this->db->query('UPDATE users INNER JOIN teacher ON users.username = teacher.username
+            SET users.full_name = :full_name,
+            users.designation = :designation,
+            users.email = :email,
+            users.password = :password,
+            users.dp = :url,
+            teacher.nameWithInitials = :nameWithInitials,
+            teacher.address = :address,
+            teacher.bday = :birthday,
+            teacher.school = :school,
+            teacher.NIC = :NIC,
+            teacher.contactNumber = :contact
+            WHERE users.id = :id');
+            // Bind values
+            //$this->db->bind(':userId', $data['userId']);
+            $this->db->bind(':full_name', $data['full_name']);
+            $this->db->bind(':designation', $data['designation']);
+            $this->db->bind(':email', $data['email']);
+            $this->db->bind(':password', $data['password']);
+            $this->db->bind(':url', $img_name);
+            $this->db->bind(':nameWithInitials', $data['name_with_initials']);
+            $this->db->bind(':address', $data['address']);
+            $this->db->bind(':birthday', $data['birthday']);
+            $this->db->bind(':school', $data['school']);
+            $this->db->bind(':NIC', $data['NIC']);
+            $this->db->bind(':contact', $data['contact']);
+            $this->db->bind(':id', $_SESSION['user_id']);
+            // Execute
+            if($this->db->execute()){
+              return true;
+            } else {
+              return false;
+            }
+        }
+
         // public function getSchoolDeatail($school){
         //     $this->db->query('SELECT * FROM schools WHERE school = :school');
         //     $this->db->bind(':school', $school);

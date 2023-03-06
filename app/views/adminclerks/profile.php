@@ -9,7 +9,7 @@
                     <a href="<?php echo URLROOT; ?>/adminclerks/index"><i class="fa-solid fa-house"></i><span class="link">Home</span></a>
                 </li>
                 <li>
-                    <a href="<?php echo URLROOT; ?>/adminclerks/viewDetails"><i class="fa-solid fa-eye"></i><span class="link">View</span></a>
+                    <a href="<?php echo URLROOT; ?>/adminclerks/viewDetails"><i class="fa-solid fa-eye"></i><span class="link">Users</span></a>
                 </li>
                 <li>
                     <a href="<?php echo URLROOT; ?>/adminclerks/volunteers"><i class="fa-solid fa-handshake-angle"></i><span class="link">Volunteers</span></a>
@@ -42,7 +42,7 @@
                             Employee Number :
                         </div>
                         <div class="main-editprofile-right">
-                            <input type="text" name="emp.num" class="textBox" value="<?php echo $data['users']->userId ?>" readonly>
+                            <input type="text" name="emp.num" class="textBox" value="<?php echo $data['users']->emp_no ?>" readonly>
                         </div>
                     </div>
                     <div class="main-editprofile-block">
@@ -58,7 +58,7 @@
                             Contact Number :
                         </div>
                         <div class="main-editprofile-right">
-                            <input type="text" name="contact.num" class="textBox" value="<?php echo $data['users']->contact ?>" readonly>
+                            <input type="text" name="contact.num" class="textBox" value="<?php echo $data['users']->contact_num ?>" readonly>
                         </div>
                     </div>
                 </div>
@@ -76,7 +76,7 @@
                             Name with initials :
                         </div>
                         <div class="main-editprofile-right">
-                            <input type="text" name="fullName" class="textBox" value="<?php echo $data['users']->nameWithInitials ?>" readonly>
+                            <input type="text" name="fullName" class="textBox" value="<?php echo $data['users']->name_with_initials ?>" readonly>
                         </div>
                     </div>
                     <div class="main-editprofile-block">
@@ -97,14 +97,6 @@
                     </div>
                     <div class="main-editprofile-block">
                         <div class="main-editprofile-left">
-                            Zonal :
-                        </div>
-                        <div class="main-editprofile-right">
-                            <input type="text" name="zonal" class="textBox" value="<?php echo $data['users']->zonal ?>" readonly>
-                        </div> 
-                    </div>
-                    <div class="main-editprofile-block">
-                        <div class="main-editprofile-left">
                             Designation :
                         </div>
                         <div class="main-editprofile-right">
@@ -116,7 +108,7 @@
                             NIC :
                         </div>
                         <div class="main-editprofile-right">
-                            <input type="text" name="nic" class="textBox" value="<?php echo $data['users']->NIC ?>" readonly>
+                            <input type="text" name="nic" class="textBox" value="<?php echo $data['users']->nic ?>" readonly>
                         </div>
                     </div>
                     <a href="<?php echo URLROOT; ?>/adminclerks/editProfile"><div class="fullBtn">Edit Profile</div></a>
@@ -124,23 +116,4 @@
             </div>
         </div>
     </div>
-    <script>
-        let sidebar = document.querySelector(".sidebar");
-        let navbar = document.querySelector(".navbar");
-        let link = document.querySelector(".link");
-        let container = document.querySelector(".container");
-        let sidebarBtn = document.querySelector(".fa-bars");
-        sidebarBtn.onclick = function() {
-            sidebar.classList.toggle("active");
-            navbar.classList.toggle("active");
-            link.classList.toggle("active");
-            container.classList.toggle("active");
-            if (sidebar.classList.contains("active")) {
-                // sidebarBtn.classList.replace("bx-menu", "bx-menu-alt-right");
-                // link.style.display = 'none';
-            } else
-                // sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
-                // link.style.display = '';
-        }
-    </script>
 <?php require APPROOT . '/views/inc/footer.php'; ?>   

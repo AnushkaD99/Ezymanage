@@ -56,7 +56,7 @@
             <div class="main-editprofile">
                 <div class="main-editprofile-dp">
                     <div class="img">
-                        <img src="<?php echo URLROOT; ?>/img/uploads/download.png" alt="user" class="user"><br>
+                        <img src="<?php echo URLROOT; ?>/img/uploads/<?php echo $data['users']->dp ?>" alt="user" class="user"><br>
                         <b>User Name : </b><?php echo $data['users']->username ?>
                     </div>
                 </div>
@@ -66,7 +66,7 @@
                             Employee Number :
                         </div>
                         <div class="main-editprofile-right">
-                            <input type="text" name="emp.num" class="textBox" value="<?php echo $data['users']->userId ?>">
+                            <input type="text" name="emp.num" class="textBox" value="<?php echo $data['users']->userId ?>" readonly>
                         </div>
                     </div>
                     <div class="main-editprofile-block">
@@ -74,7 +74,7 @@
                             Email :
                         </div>
                         <div class="main-editprofile-right">
-                            <input type="text" name="email" class="textBox" value="<?php echo $data['users']->email ?>">
+                            <input type="text" name="email" class="textBox" value="<?php echo $data['users']->email ?>" readonly>
                         </div>
                     </div>
                     <div class="main-editprofile-block">
@@ -82,7 +82,7 @@
                             Contact Number :
                         </div>
                         <div class="main-editprofile-right">
-                            <input type="text" name="contact.num" class="textBox" value="<?php echo $data['users']->contact ?>">
+                            <input type="text" name="contact.num" class="textBox" value="<?php echo $data['users']->contact ?>" readonly>
                         </div>
                     </div>
                 </div>
@@ -92,7 +92,7 @@
                             Full Name :
                         </div>
                         <div class="main-editprofile-right">
-                            <input type="text" name="fullName" class="textBox" value="<?php echo $data['users']->full_name ?>">
+                            <input type="text" name="fullName" class="textBox" value="<?php echo $data['users']->full_name ?>" readonly>
                         </div>
                     </div>
                     <div class="main-editprofile-block">
@@ -100,7 +100,7 @@
                             Name with initials :
                         </div>
                         <div class="main-editprofile-right">
-                            <input type="text" name="fullName" class="textBox" value="<?php echo $data['users']->nameWithInitials ?>">
+                            <input type="text" name="fullName" class="textBox" value="<?php echo $data['users']->nameWithInitials ?>" readonly>
                         </div>
                     </div>
                     <div class="main-editprofile-block">
@@ -108,7 +108,7 @@
                             Address :
                         </div>
                         <div class="main-editprofile-right">
-                            <input type="text" name="address" class="textBox" value="<?php echo $data['users']->address ?>">
+                            <input type="text" name="address" class="textBox" value="<?php echo $data['users']->address ?>" readonly>
                         </div>
                     </div>
                     <div class="main-editprofile-block">
@@ -116,7 +116,7 @@
                             Birthday :
                         </div>
                         <div class="main-editprofile-right">
-                            <input type="text" name="birthday" class="textBox" value="<?php echo $data['users']->birthday ?>">
+                            <input type="text" name="birthday" class="textBox" value="<?php echo $data['users']->birthday ?>" readonly>
                         </div>
                     </div>
                     <div class="main-editprofile-block">
@@ -124,7 +124,7 @@
                             School :
                         </div>
                         <div class="main-editprofile-right">
-                            <input type="text" name="zonal" class="textBox" value="<?php echo $data['users']->zonal ?>">
+                            <input type="text" name="zonal" class="textBox" value="<?php echo $data['users']->school ?>" readonly>
                         </div> 
                     </div>
                     <div class="main-editprofile-block">
@@ -132,7 +132,7 @@
                             Designation :
                         </div>
                         <div class="main-editprofile-right">
-                            <input type="text" name="designation" class="textBox" value="<?php echo $data['users']->designation ?>">
+                            <input type="text" name="designation" class="textBox" value="<?php echo $data['users']->designation ?>" readonly>
                         </div>
                     </div>
                     <div class="main-editprofile-block">
@@ -140,7 +140,7 @@
                             NIC :
                         </div>
                         <div class="main-editprofile-right">
-                            <input type="text" name="nic" class="textBox" value="<?php echo $data['users']->NIC ?>">
+                            <input type="text" name="nic" class="textBox" value="<?php echo $data['users']->NIC ?>" readonly>
                         </div>
                     </div>
                     <a href="<?php echo URLROOT; ?>/principals/editProfile"><div class="fullBtn">Edit Profile</div></a>

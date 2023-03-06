@@ -9,7 +9,7 @@
                     <a href="<?php echo URLROOT; ?>/adminclerks/index"><i class="fa-solid fa-house"></i><span class="link">Home</span></a>
                 </li>
                 <li>
-                    <a href="<?php echo URLROOT; ?>/adminclerks/viewDetails"><i class="fa-solid fa-eye"></i><span class="link">View</span></a>
+                    <a href="<?php echo URLROOT; ?>/adminclerks/viewDetails"><i class="fa-solid fa-eye"></i><span class="link">Users</span></a>
                 </li>
                 <li>
                     <a href="<?php echo URLROOT; ?>/adminclerks/volunteers"><i class="fa-solid fa-handshake-angle"></i><span class="link">Volunteers</span></a>
@@ -60,7 +60,7 @@
                                 Employee Number :
                             </div>
                             <div class="main-editprofile-right">
-                                <input type="text" name="emp_num" class="textBox" value="<?php echo $data['users']->userId ?>">
+                                <input type="text" name="emp_num" class="textBox" value="<?php echo $data['users']->emp_no ?>" readonly>
                             </div>
                         </div>
                         <div class="main-editprofile-block">
@@ -76,7 +76,7 @@
                                 Contact Number :
                             </div>
                             <div class="main-editprofile-right">
-                                <input type="text" name="contact" class="textBox" value="<?php echo $data['users']->contact ?>">
+                                <input type="text" name="contact" class="textBox" value="<?php echo $data['users']->contact_num ?>">
                             </div>
                         </div>
                     </div>
@@ -94,7 +94,7 @@
                                 Name with Initials :
                             </div>
                             <div class="main-editprofile-right">
-                                <input type="text" name="nameWithInitials" class="textBox" value="<?php echo $data['users']->nameWithInitials ?>">
+                                <input type="text" name="nameWithInitials" class="textBox" value="<?php echo $data['users']->name_with_initials ?>">
                             </div>
                         </div>
                         <div class="main-editprofile-block">
@@ -115,18 +115,10 @@
                         </div>
                         <div class="main-editprofile-block">
                             <div class="main-editprofile-left">
-                                Zonal :
-                            </div>
-                            <div class="main-editprofile-right">
-                                <input type="text" name="zonal" class="textBox" value="<?php echo $data['users']->zonal ?>">
-                            </div> 
-                        </div>
-                        <div class="main-editprofile-block">
-                            <div class="main-editprofile-left">
                                 Designation :
                             </div>
                             <div class="main-editprofile-right">
-                                <input type="text" name="designation" class="textBox" value="<?php echo $data['users']->designation ?>">
+                                <input type="text" name="designation" class="textBox" value="<?php echo $data['users']->designation ?>" readonly>
                             </div>
                         </div>
                         <div class="main-editprofile-block">
@@ -134,10 +126,10 @@
                                 NIC :
                             </div>
                             <div class="main-editprofile-right">
-                                <input type="text" name="nic" class="textBox" value="<?php echo $data['users']->NIC ?>">
+                                <input type="text" name="nic" class="textBox" value="<?php echo $data['users']->nic ?>">
                             </div>
                         </div>
-                        <div class="main-editprofile-block">
+                        <!-- <div class="main-editprofile-block">
                             <div class="main-editprofile-left">
                                 Password :
                             </div>
@@ -152,7 +144,7 @@
                             <div class="main-editprofile-right">
                                 <input type="text" name="confirmPassword" class="textBox" placeholder="***************">
                             </div>
-                        </div>
+                        </div> -->
                         <div class="col-2-btn">
                             <input type="submit" value="Change" class="submit-btn">
                             <input type="reset" value="Reset" class="submit-btn">

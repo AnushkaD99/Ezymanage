@@ -79,141 +79,233 @@
         }
     
         public function editProfile(){
-            // Get teachers
+            // Get principals
             $id = $_SESSION['user_id'];
-            $users = $this->principalModel->updateprofile($id);
-    
-            $data = [
-                'users' => $users
-                
-            ];
-    
-            $this->view('principals/editProfile', $data);
-        }
 
-        public function leaveForm(){
+            //process form
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
-                // Process form
-
-                // Sanitize POST data
+                //sanitize post data
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                $users = $this->principalModel->getUser($id);
 
-                // Init data
+                //init data
                 $data = [
-                    'title' => 'Leave Form',
-                    'reason' => trim($_POST['reason']),
-                    'commencing_date' => trim($_POST['commencing_date']),
-                    'resuming_date' => trim($_POST['resuming_date']),
-                    'leave_type' => trim($_POST['leavetype']),
-                    'userId' => $_SESSION['user_id'],
-                    'submitted_date' => date('Y-m-d'),
-                    'commencing_date_err' => '',
-                    'resuming_date_err' => '',
-                    'total_leaves_err' => '',
-                    'interval_err' => '',
-                    'leavetype_err' => '',
-                    // 'date1' => strtotime('commencing_date'),
-                    // 'date2' => strtotime('resuming_date'),
+                    'users' => $users,
+                    'dp' => $_FILES['fileImg']['name'],
+                    'image_tmp' => $_FILES['fileImg']['tmp_name'],
+                    'emp_number' => trim($_POST['emp_num']),
+                    'email' => trim($_POST['email']),
+                    'contact' => trim($_POST['contact']),
+                    'full_name' => trim($_POST['fullName']),
+                    'name_with_initials' => trim($_POST['nameWithInitials']),
+                    'address' => trim($_POST['address']),
+                    'birthday' => trim($_POST['birthday']),
+                    'school' => trim($_POST['school']),
+                    'designation' => trim($_POST['designation']),
+                    'NIC' => trim($_POST['nic']),
+                    'password' => trim($_POST['password']),
+                    'confirm_password' => trim($_POST['confirmPassword']),
+                    'dp_err' => '',
+                    'emp_number_err' => '',
+                    'email_err' => '',
+                    'contact_err' => '',
+                    'full_name_err' => '',
+                    'name_with_initials_err' => '',
+                    'address_err' => '',
+                    'birthday_err' => '',
+                    'zonal_err' => '',
+                    'designation_err' => '',
+                    'NIC_err' => '',
+                    'password_err' => '',
+                    'confirm_password_err' => ''
                 ];
-
-                // function calInterval(){
-                //     $interval = $data['date2'] - $data['date1'];
-                //     $interval = $interval / (60 2 60 2 24);
-                //     return $interval;
+                
+                //validate
+                //check if any of the fields are empty
+                // if(empty($data['dp'])){
+                //     $data['dp_err'] = 'Please upload a profile picture';
+                // }
+                // if(empty($data['emp_number'])){
+                //     $data['emp_number_err'] = 'Please enter employee number';
+                // }
+                // if(empty($data['email'])){
+                //     $data['email_err'] = 'Please enter email';
+                // }
+                // if(empty($data['contact'])){
+                //     $data['contact_err'] = 'Please enter contact number';
+                // }
+                // if(empty($data['full_name'])){
+                //     $data['full_name_err'] = 'Please enter full name';
+                // }
+                // if(empty($data['name_with_initials'])){
+                //     $data['name_with_initials_err'] = 'Please enter name with initials';
+                // }
+                // if(empty($data['address'])){
+                //     $data['address_err'] = 'Please enter address';
+                // }
+                // if(empty($data['birthday'])){
+                //     $data['birthday_err'] = 'Please enter birthday';
+                // }
+                // if(empty($data['zonal'])){
+                //     $data['zonal_err'] = 'Please enter zonal';
+                // }
+                // if(empty($data['designation'])){
+                //     $data['designation_err'] = 'Please enter designation';
+                // }
+                // if(empty($data['NIC'])){
+                //     $data['NIC_err'] = 'Please enter NIC';
+                // }
+                // if(empty($data['password'])){
+                //     $data['password_err'] = 'Please enter password';
+                // }
+                // if(empty($data['confirm_password'])){
+                //     $data['confirm_password_err'] = 'Please confirm password';
                 // }
 
-                // $interval = calInterval();
-
-                //Validate
-                if(empty($data['reason'])){
-                    $data['reason_err'] = 'Please enter a reason';
-                }
-                if(empty($data['commencing_date'])){
-                    $data['commencing_date_err'] = 'Please enter a commencing date';
-                }
-                if(empty($data['resuming_date'])){
-                    $data['resuming_date_err'] = 'Please enter a resuming date';
-                }
-                if(empty($data['leave_type'])){
-                    $data['leavetype_err'] = 'Please select a leave type';
+                //check if password and confirm password match
+                if($data['password'] != $data['confirm_password']){
+                    $data['confirm_password_err'] = 'Passwords do not match';
                 }
 
-                //make sure no errors
-            
-                if(empty($data['reason_err']) && empty($data['commencing_date_err']) && empty($data['resuming_date_err']) && empty($data['leavetype_err'])){
-                    // Validated
-                    if($this->principalModel->submitLeaveForm($data)){
-                        redirect('principals/LeaveForm');
+                //check if email is valid
+                if(!filter_var($data['email'], FILTER_VALIDATE_EMAIL)){
+                    $data['email_err'] = 'Please enter the correct format';
+                }
+
+                //nic validation
+                if((!preg_match("/^[0-9]{9}[vVxX]$/", $data['NIC'])) || ((strlen($data['NIC']) != 12) && (strlen($data['NIC']) != 10))){
+                    $data['NIC_err'] = 'Please enter the correct format';
+                }
+
+                //make sure errors are empty
+                if(1==1){
+                    //validated
+                    //hash password
+                    $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+
+                    //rename image
+                    $target_dir = "D:/installed apps/XAMPP/htdocs/Ezymanage/public/img/uploads/";
+                    $img_name = basename("$id.".pathinfo($_FILES["fileImg"]["name"],PATHINFO_EXTENSION));
+                    $target_file = $target_dir . basename("$id.".pathinfo($_FILES["fileImg"]["name"],PATHINFO_EXTENSION));
+                    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+                    //register user
+                    if($this->principalModel->updateprofile($data, $img_name)){
+                        if (move_uploaded_file($_FILES["fileImg"]["tmp_name"], $target_file)) {
+                            echo "The file " . basename($_FILES["fileImg"]["name"]) . " has been uploaded.";
+                        } else {
+                            echo "Sorry, there was an error uploading your file.";
+                        }
+                        flash('update_success');
+                        redirect('principals/profile');
                     } else {
                         die('Something went wrong');
                     }
+                } else {
+                    //load view with errors
+                    die('Something went wrong');
+                    $this->view('principals/editProfile', $data);
+
                 }
-                else {
-                    // Load view with errors
-                    $this->view('principals/leaveForm', $data);
-                }
-
-
-
-                // if($data['reason'] != null && $data['commencing_date'] != null && $data['resuming_date'] != null){
-                //     //$sql = "INSERT INTO leave_details (reason, commencing_date, resuming_date, casual, medical, other, userId, submitted_date) VALUES ('$reason', '$commencing_date', '$resuming_date', '$casual', '$medical', '$other', '$Userid', '$submittedDate')";
-                //     if ($this->principalModel->submitLeaveForm($data)) {
-                //         echo "<script> alert(\"New record created successfully!\"); </script>";
-                //         redirect('posts');
-                //     } else {
-                //         echo "<script> alert(\"Submition Failed please try again!\"); </script>";
-                //     }
-                // }
-
-
-            }else {
-                // Get leave details
-                $leave_details = $this->principalModel->getLeaveDeatail();
-
-                // Init data
+            }else{
+                $users = $this->principalModel->getUser($id);
+                //init data
                 $data = [
-                    'title' => 'Leave Form',
-                    'reason' => '',
-                    'commencing_date' => '',
-                    'resuming_date' => '',
-                    'leavetype' => '',
-                    'commencing_date_err' => '',
-                    'resuming_date_err' => '',
-                    'total_leaves_err' => '',
-                    'date1' => '',
-                    'date2' => '',
-                    'interval' => '',
-                    'interval_err' => '',
-                    'leavetype_err' => '',
-                    'leave_details' => $leave_details,
+                    'users' => $users,
+                    'dp' => '',
+                    'emp_number' => '',
+                    'email' => '',
+                    'contact' => '',
+                    'full_name' => '',
+                    'name_with_initials' => '',
+                    'address' => '',
+                    'birthday' => '',
+                    'zonal' => '',
+                    'designation' => '',
+                    'NIC' => '',
+                    'password' => '',
+                    'confirm_password' => '',
+                    'dp_err' => '',
+                    'emp_number_err' => '',
+                    'email_err' => '',
+                    'contact_err' => '',
+                    'full_name_err' => '',
+                    'name_with_initials_err' => '',
+                    'address_err' => '',
+                    'birthday_err' => '',
+                    'zonal_err' => '',
+                    'designation_err' => '',
+                    'NIC_err' => '',
+                    'password_err' => '',
+                    'confirm_password_err' => ''
                 ];
-                // Load view
-                $this->view('principals/leaveForm', $data);
+                //load view
+                $this->view('principals/editProfile', $data);
             }
+
         }
 
-        public function LeaveView($id){
-            // Get Leave Details
-            $leave = $this->principalModel->getLeaveById($id);
-            $leave_details = $this->principalModel->getLeaveDeatail();
+        //School Management
+        public function school_management(){
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                //sanitize post data
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                $leaves = $this->principalModel->getLeaves();
+                $karyasadana = $this->principalModel->getKaryasadana();
+                $issues = $this->principalModel->getIssues();
+                $data = [
+                    'title' => trim($_POST['title']),
+                    'leaves' => $leaves,
+                    'karyasadana' => $karyasadana,
+                    'issues' => $issues,
+                    'form_id' => trim($_POST['form_id']),
+                    'status' => trim($_POST['status']),
+                    'leave_id_err' => '',
+                ];
+
+                if($this->principalModel->updateStatus($data)){
+                    redirect('principals/school_management');
+                } else {
+                    die('Something went wrong');
+                }
+            }else{
+                $leaves = $this->principalModel->getLeaves();
+                $karyasadana = $this->principalModel->getKaryasadana();
+                $issues = $this->principalModel->getIssues();
+                $data = [
+                    'title' => '',
+                    'leaves' => $leaves,
+                    'karyasadana' => $karyasadana,
+                    'issues' => $issues,
+                    'leave_id' => '',
+                    'status' => '',
+                    'leave_id_err' => '',
+                ];
+                $this->view('principals/school_management', $data);
+            }
+        
+        }
+
+        public function paysheet(){
 
             $data = [
-                'leave' => $leave,
-                'leave_details' => $leave_details,
+                //'teachers' => $teachers
             ];
 
-            $this->view('principals/LeaveView', $data);
+            $this->view('principals/paysheet', $data);
         }
 
+        //karyasadanaya
         public function Karyasadanaya(){
             // process form
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 // Sanitize POST data
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
+                $karyasadana_details = $this->principalModel->getKaryasadanaDeatail();
                 // Init data
                 $data = [
                     'title' => 'Karyasadanaya',
+                    'userId' => $_SESSION['user_id'],
                     'start_date' => trim($_POST['start_date']),
                     'end_date' => trim($_POST['end_date']),
                     'tasks1' => trim($_POST['tasks1']),
@@ -248,6 +340,8 @@
                     'tasks5_err' => '',
                     'Indicators5_err' => '',
                     'Problems5_err' => '',
+                    'submittedDate' => date("Y-m-d"),
+                    'karyasadana_details' => $karyasadana_details
                 ];
 
                 //validate
@@ -333,9 +427,13 @@
                     $this->view('principals/Karyasadanaya', $data);
                 }
             }else{
+                // Get leave details
+                $karyasadana_details = $this->principalModel->getKaryasadanaDeatail();
+
                 //init data
                 $data = [
                     'title' => 'Karyasadanaya',
+                    'userId' => '',
                     'start_date' => '',
                     'end_date' => '',
                     'tasks1' => '',
@@ -370,6 +468,7 @@
                     'tasks5_err' => '',
                     'Indicators5_err' => '',
                     'Problems5_err' => '',
+                    'karyasadana_details' => $karyasadana_details
                 ];
 
                 //load view
@@ -377,44 +476,270 @@
             }
         }
 
-        //School Management
-        public function school_management(){
+        //karyadasanaya view
+        public function karyasadanaya_view($id){
+            // Get Leave Details
+            $karyasadana = $this->principalModel->getKaryasadanaById($id);
+            $karyasadana_details = $this->principalModel->getKaryasadanaDeatail();
+
+            $data = [
+                'karyasadana' => $karyasadana ,
+                'karyasadana_details' => $karyasadana_details,
+            ];
+
+            $this->view('principals/karyasadanaya_view', $data);
+        }
+
+        //leave form
+        public function leaveForm(){
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                // Process form
+
+                // Sanitize POST data
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+                // Init data
+                $data = [
+                    'title' => 'Leave Form',
+                    'reason' => trim($_POST['reason']),
+                    'commencing_date' => trim($_POST['commencing_date']),
+                    'resuming_date' => trim($_POST['resuming_date']),
+                    'leave_type' => trim($_POST['leavetype']),
+                    'userId' => $_SESSION['user_id'],
+                    'submitted_date' => date('Y-m-d'),
+                    'commencing_date_err' => '',
+                    'resuming_date_err' => '',
+                    'total_leaves_err' => '',
+                    'interval_err' => '',
+                    'leavetype_err' => '',
+                    'approval' => 'Pending',
+                    // 'date1' => strtotime('commencing_date'),
+                    // 'date2' => strtotime('resuming_date'),
+                ];
+
+                // function calInterval(){
+                //     $interval = $data['date2'] - $data['date1'];
+                //     $interval = $interval / (60 2 60 2 24);
+                //     return $interval;
+                // }
+                // function calculateDifference() {
+                //     $startDate = $date['commencing_date'];
+                //     $endDate = $data['resuming_date'];
+                //     $difference = $this->model->getDateDifference($startDate, $endDate);
+                //     $interval = $difference->format('%a days');
+                //     return $interval;
+                // }
+
+                // $interval = calInterval();
+
+                //Validate
+                if(empty($data['reason'])){
+                    $data['reason_err'] = 'Please enter a reason';
+                }
+                if(empty($data['commencing_date'])){
+                    $data['commencing_date_err'] = 'Please enter a commencing date';
+                }
+                if(empty($data['resuming_date'])){
+                    $data['resuming_date_err'] = 'Please enter a resuming date';
+                }
+                if(empty($data['leave_type'])){
+                    $data['leavetype_err'] = 'Please select a leave type';
+                }
+
+                //make sure no errors
+            
+                if(empty($data['reason_err']) && empty($data['commencing_date_err']) && empty($data['resuming_date_err']) && empty($data['leavetype_err'])){
+                    // Validated
+                    $startDate = $data['resuming_date'];
+                    $endDate = $data['commencing_date'];
+                    $difference = $this->principalModel->getDateDifference($startDate, $endDate);
+                    $interval = $difference->format('%a days');
+                    if($this->principalModel->submitLeaveForm($data, $interval)){
+                        redirect('principals/LeaveForm');
+                    } else {
+                        die('Something went wrong');
+                    }
+                }
+                else {
+                    die('Something went wrong');
+                    // Load view with errors
+                    $this->view('principals/leaveForm', $data);
+                }
+
+
+
+                // if($data['reason'] != null && $data['commencing_date'] != null && $data['resuming_date'] != null){
+                //     //$sql = "INSERT INTO leave_details (reason, commencing_date, resuming_date, casual, medical, other, userId, submitted_date) VALUES ('$reason', '$commencing_date', '$resuming_date', '$casual', '$medical', '$other', '$Userid', '$submittedDate')";
+                //     if ($this->principalModel->submitLeaveForm($data)) {
+                //         echo "<script> alert(\"New record created successfully!\"); </script>";
+                //         redirect('posts');
+                //     } else {
+                //         echo "<script> alert(\"Submition Failed please try again!\"); </script>";
+                //     }
+                // }
+
+
+            }else {
+                // Get leave details
+                $leave_details = $this->principalModel->getLeaveDeatail();
+
+                // Init data
+                $data = [
+                    'title' => 'Leave Form',
+                    'reason' => '',
+                    'commencing_date' => '',
+                    'resuming_date' => '',
+                    'leavetype' => '',
+                    'commencing_date_err' => '',
+                    'resuming_date_err' => '',
+                    'total_leaves_err' => '',
+                    'date1' => '',
+                    'date2' => '',
+                    'interval' => '',
+                    'interval_err' => '',
+                    'leavetype_err' => '',
+                    'leave_details' => $leave_details,
+                    'approval' => ''
+                ];
+                // Load view
+                $this->view('principals/leaveForm', $data);
+            }
+        }
+
+        //leave view
+        public function LeaveView($id){
+            // Get Leave Details
+            $leave = $this->principalModel->getLeaveById($id);
+            $leave_details = $this->principalModel->getLeaveDeatail();
+
+            $data = [
+                'leave' => $leave,
+                'leave_details' => $leave_details,
+            ];
+
+            $this->view('principals/LeaveView', $data);
+        }
+
+        //report issue
+        public function report_issue(){
+            //process form
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 //sanitize post data
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-                $leaves = $this->principalModel->getLeaves();
-                $karyasadana = $this->principalModel->getKaryasadana();
-                $issues = $this->principalModel->getIssues();
+                $submitted_issues = $this->principalModel->getSubmittedIssues($_SESSION['user_id']);
+
                 $data = [
-                    'title' => trim($_POST['title']),
-                    'leaves' => $leaves,
-                    'karyasadana' => $karyasadana,
-                    'issues' => $issues,
-                    'form_id' => trim($_POST['form_id']),
-                    'status' => trim($_POST['status']),
-                    'leave_id_err' => '',
+                    'issue_type' => trim($_POST['issue_type']),
+                    'description' => trim($_POST['description']),
+                    'issue_cat' => trim($_POST['issue_cat']),
+                    'description_err' => '',
+                    'issue_cat_err' => '',
+                    'user_id' => $_SESSION['user_id'],
+                    'submitted_date' => date('Y-m-d'),
+                    'submitted_issues' => $submitted_issues,
                 ];
 
-                if($this->principalModel->updateStatus($data)){
-                    redirect('principals/school_management');
-                } else {
-                    die('Something went wrong');
+                //validate description
+                if(empty($data['description'])){
+                    $data['description_err'] = '*Please enter description';
                 }
-            }else{
-                $leaves = $this->principalModel->getLeaves();
-                $karyasadana = $this->principalModel->getKaryasadana();
-                $issues = $this->principalModel->getIssues();
+
+                //validate description
+                if(empty($data['issue_cat'])){
+                    $data['issue_cat_err'] = '*Please choose ant issue category';
+                }
+
+                //make sure errors are empty
+                if(empty($data['description_err']) && empty($data['issue_cat_err'])){
+                    //validated
+                    if($this->principalModel->addIssue($data)){
+                        flash('issue_message', 'Issue Added');
+                        redirect('principals/report_issue');
+                    } else {
+                        die('Something went wrong');
+                    }
+                } else {
+                    //load view with errors
+                    $this->view('principals/report_issue', $data);
+                }
+            } else {
+                $submitted_issues = $this->principalModel->getSubmittedIssues($_SESSION['user_id']);
+                //init data
                 $data = [
-                    'title' => '',
-                    'leaves' => $leaves,
-                    'karyasadana' => $karyasadana,
-                    'issues' => $issues,
-                    'leave_id' => '',
-                    'status' => '',
-                    'leave_id_err' => '',
+                    'issue_type' => '',
+                    'description' => '',
+                    'issue_cat' => '',
+                    'description_err' => '',
+                    'issue_cat_err' => '',
+                    'user_id' => '',
+                    'submitted_date' => '',
+                    'submitted_issues' => $submitted_issues
                 ];
-                $this->view('principals/school_management', $data);
+
+                //load view
+                $this->view('principals/report_issue', $data);
             }
-        
+        }
+
+        //appoinments
+        public function appointments(){
+            //process form
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                //sanitize post data
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                //$submitted_appointments = $this->principalModel->getSubmittedAppointments($_SESSION['user_id']);
+    
+                $data = [
+                    'reason' => trim($_POST['reason']),
+                    'date' => trim($_POST['date']),
+                    'start_time' => trim($_POST['start_time']),
+                    'end_time' => trim($_POST['end_time']),
+                    'reason_err' => '',
+                    'date_err' => '',
+                    'start_time_err' => '',
+                    'end_time_err' => '',
+                    'user_id' => $_SESSION['user_id'],
+                    'submitted_date' => date('Y-m-d'),
+                    //'submitted_appointments' => $submitted_appointments,
+                ];
+    
+                //validate description
+                if(empty($data['reason'])){
+                    $data['reason_err'] = '*Please enter reason';
+                }
+    
+                //make sure errors are empty
+                if(empty($data['reason_err'])){
+                    //validated
+                    if($this->principalModel->addAppointment($data)){
+                        flash('appointment_message', 'Appointment Added');
+                        redirect('principals/appointments');
+                    } else {
+                        die('Something went wrong');
+                    }
+                } else {
+                    //load view with errors
+                    $this->view('principals/appointments', $data);
+                }
+            } else {
+                //$submitted_appointments = $this->principalModel->getSubmittedAppointments($_SESSION['user_id']);
+                //init data
+                $data = [
+                    'reason' => '',
+                    'date' => '',
+                    'start_time' => '',
+                    'end_time' => '',
+                    'reason_err' => '',
+                    'date_err' => '',
+                    'start_time_err' => '',
+                    'end_time_err' => '',
+                    'user_id' => $_SESSION['user_id'],
+                    'submitted_date' => date('Y-m-d'),
+                    //'submitted_appointments' => $submitted_appointments
+                ];
+    
+                //load view
+                $this->view('principals/appointments', $data);
+            }
         }
     }

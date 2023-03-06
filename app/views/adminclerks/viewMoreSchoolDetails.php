@@ -9,7 +9,7 @@
                     <a href="<?php echo URLROOT; ?>/adminclerks/index"><i class="fa-solid fa-house"></i><span class="link">Home</span></a>
                 </li>
                 <li>
-                    <a href="<?php echo URLROOT; ?>/adminclerks/viewDetails" class="active"><i class="fa-solid fa-eye"></i><span class="link">View</span></a>
+                    <a href="<?php echo URLROOT; ?>/adminclerks/viewDetails" class="active"><i class="fa-solid fa-eye"></i><span class="link">Users</span></a>
                 </li>
                 <li>
                     <a href="<?php echo URLROOT; ?>/adminclerks/volunteers"><i class="fa-solid fa-handshake-angle"></i><span class="link">Volunteers</span></a>
@@ -36,7 +36,7 @@
                         <ul>
                             <li>Name: <?php echo $data['schools']->name; ?></li>
                             <li>Address : <?php echo $data['schools']->address; ?></li>
-                            <li>Phone Number : <?php echo $data['schools']->phoneNumber; ?></li>
+                            <li>Phone Number : <?php echo $data['schools']->contact_num; ?></li>
                             <li>Principal Name : <?php echo $data['schools']->principal; ?></li>
                         </ul>
                     </div>
@@ -58,7 +58,7 @@
                     </div>
                 </div>
             </div>
-            <div class="backBtn-circle"><i class="fa-solid fa-angle-left"></i> Back</div>
+            <a href="<?php echo URLROOT; ?>/adminclerks/viewDetails_schools"><div class="backBtn-circle"><i class="fa-solid fa-angle-left"></i> Back</div></a>
         </div>
     </div>
     <script>

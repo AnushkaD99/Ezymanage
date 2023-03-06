@@ -9,7 +9,7 @@
                     <a href="<?php echo URLROOT; ?>/adminclerks/index" class="active"><i class="fa-solid fa-house"></i><span class="link">Home</span></a>
                 </li>
                 <li>
-                    <a href="<?php echo URLROOT; ?>/adminclerks/viewDetails"><i class="fa-solid fa-eye"></i><span class="link">View</span></a>
+                    <a href="<?php echo URLROOT; ?>/adminclerks/viewDetails"><i class="fa-solid fa-eye"></i><span class="link">Users</span></a>
                 </li>
                 <li>
                     <a href="<?php echo URLROOT; ?>/adminclerks/volunteers"><i class="fa-solid fa-handshake-angle"></i><span class="link">Volunteers</span></a>
@@ -26,7 +26,7 @@
               <a href="<?php echo URLROOT; ?>/users/logout"><i class="fa-solid fa-sign-out"></i><span class="link">Logout</span></a>
           </div>
         </div>
-        <!-- End sidebar -->
+        <!-- End sidebar --> 
         <div class="main">
             <div class="main-single">
                 <div class="main-single-up">
@@ -91,4 +91,5 @@
                 // link.style.display = '';
         }
     </script>
+    <?php require_once APPROOT . '/views/inc/upload_successful_mzg.php'; ?>
 <?php require APPROOT . '/views/inc/footer.php'; ?>   

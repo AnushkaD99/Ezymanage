@@ -9,7 +9,7 @@
                     <a href="<?php echo URLROOT; ?>/adminclerks/index"><i class="fa-solid fa-house"></i><span class="link">Home</span></a>
                 </li>
                 <li>
-                    <a href="<?php echo URLROOT; ?>/adminclerks/viewDetails" class="active"><i class="fa-solid fa-eye"></i><span class="link">View</span></a>
+                    <a href="<?php echo URLROOT; ?>/adminclerks/viewDetails" class="active"><i class="fa-solid fa-eye"></i><span class="link">Users</span></a>
                 </li>
                 <li>
                     <a href="<?php echo URLROOT; ?>/adminclerks/volunteers"><i class="fa-solid fa-handshake-angle"></i><span class="link">Volunteers</span></a>
@@ -29,133 +29,53 @@
         <!-- End sidebar -->
         <div class="main">
             <h1>View Details</h1>
-            <div class="main-viewDetails">
-                <div class="main-viewDetails-buttons">
-                    <div class="main-viewDetails-buttons-left select-btn active" id="select-btn1">Teachers</div>
-                    <div class="main-viewDetails-buttons-center select-btn" id="select-btn2">Principals</div>
-                    <div class="main-viewDetails-buttons-right select-btn" id="select-btn3">Schools</div>
+            <div class="main-viewDetails-buttons">
+                <a href="<?php echo URLROOT; ?>/adminclerks/viewDetails"><div class="main-viewDetails-buttons-1 select-btn active" id="select-btn1">Teachers</div></a>
+                <a href="<?php echo URLROOT; ?>/adminclerks/viewDetails_principal"><div class="main-viewDetails-buttons-2 select-btn" id="select-btn2">Principals</div></a>
+                <a href="<?php echo URLROOT; ?>/adminclerks/viewDetails_directors"><div class="main-viewDetails-buttons-3 select-btn" id="select-btn3">Directors</div></a>
+                <div class="main-viewDetails-buttons-4 dropdown">
+                    <div class="select-btn dropbtn">
+                        Clerks
+                    </div>
+                    <div class="dropdown-content">
+                        <a href="<?php echo URLROOT; ?>/adminclerks/viewDetails_schoolClerks">School Clerks</a>
+                        <a href="<?php echo URLROOT; ?>/adminclerks/viewDetails_zonalClerks">zonal Education Office Clerks</a>
+                    </div>
                 </div>
-                <div class="main-viewDetails-details">
-                    <!-- Schools -->
-                    <div id="schools">
-                        <table id="table-customize">
-                            <div class="space"></div>
-                        <h3>School Details</h3>
-                            <div class="search-bar">
+                <a href="<?php echo URLROOT; ?>/adminclerks/viewDetails_schools"><div class="main-viewDetails-buttons-5 select-btn">Schools</div></a>
+            </div>
+            <div class="content">
+                <div id="teachers">
+                    <table id="table-customize">
+                        <h3 id="center">Teacher Details</h3>
+                        <div class="space"></div>
+                        <div class="search-bar">
+                            <div class="form">
                                 <form action="" method="POST">
-                                    <input type="text" placeholder="Search by school registration number or school name" class="search-tab" name="search">
-                                    <button type="submit" class="search-btn"><i class="fa-solid fa-search"></i>Search</button>
+                                    <input type="text" placeholder="Search by Employee number or name" class="search-tab" name="search"><!-- gap 
+                                    --><button type="submit" class="search-btn"><i class="fa-solid fa-search"></i>Search</button>
                                 </form>
                             </div>
-                            <br>
-                            <tr>
-                                <th>School Reg.No</th>
-                                <th>Name</th>
-                                <th>View more details</th>
-                            </tr>
-                            <?php foreach($data['schools'] as $school) : ?>
-                            <tr>
-                                <td> <?php echo $school->id; ?></td>
-                                <td> <?php echo $school->name; ?></td>
-                                <td id="center"> <a href="<?php echo URLROOT; ?>/adminclerks/viewMoreSchoolDetails/<?php echo $school->id; ?>" class="btn3">More</a></td>
-                            </tr>
-                            <?php endforeach; ?>
-                        </table>
-                    </div>
-
-                    <!-- Principal -->
-                    <div id="principals">
-                        <table id="table-customize">
-                            <h3>Principal Details</h3>
-                            <div class="search-bar">
-                                <form action="" method="POST">
-                                    <input type="text" placeholder="Search by school employee number or name" class="search-tab" name="search">
-                                    <button type="submit" class="search-btn"><i class="fa-solid fa-search"></i>Search</button>
-                                </form>
+                            <div class="add">
+                                <a href="<?php echo URLROOT; ?>/adminclerks/add_teacher"><div class="btn3"><i class="fa-solid fa-plus"></i> Add Teacher</div></a>
                             </div>
-                            <br>
-                            <tr>
-                                <th>Emp No</th>
-                                <th>Name</th>
-                                <th>View more details</th>
-                            </tr>
-                            <?php foreach($data['principals'] as $principal) : ?>
-                            <tr>
-                                <td> <?php echo $principal->id; ?></td>
-                                <td> <?php echo $principal->fullName; ?></td>
-                                <td id="center"> <a href="<?php echo URLROOT; ?>/adminclerks/viewMorePrincipalDetails/<?php echo $principal->id; ?>" class="btn3">More</a></td>
-                            </tr>
-                            <?php endforeach; ?>
-                        </table>
-                    </div>
-
-                    <!-- Teacher -->
-                    <div id="teachers">
-                        <table id="table-customize">
-                            <h3>Teacher Details</h3>
-                            <div class="search-bar">
-                                <form action="" method="POST">
-                                    <input type="text" placeholder="Search by school employee number or name" class="search-tab" name="search">
-                                    <button type="submit" class="search-btn"><i class="fa-solid fa-search"></i>Search</button>
-                                </form>
-                            </div>
-                            <br>
-                            <tr>
-                                <th>Emp No</th>
-                                <th>Name</th>
-                                <th>View more details</th>
-                            </tr>
-                            <?php foreach($data['teachers'] as $teacher) : ?>
-                            <tr>
-                                <td> <?php echo $teacher->id; ?></td>
-                                <td> <?php echo $teacher->fullName; ?></td>
-                                <td id="center"> <a href="<?php echo URLROOT; ?>/adminclerks/viewMoreTeacherDetails/<?php echo $teacher->id; ?>" class="btn3">More</a></td>
-                            </tr>
-                            <?php endforeach; ?>
-                        </table>
-                    </div>
+                        </div>
+                        <br>
+                        <tr>
+                            <th>Emp No</th>
+                            <th>Name</th>
+                            <th>View more details</th>
+                        </tr>
+                        <?php foreach($data['teachers'] as $teacher) : ?>
+                        <tr>
+                            <td> <?php echo $teacher->emp_no; ?></td>
+                            <td> <?php echo $teacher->full_name; ?></td>
+                            <td id="center"> <a href="<?php echo URLROOT; ?>/adminclerks/viewMoreTeacherDetails/<?php echo $teacher->emp_no; ?>" class="btn3">More</a></td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
-    <script>
-        var teachers = document.getElementById("teachers");
-        var principals = document.getElementById("principals");
-        var schools = document.getElementById("schools");
-
-        var btn1 = document.getElementById("select-btn1");
-        var btn2 = document.getElementById("select-btn2");
-        var btn3 = document.getElementById("select-btn3");
-
-        btn1.onclick = function(){
-            teachers.style.display = 'contents';
-            principals.style.display = 'none';
-            schools.style.display = 'none';
-        }
-
-        btn2.onclick = function(){
-            teachers.style.display = 'none';
-            principals.style.display = 'contents';
-            schools.style.display = 'none';
-        }
-
-        btn3.onclick = function(){
-            teachers.style.display = 'none';
-            principals.style.display = 'none';
-            schools.style.display = 'contents';
-        }
-
-        const buttons = document.querySelectorAll('.select-btn');
-
-        buttons.forEach(button => {
-            button.addEventListener('click', function() {
-                buttons.forEach(btn => {
-                    btn.classList.remove('active');
-                    });
-                this.classList.add('active');
-            });
-        });
-
-
-    </script>
 <?php require APPROOT . '/views/inc/footer.php'; ?>   

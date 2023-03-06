@@ -32,7 +32,7 @@
         <!-- End sidebar -->
         <div class="main">
             <h1>Edit Profile</h1>
-            <form action="profile.php" method="post">
+            <form action="" enctype="multipart/form-data" method="POST">
                 <div class="main-editprofile">
                     <div class="main-editprofile-dp">
                         <!-- <div class="img">
@@ -41,11 +41,11 @@
                           <b>User Name : </b><input type="text" name="emp.num" class="textBox" value="<?php echo $data['users']->username ?>">
                         </div> -->
                         <div class="upload">
-                            <img src="<?php echo $data['users']->dp ?>" id = "image" alt="user">
+                            <img src="<?php echo URLROOT; ?>/img/uploads/<?php echo $data['users']->dp ?>" id = "image" alt="user">
 
                             <div class="rightRound" id = "upload">
-                            <input type="file" name="fileImg" id = "fileImg" accept=".jpg, .jpeg, .png">
-                            <i class = "fa fa-camera"></i>
+                                <input type="file" name="fileImg" id = "fileImg" accept=".jpg, .jpeg, .png">
+                                <i class = "fa fa-camera"></i>
                             </div>
 
                             <!-- <div class="leftRound" id = "cancel" style = "display: none;">
@@ -63,7 +63,7 @@
                                 Employee Number :
                             </div>
                             <div class="main-editprofile-right">
-                                <input type="text" name="emp.num" class="textBox" value="<?php echo $data['users']->userId ?>">
+                                <input type="text" name="emp_num" class="textBox" value="<?php echo $data['users']->userId ?>">
                             </div>
                         </div>
                         <div class="main-editprofile-block">
@@ -156,7 +156,10 @@
                                 <input type="text" name="confirmPassword" class="textBox" placeholder="***************">
                             </div>
                         </div>
-                        <button type="submit" class="fullBtn">Update</button>
+                        <div class="col-2-btn">
+                            <input type="submit" value="Change" class="submit-btn">
+                            <input type="reset" value="Reset" class="submit-btn">
+                        </div>
                     </div>
                 </div>
             </form>

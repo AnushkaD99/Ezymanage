@@ -1,5 +1,2 @@
 <a href="<?php echo URLROOT; ?>/users/login"><button>Login</button></a>
-<?php
-$pass = password_hash('123456', PASSWORD_DEFAULT);
-echo $pass;
-?>
+<a href="<?php echo URLROOT; ?>/pages/volunteerRegistration"><button>Register as a Volunteer</button></a>

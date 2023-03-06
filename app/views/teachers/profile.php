@@ -50,7 +50,7 @@
             <div class="main-editprofile">
                 <div class="main-editprofile-dp">
                     <div class="img">
-                        <img src="<?php echo URLROOT; ?>/img/uploads/download.png" alt="user" class="user"><br>
+                        <img src="<?php echo URLROOT; ?>/img/uploads/<?php echo $data['users']->dp ?>" alt="user" class="user"><br>
                         <b>User Name : </b><?php echo $data['users']->username ?>
                     </div>
                 </div>
@@ -118,7 +118,7 @@
                             School :
                         </div>
                         <div class="main-editprofile-right">
-                            <input type="text" name="zonal" class="textBox" value="<?php echo $data['users']->school ?>" readonly>
+                            <input type="text" name="school" class="textBox" value="<?php echo $data['users']->school ?>" readonly>
                         </div> 
                     </div>
                     <div class="main-editprofile-block">

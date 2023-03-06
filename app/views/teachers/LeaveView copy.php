@@ -119,7 +119,7 @@
                             <tr>
                                 <td><?php echo $leave_details->commencing_date ?></td>
                                 <td><?php echo $leave_details->resuming_date ?></td>
-                                <td> <a href="<?php echo URLROOT; ?>/teachers/LeaveView/<?php echo $leave_details->leave_id; ?>" class="Btn3">More</a></td>
+                                <td> <a href="<?php echo URLROOT; ?>/teachers/LeaveView/<?php echo $leave_details->id; ?>" class="Btn3">More</a></td>
                             </tr>
                             <tr>
                                 <td colspan="3"><hr></td>
