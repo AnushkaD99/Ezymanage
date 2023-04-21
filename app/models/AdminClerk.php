@@ -118,16 +118,7 @@ class AdminClerk
     users_tbl.birthday as birthday,
     users_tbl.nic as nic,
     school_clerk_tbl.school as school
-    FROM users_tbl INNER JOIN school_clerk_tbl ON users_tbl.emp_no = school_clerk_tbl.emp_no WHERE designation = "School Clerk"');
-
-    $results = $this->db->resultSet();
-
-    return $results;
-  }
-
-  public function getTransferClerksDetail()
-  {
-    $this->db->query('SELECT * FROM clerk_transfer');
+    FROM users_tbl INNER JOIN school_clerk_tbl ON users_tbl.emp_no = school_clerk_tbl.emp_no WHERE designation = "Clerk School"');
 
     $results = $this->db->resultSet();
 
@@ -136,7 +127,7 @@ class AdminClerk
 
   public function getZonalClerkDetail()
   {
-    $this->db->query('SELECT * FROM users_tbl WHERE designation = "Salary Clerk" || designation = "Transfer Clerk"');
+    $this->db->query('SELECT * FROM users_tbl WHERE designation = "Clerk Salary" || designation = "Clerk Transfer"');
 
     $results = $this->db->resultSet();
 

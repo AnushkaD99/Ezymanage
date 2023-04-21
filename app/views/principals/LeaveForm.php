@@ -103,7 +103,7 @@
                                 <td class="align-right">42</td>
                         </table>
                     </div>
-                    <div class="content" id="center">
+                    <div class="content">
                     <h3 id="center">PREVIOUS LEAVE FORM</h3>
                         <table class="row-space">
                             <tr>

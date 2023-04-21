@@ -72,9 +72,11 @@
                                         <option value="Category 2">category 2</option>
                                         <option value="Category 3">category 3</option>
                                     </select>
+                                    <span class="error"><?php echo $data['issue_cat_err']; ?></span>
                                     <div class="space"></div>
                                     <label for="description">Issue Description:</label>
                                     <textarea id="description" name="description" rows="5" cols="30"></textarea>
+                                    <span class="error"><?php echo $data['description_err']; ?></span>
                                     <div class="space"></div>
                                 </div>
                                 <input type="submit" value="Submit" class="submit-btn">
@@ -94,9 +96,11 @@
                                     <option value="Category 2">category 2</option>
                                     <option value="Category 3">category 3</option>
                                 </select>
+                                <span class="error"><?php echo $data['issue_cat_err']; ?></span>
                                 <div class="space"></div>
                                 <label for="description">Issue Description:</label>
                                 <textarea id="description" name="description" rows="5" cols="30"></textarea>
+                                <span class="error"><?php echo $data['description_err']; ?></span>
                                 <div class="space"></div>
                             </div>
                             <input type="submit" value="Submit" class="submit-btn">

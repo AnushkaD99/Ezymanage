@@ -118,7 +118,7 @@ class TransferClerk
     users_tbl.birthday as birthday,
     users_tbl.nic as nic,
     school_clerk_tbl.school as school
-    FROM users_tbl INNER JOIN school_clerk_tbl ON users_tbl.emp_no = school_clerk_tbl.emp_no WHERE designation = "School Clerk"');
+    FROM users_tbl INNER JOIN school_clerk_tbl ON users_tbl.emp_no = school_clerk_tbl.emp_no WHERE designation = "Clerk School"');
 
     $results = $this->db->resultSet();
 
@@ -136,7 +136,7 @@ class TransferClerk
 
   public function getZonalClerkDetail()
   {
-    $this->db->query('SELECT * FROM users_tbl WHERE designation = "Salary Clerk" || designation = "Transfer Clerk"');
+    $this->db->query('SELECT * FROM users_tbl WHERE designation = "Clerk Salary" || designation = "Clerk Transfer"');
 
     $results = $this->db->resultSet();
 
@@ -282,4 +282,52 @@ class TransferClerk
     $row = $this->db->single();
     return $row;
   }
+
+  //Profile
+  public function getUser($id)
+  {
+    $this->db->query('SELECT * FROM users_tbl WHERE emp_no = :id');
+    $this->db->bind(':id', $id);
+
+    $row = $this->db->single();
+    return $row;
+  }
+
+  public function updateprofile($data, $img_name)
+  {
+    $this->db->query('UPDATE users_tbl
+      SET full_name = :full_name,
+      designation = :designation,
+      email = :email,
+      dp = :url,
+      name_with_initials = :nameWithInitials,
+      address = :address,
+      birthday = :birthday,
+      nic = :NIC,
+      contact_num = :contact
+      WHERE emp_no = :id');
+    // Bind values
+    //$this->db->bind(':userId', $data['userId']);
+    $this->db->bind(':full_name', $data['full_name']);
+    $this->db->bind(':designation', $data['designation']);
+    $this->db->bind(':email', $data['email']);
+    //$this->db->bind(':password', $data['password']);
+    $this->db->bind(':url', $img_name);
+    $this->db->bind(':nameWithInitials', $data['name_with_initials']);
+    $this->db->bind(':address', $data['address']);
+    $this->db->bind(':birthday', $data['birthday']);
+    //$this->db->bind(':zonal', $data['zonal']);
+    $this->db->bind(':NIC', $data['NIC']);
+    $this->db->bind(':contact', $data['contact']);
+    $this->db->bind(':id', $_SESSION['user_id']);
+    // Execute
+    if ($this->db->execute()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  //transfer list generation
+
 }

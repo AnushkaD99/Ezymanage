@@ -75,23 +75,4 @@
             </div>
         </div>
     </div>
-    <script>
-        let sidebar = document.querySelector(".sidebar");
-        let navbar = document.querySelector(".navbar");
-        let link = document.querySelector(".link");
-        let container = document.querySelector(".container");
-        let sidebarBtn = document.querySelector(".fa-bars");
-        sidebarBtn.onclick = function() {
-            sidebar.classList.toggle("active");
-            navbar.classList.toggle("active");
-            link.classList.toggle("active");
-            container.classList.toggle("active");
-            if (sidebar.classList.contains("active")) {
-                // sidebarBtn.classList.replace("bx-menu", "bx-menu-alt-right");
-                // link.style.display = 'none';
-            } else
-                // sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
-                // link.style.display = '';
-        }
-    </script>
 <?php require APPROOT . '/views/inc/footer.php'; ?>   

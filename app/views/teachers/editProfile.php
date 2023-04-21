@@ -155,7 +155,7 @@
                                 <input type="text" name="nic" class="textBox" value="<?php echo $data['users']->NIC ?>">
                             </div>
                         </div>
-                        <div class="main-editprofile-block">
+                        <!-- <div class="main-editprofile-block">
                             <div class="main-editprofile-left">
                                 Password :
                             </div>
@@ -170,7 +170,7 @@
                             <div class="main-editprofile-right">
                                 <input type="text" name="confirmPassword" class="textBox" placeholder="***************">
                             </div>
-                        </div>
+                        </div> -->
                         <div class="col-2-btn">
                             <input type="submit" value="Change" class="submit-btn">
                             <input type="reset" value="Reset" class="submit-btn">
@@ -181,23 +181,6 @@
         </div>
     </div>
     <script>
-        let sidebar = document.querySelector(".sidebar");
-        let navbar = document.querySelector(".navbar");
-        let link = document.querySelector(".link");
-        let container = document.querySelector(".container");
-        let sidebarBtn = document.querySelector(".fa-bars");
-        sidebarBtn.onclick = function() {
-            sidebar.classList.toggle("active");
-            navbar.classList.toggle("active");
-            link.classList.toggle("active");
-            container.classList.toggle("active");
-            if (sidebar.classList.contains("active")) {
-                // sidebarBtn.classList.replace("bx-menu", "bx-menu-alt-right");
-                // link.style.display = 'none';
-            } else
-                // sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
-                // link.style.display = '';
-        }
 
         document.getElementById("profile-picture").onchange = function(){
         document.getElementById("image").src = URL.createObjectURL(profile-picture.files[0]); // Preview new image

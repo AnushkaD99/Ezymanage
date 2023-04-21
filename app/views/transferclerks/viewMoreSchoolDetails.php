@@ -6,19 +6,16 @@
         <div class="sidebar">
             <ul>
                 <li>
-                    <a href="<?php echo URLROOT; ?>/adminclerks/index"><i class="fa-solid fa-house"></i><span class="link">Home</span></a>
+                    <a href="<?php echo URLROOT; ?>/transferclerks/index"><i class="fa-solid fa-house"></i><span class="link">Home</span></a>
                 </li>
                 <li>
-                    <a href="<?php echo URLROOT; ?>/adminclerks/viewDetails" class="active"><i class="fa-solid fa-eye"></i><span class="link">Users</span></a>
+                    <a href="<?php echo URLROOT; ?>/transferclerks/viewDetails" class="active"><i class="fa-solid fa-eye"></i><span class="link">View</span></a>
                 </li>
                 <li>
-                    <a href="<?php echo URLROOT; ?>/adminclerks/volunteers"><i class="fa-solid fa-handshake-angle"></i><span class="link">Volunteers</span></a>
+                    <a href="<?php echo URLROOT; ?>/transferclerks/transfers"><i class="fa-solid fa-shuffle"></i><span class="link">Tranfers</span></a>
                 </li>
                 <li>
-                    <a href="<?php echo URLROOT; ?>/adminclerks/verifyDetails"><i class="fa-solid fa-user-check"></i><span class="link">Verify Details</span></a>
-                </li>
-                <li>
-                    <a href="<?php echo URLROOT; ?>/adminclerks/profile"><i class="fa-solid fa-circle-user"></i><span class="link">Profile</span></a>
+                    <a href="<?php echo URLROOT; ?>/transferclerks/profile"><i class="fa-solid fa-circle-user"></i><span class="link">Profile</span></a>
                 </li>
             </ul>
           <div class="logout">
@@ -58,26 +55,7 @@
                     </div>
                 </div>
             </div>
-            <a href="<?php echo URLROOT; ?>/adminclerks/viewDetails_schools"><div class="backBtn-circle"><i class="fa-solid fa-angle-left"></i> Back</div></a>
+            <a href="<?php echo URLROOT; ?>/transferClerks/viewDetails_schools"><div class="backBtn-circle"><i class="fa-solid fa-angle-left"></i> Back</div></a>
         </div>
     </div>
-    <script>
-        let sidebar = document.querySelector(".sidebar");
-        let navbar = document.querySelector(".navbar");
-        let link = document.querySelector(".link");
-        let container = document.querySelector(".container");
-        let sidebarBtn = document.querySelector(".fa-bars");
-        sidebarBtn.onclick = function() {
-            sidebar.classList.toggle("active");
-            navbar.classList.toggle("active");
-            link.classList.toggle("active");
-            container.classList.toggle("active");
-            if (sidebar.classList.contains("active")) {
-                // sidebarBtn.classList.replace("bx-menu", "bx-menu-alt-right");
-                // link.style.display = 'none';
-            } else
-                // sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
-                // link.style.display = '';
-        }
-    </script>
 <?php require APPROOT . '/views/inc/footer.php'; ?>   

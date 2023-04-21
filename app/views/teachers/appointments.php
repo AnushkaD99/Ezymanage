@@ -58,11 +58,11 @@
                             <div class="border-box">
                                 <label for="reason">Reason for appointment</label><br>
                                 <textarea name="reason" placeholder="Reason"></textarea><br>
-                                <?php //echo $reason_err; ?>
+                                <span class="error"><?php echo $data['reason_err']; ?></span>
                                 <div class="space"></div>
                                 <label for="date">Appointment Required Date :</label><br>
                                 <input type="date" name="date">
-                                <?php //echo $date_err; ?>
+                                <span class="error"><?php echo $data['date_err']; ?></span>
                                 <div class="space"></div>
                                 <label for="Problems1">Appointment Required Time :</label><br>
                                 <table>
@@ -72,7 +72,7 @@
                                         <td><input type="time" name="end_time"></td>
                                     </tr>
                                 </table>
-                                <?php //echo $date_err; ?>
+                                <span class="error"><?php echo $data['time_err']; ?></span>
                             </div>
                             <input type="submit" value="Submit" class="submit-btn">
                         </div>
@@ -105,18 +105,21 @@
                     </div>
                     <div class="content">
                         <h3 id="center"><?php echo date("Y F j");?></h3>
-                        <!-- <table class="row-space">
+                        <table class="row-space">
                             <tr>
-                                <th>Year</th>
-                                <th></th>
+                                <th>Reason</th>
+                                <th>Date</th>
+                                <th>Status</th>
                             </tr>
-                            <?php foreach($data['karyasadana_details'] as $karyasadana_details) : ?>
+                            <?php foreach($data['submitted_appointments'] as $submitted_appointments) : ?>
                             <tr>
-                                <td><?php echo $karyasadana_details->end_date ?></td>
-                                <td class="align-right"><a href="<?php echo URLROOT; ?>/teachers/karyasadanaView/<?php echo $karyasadana_details->karyasadana_id; ?>" class="view-btn">More</a></td>
+                                <td><?php echo $submitted_appointments->reason ?></td>
+                                <td><?php echo $submitted_appointments->date ?></td>
+                                <td><?php echo $submitted_appointments->status ?></td>
+                                <!-- <td class="align-right"><a href="<?php echo URLROOT; ?>/teachers/appointments/<?php echo $submitted_appointments->appointment_id; ?>" class="view-btn">More</a></td> -->
                             </tr>
                             <?php endforeach; ?>
-                        </table> -->
+                        </table>
                         <div class="submit-btn">See More</div>
                     </div>
                 </div>

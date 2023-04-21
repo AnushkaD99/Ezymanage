@@ -4,39 +4,36 @@
     <?php require_once APPROOT . '/views/inc/navbar.php'; ?>
     <!-- Start sidebar -->
     <div class="sidebar">
-        <ul>
-            <li>
-                <a href="<?php echo URLROOT; ?>/adminclerks/index"><i class="fa-solid fa-house"></i><span class="link">Home</span></a>
-            </li>
-            <li>
-                <a href="<?php echo URLROOT; ?>/adminclerks/viewDetails" class="active"><i class="fa-solid fa-eye"></i><span class="link">Users</span></a>
-            </li>
-            <li>
-                <a href="<?php echo URLROOT; ?>/adminclerks/volunteers"><i class="fa-solid fa-handshake-angle"></i><span class="link">Volunteers</span></a>
-            </li>
-            <li>
-                <a href="<?php echo URLROOT; ?>/adminclerks/verifyDetails"><i class="fa-solid fa-user-check"></i><span class="link">Verify Details</span></a>
-            </li>
-            <li>
-                <a href="<?php echo URLROOT; ?>/adminclerks/profile"><i class="fa-solid fa-circle-user"></i><span class="link">Profile</span></a>
-            </li>
-        </ul>
-        <div class="logout">
-            <hr>
-            <a href="<?php echo URLROOT; ?>/users/logout"><i class="fa-solid fa-sign-out"></i><span class="link">Logout</span></a>
+            <ul>
+                <li>
+                    <a href="<?php echo URLROOT; ?>/transferclerks/index"><i class="fa-solid fa-house"></i><span class="link">Home</span></a>
+                </li>
+                <li>
+                    <a href="<?php echo URLROOT; ?>/transferclerks/viewDetails" class="active"><i class="fa-solid fa-eye"></i><span class="link">View</span></a>
+                </li>
+                <li>
+                    <a href="<?php echo URLROOT; ?>/transferclerks/transfers"><i class="fa-solid fa-shuffle"></i><span class="link">Tranfers</span></a>
+                </li>
+                <li>
+                    <a href="<?php echo URLROOT; ?>/transferclerks/profile"><i class="fa-solid fa-circle-user"></i><span class="link">Profile</span></a>
+                </li>
+            </ul>
+          <div class="logout">
+              <hr>
+              <a href="<?php echo URLROOT; ?>/users/logout"><i class="fa-solid fa-sign-out"></i><span class="link">Logout</span></a>
+          </div>
         </div>
-    </div>
     <!-- End sidebar -->
     <div class="main">
         <h1>View Details</h1>
         <div class="main-viewDetails-buttons">
-            <a href="<?php echo URLROOT; ?>/adminclerks/viewDetails">
+            <a href="<?php echo URLROOT; ?>/transferClerks/viewDetails">
                 <div class="main-viewDetails-buttons-1 select-btn" id="select-btn1">Teachers</div>
             </a>
-            <a href="<?php echo URLROOT; ?>/adminclerks/viewDetails_principal">
+            <a href="<?php echo URLROOT; ?>/transferClerks/viewDetails_principal">
                 <div class="main-viewDetails-buttons-2 select-btn active" id="select-btn2">Principals</div>
             </a>
-            <a href="<?php echo URLROOT; ?>/adminclerks/viewDetails_directors">
+            <a href="<?php echo URLROOT; ?>/transferClerks/viewDetails_directors">
                 <div class="main-viewDetails-buttons-3 select-btn" id="select-btn3">Directors</div>
             </a>
             <div class="main-viewDetails-buttons-4 dropdown">
@@ -44,11 +41,11 @@
                     Clerks
                 </div>
                 <div class="dropdown-content">
-                    <a href="<?php echo URLROOT; ?>/adminclerks/viewDetails_schoolClerks">School Clerks</a>
-                    <a href="<?php echo URLROOT; ?>/adminclerks/viewDetails_zonalClerks">zonal Education Office Clerks</a>
+                    <a href="<?php echo URLROOT; ?>/transferClerks/viewDetails_schoolClerks">School Clerks</a>
+                    <a href="<?php echo URLROOT; ?>/transferClerks/viewDetails_zonalClerks">zonal Education Office Clerks</a>
                 </div>
             </div>
-            <a href="<?php echo URLROOT; ?>/adminclerks/viewDetails_schools">
+            <a href="<?php echo URLROOT; ?>/transferClerks/viewDetails_schools">
                 <div class="main-viewDetails-buttons-5 select-btn">Schools</div>
             </a>
         </div>
@@ -64,11 +61,11 @@
                                 --><button type="submit" class="search-btn"><i class="fa-solid fa-search"></i>Search</button>
                             </form>
                         </div>
-                        <div class="add">
-                            <a href="<?php echo URLROOT; ?>/adminclerks/add_principal">
+                        <!-- <div class="add">
+                            <a href="<?php echo URLROOT; ?>/transferClerks/add_principal">
                                 <div class="btn3"><i class="fa-solid fa-plus"></i> Add Principal</div>
                             </a>
-                        </div>
+                        </div> -->
                     </div>
                     <br>
                     <tr>
@@ -80,7 +77,7 @@
                         <tr>
                             <td> <?php echo $principal->emp_no; ?></td>
                             <td> <?php echo $principal->full_name; ?></td>
-                            <td id="center"> <a href="<?php echo URLROOT; ?>/adminclerks/viewMorePrincipalDetails/<?php echo $principal->emp_no; ?>" class="btn3">More</a></td>
+                            <td id="center"> <a href="<?php echo URLROOT; ?>/transferClerks/viewMorePrincipalDetails/<?php echo $principal->emp_no; ?>" class="btn3">More</a></td>
                         </tr>
                     <?php endforeach; ?>
                 </table>

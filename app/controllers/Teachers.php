@@ -6,6 +6,7 @@
             }
 
             $this->teacherModel = $this->model('Teacher');
+            $this->commonModel = $this->model('Common');
             $this->userModel = $this->model('User');
         }
 
@@ -26,6 +27,7 @@
 
                 // Sanitize POST data
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                $leave_details = $this->commonModel->getLeaveDeatail();
 
                 // Init data
                 $data = [
@@ -44,6 +46,7 @@
                     'approval' => 'Pending',
                     // 'date1' => strtotime('commencing_date'),
                     // 'date2' => strtotime('resuming_date'),
+                    'leave_details' => $leave_details,
                 ];
 
                 // function calInterval(){
@@ -81,16 +84,19 @@
                     // Validated
                     $startDate = $data['resuming_date'];
                     $endDate = $data['commencing_date'];
-                    $difference = $this->teacherModel->getDateDifference($startDate, $endDate);
+                    $difference = $this->commonModel->getDateDifference($startDate, $endDate);
                     $interval = $difference->format('%a days');
-                    if($this->teacherModel->submitLeaveForm($data, $interval)){
+                    if($this->commonModel->submitLeaveForm($data, $interval)){
+                        $_SESSION['status'] = 'success';
+                        $_SESSION['tittle'] = 'Success';
+                        $_SESSION['message'] = 'Leave Form Submitted';
                         redirect('teachers/LeaveForm');
                     } else {
                         die('Something went wrong');
                     }
                 }
                 else {
-                    die('Something went wrong');
+                    //die('Something went wrong');
                     // Load view with errors
                     $this->view('teachers/leaveForm', $data);
                 }
@@ -154,7 +160,7 @@
                 // Sanitize POST data
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-                $karyasadana_details = $this->teacherModel->getKaryasadanaDeatail();
+                $karyasadana_details = $this->commonModel->getKaryasadanaDeatail();
                 // Init data
                 $data = [
                     'title' => 'Karyasadanaya',
@@ -269,8 +275,10 @@
                     && empty($data['Indicators5_err'])
                     && empty($data['Problems5_err'])){
                     //validated
-                    if($this->teacherModel->addKaryasadanaya($data)){
-                        flash('karyasadanaya_message', 'Karyasadanaya Added');
+                    if($this->commonModel->addKaryasadanaya($data)){
+                        $_SESSION['status'] = 'success';
+                        $_SESSION['tittle'] = 'Success';
+                        $_SESSION['message'] = 'Leave Form Submitted';
                         redirect('teachers/Karyasadanaya');
                     } else {
                         die('Something went wrong');
@@ -281,7 +289,7 @@
                 }
             }else{
                 // Get leave details
-                $karyasadana_details = $this->teacherModel->getKaryasadanaDeatail();
+                $karyasadana_details = $this->commonModel->getKaryasadanaDeatail();
 
                 //init data
                 $data = [
@@ -342,18 +350,17 @@
             $this->view('teachers/karyasadanaya_view', $data);
         }
 
-        // public function school_details(){
-        //     // Get school details
-        //     $school = $_SESSION['user_school'];
-        //     // $school = $this->teacherModel->getSchoolName($id);
-        //     $schools = $this->teacherModel->getSchoolDetails($school);
+        public function school_details(){
+            // Get school details
+            $school = $this->teacherModel->getSchoolByUserId();
+            $school_name = $school->school;
 
-        //     $data = [
-        //         'schools' => $schools,
-        //     ];
+            $data = [
+                'schools' => $this->teacherModel->getSchoolDetails($school_name),
+            ];
 
-        //     $this->view('teachers/school_details', $data);
-        // }
+            $this->view('teachers/school_details', $data);
+        }
 
         public function profile(){
             // Get teachers
@@ -395,8 +402,8 @@
                     'school' => trim($_POST['school']),
                     'designation' => trim($_POST['designation']),
                     'NIC' => trim($_POST['nic']),
-                    'password' => trim($_POST['password']),
-                    'confirm_password' => trim($_POST['confirmPassword']),
+                    // 'password' => trim($_POST['password']),
+                    // 'confirm_password' => trim($_POST['confirmPassword']),
                     'dp_err' => '',
                     'emp_number_err' => '',
                     'email_err' => '',
@@ -455,9 +462,9 @@
                 // }
 
                 //check if password and confirm password match
-                if($data['password'] != $data['confirm_password']){
-                    $data['confirm_password_err'] = 'Passwords do not match';
-                }
+                // if($data['password'] != $data['confirm_password']){
+                //     $data['confirm_password_err'] = 'Passwords do not match';
+                // }
 
                 //check if email is valid
                 if(!filter_var($data['email'], FILTER_VALIDATE_EMAIL)){
@@ -473,7 +480,7 @@
                 if(1==1){
                     //validated
                     //hash password
-                    $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+                    //$data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
 
                     //rename image
                     $target_dir = "D:/installed apps/XAMPP/htdocs/Ezymanage/public/img/uploads/";
@@ -487,7 +494,9 @@
                         } else {
                             echo "Sorry, there was an error uploading your file.";
                         }
-                        flash('update_success');
+                        $_SESSION['status'] = 'success';
+                        $_SESSION['tittle'] = 'Success';
+                        $_SESSION['message'] = 'Update Success';
                         redirect('teachers/profile');
                     } else {
                         die('Something went wrong');
@@ -571,7 +580,7 @@
 
                 //validate description
                 if(empty($data['issue_cat'])){
-                    $data['issue_cat_err'] = '*Please choose ant issue category';
+                    $data['issue_cat_err'] = '*Please choose an issue category';
                 }
 
                 //make sure errors are empty
@@ -611,7 +620,7 @@
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 //sanitize post data
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-                //$submitted_appointments = $this->teacherModel->getSubmittedAppointments($_SESSION['user_id']);
+                $submitted_appointments = $this->teacherModel->getSubmittedAppointments($_SESSION['user_id']);
 
                 $data = [
                     'reason' => trim($_POST['reason']),
@@ -620,11 +629,10 @@
                     'end_time' => trim($_POST['end_time']),
                     'reason_err' => '',
                     'date_err' => '',
-                    'start_time_err' => '',
-                    'end_time_err' => '',
+                    'time_err' => '',
                     'user_id' => $_SESSION['user_id'],
                     'submitted_date' => date('Y-m-d'),
-                    //'submitted_appointments' => $submitted_appointments,
+                    'submitted_appointments' => $submitted_appointments,
                 ];
 
                 //validate description
@@ -636,7 +644,9 @@
                 if(empty($data['reason_err'])){
                     //validated
                     if($this->teacherModel->addAppointment($data)){
-                        flash('appointment_message', 'Appointment Added');
+                        $_SESSION['status'] = 'success';
+                        $_SESSION['tittle'] = 'Success';
+                        $_SESSION['message'] = 'Appointment Submitted';
                         redirect('teachers/appointments');
                     } else {
                         die('Something went wrong');
@@ -646,7 +656,7 @@
                     $this->view('teachers/appointments', $data);
                 }
             } else {
-                //$submitted_appointments = $this->teacherModel->getSubmittedAppointments($_SESSION['user_id']);
+                $submitted_appointments = $this->teacherModel->getSubmittedAppointments($_SESSION['user_id']);
                 //init data
                 $data = [
                     'reason' => '',
@@ -655,11 +665,10 @@
                     'end_time' => '',
                     'reason_err' => '',
                     'date_err' => '',
-                    'start_time_err' => '',
-                    'end_time_err' => '',
+                    'time_err' => '',
                     'user_id' => $_SESSION['user_id'],
                     'submitted_date' => date('Y-m-d'),
-                    //'submitted_appointments' => $submitted_appointments
+                    'submitted_appointments' => $submitted_appointments
                 ];
 
                 //load view

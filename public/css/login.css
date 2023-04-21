@@ -15,31 +15,12 @@ a {
 
 .input-group input {
   height: 30px;
-  width: 95%;
+  width: 500px;
   padding: 5px 10px;
   font-size: 16px;
   border-radius: 5px;
   border: 1px solid gray;
   margin-bottom: 10px;
-}
-
-.input-group select{
-  height: 30px;
-  width: 100%;
-  padding: 5px 10px;
-  font-size: 16px;
-  border-radius: 5px;
-  border: 1px solid gray;
-  margin-bottom: 10px;
-}
-
-.btn button {
-  color: red;
-  font-size: small;
-}
-
-.btn button:hover {
-  cursor: pointer;
 }
 
 .error {
@@ -47,106 +28,29 @@ a {
   font-size: small;
 }
 
-.success {
-  color: #3c763d;
-  background: #dff0d8;
-  border: 1px solid #3c763d;
-  margin-bottom: 20px;
-}
-
 .fa-solid,
 .fa-eye {
-  margin-left: -27px;
+  margin-left: -40px;
   cursor: pointer;
   color: gray;
-}
-
-ul {
-  list-style-type: none;
-  margin: 0;
-}
-
-li {
-  display: inline-block;
-
-}
-
-.loginPageImg {
-  height: 700px;
-  /*width: 520px;*/
-  margin-left: -50px;
-}
-
-.login {
-  vertical-align: top;
-  text-align: left;
-  margin: 75px 0 0 250px;
-}
-
-.logo {
-  height: 120px;
-}
-
-.btn {
-  padding: 12px 220px 12px 220px;
-}
-
-/* Register*/
-
-.right {
-  width: 50%;
-  left: 50%;
-}
-
-.left {
-  width: 50%;
-  left: 0;
-}
-
-.left img{
-  width: 100%;
 }
 
 .container {
   display: flex;
   flex-direction: column;
   justify-content: left;
-  margin: 0 10%;
-  background-color: rgba(215, 226, 255, 0.6);
-  padding: 0px 5%;
-  border-radius: 20px;
-}
-
-.frm {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #EEF3FF;
-  height: 100%;
   margin: auto;
+  background-color: rgba(215, 226, 255, 0.6);
+  padding: 50px;
+  width: auto;
+  height: auto;
+  border-radius: 20px;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
 }
 
-.radio {
-  display: flex;
-  justify-content: space-between;
-  margin: 0 10%;
-}
-
-.radio div {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.reg-btn {
-  display: flex;
-  justify-content: space-between;
-  margin: 20px 0;
-}
-
-.reg-btn button {
-  width: 200px;
-  padding: 12px 0;
+.loginbtn {
+  width: 500px;
+  height: 40px;
   font-size: 15px;
   color: white;
   background: #000D2F;
@@ -154,114 +58,19 @@ li {
   border-radius: 5px;
 }
 
-.reg-btn input {
-  width: 100%;
-  padding: 12px 0;
-  font-size: 15px;
-  color: white;
-  background: #000D2F;
-  border: none;
-  border-radius: 5px;
+.logo {
+  width: 500px;
 }
 
-.reg-btn button:hover {
-  cursor: pointer;
-}
-
-.lgmsg{
-  text-align: center;
-  margin: 10px 0;
-}
-
-.toast {
-  position: absolute;
-  top: 25px;
-  right: 30px;
-  border-radius: 12px;
-  background: #fff;
-  padding: 20px 35px 20px 25px;
-  box-shadow: 0 6px 20px -5px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  transform: translateX(calc(100% + 30px));
-  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.35);
-}
-
-.toast.active {
-  transform: translateX(0%);
-}
-
-.toast .toast-content {
+.form{
   display: flex;
-  align-items: center;
-}
-
-.toast-content .check {
-  display: flex;
-  align-items: center;
   justify-content: center;
-  height: 35px;
-  min-width: 35px;
-  background-color: #2770ff;
-  color: #fff;
-  font-size: 20px;
-  border-radius: 50%;
+  align-items: center;
+  margin: auto;
+  padding: auto;
+  min-height: 100vh;
 }
 
-.toast-content .message {
-  display: flex;
-  flex-direction: column;
-  margin: 0 20px;
-}
-
-.message .text {
-  font-size: 16px;
-  font-weight: 400;
-  color: #666666;
-}
-
-.message .text.text-1 {
-  font-weight: 600;
-  color: #333;
-}
-
-.toast .close {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  padding: 5px;
-  cursor: pointer;
-  opacity: 0.7;
-}
-
-.toast .close:hover {
-  opacity: 1;
-}
-
-.toast .progress {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 3px;
-  width: 100%;
-
-}
-
-.toast .progress:before {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  height: 100%;
-  width: 100%;
-  background-color: #2770ff;
-}
-
-.progress.active:before {
-  animation: progress 3s linear forwards;
-}
-
-@keyframes progress {
-  100% {
-    right: 100%;
-  }
+.reg-btn{
+  text-align: center;
 }

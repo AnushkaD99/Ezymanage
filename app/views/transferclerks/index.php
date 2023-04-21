@@ -12,7 +12,7 @@
                     <a href="<?php echo URLROOT; ?>/transferclerks/viewDetails"><i class="fa-solid fa-eye"></i><span class="link">View</span></a>
                 </li>
                 <li>
-                    <a href="<?php echo URLROOT; ?>/transferclerks/volunteers"><i class="fa-solid fa-shuffle"></i><span class="link">Tranfers</span></a>
+                    <a href="<?php echo URLROOT; ?>/transferclerks/transfers"><i class="fa-solid fa-shuffle"></i><span class="link">Tranfers</span></a>
                 </li>
                 <li>
                     <a href="<?php echo URLROOT; ?>/transferclerks/profile"><i class="fa-solid fa-circle-user"></i><span class="link">Profile</span></a>

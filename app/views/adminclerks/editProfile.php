@@ -154,7 +154,7 @@
             </form>
         </div>
     </div>
-    <script>
+    <!-- <script>
         let sidebar = document.querySelector(".sidebar");
         let navbar = document.querySelector(".navbar");
         let link = document.querySelector(".link");
@@ -181,7 +181,7 @@
 
         document.getElementById("upload").style.display = "none";
       }
-    </script>
+    </script> -->
 
 <script type="text/javascript">
       document.getElementById("fileImg").onchange = function(){

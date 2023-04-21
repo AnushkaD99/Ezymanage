@@ -6,6 +6,7 @@
             }
 
             $this->principalModel = $this->model('Principal');
+            $this->commonModel = $this->model('Common');
             $this->userModel = $this->model('User');
         }
 
@@ -252,11 +253,15 @@
                 $leaves = $this->principalModel->getLeaves();
                 $karyasadana = $this->principalModel->getKaryasadana();
                 $issues = $this->principalModel->getIssues();
+                // $userid = $leaves->emp_no || $karyasadana->emp_no || $issues->emp_no;
+                // $userroleFromLeave = $leaves->designation || $karyasadana->designation || $issues->designation;
+
                 $data = [
                     'title' => trim($_POST['title']),
                     'leaves' => $leaves,
                     'karyasadana' => $karyasadana,
                     'issues' => $issues,
+                    // 'school' => $this->commonModel->getSchoolByUserId($userid, $userroleFromLeave),
                     'form_id' => trim($_POST['form_id']),
                     'status' => trim($_POST['status']),
                     'leave_id_err' => '',
@@ -301,7 +306,7 @@
                 // Sanitize POST data
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-                $karyasadana_details = $this->principalModel->getKaryasadanaDeatail();
+                $karyasadana_details = $this->commonModel->getKaryasadanaDeatail();
                 // Init data
                 $data = [
                     'title' => 'Karyasadanaya',
@@ -416,7 +421,7 @@
                     && empty($data['Indicators5_err'])
                     && empty($data['Problems5_err'])){
                     //validated
-                    if($this->principalModel->addKaryasadanaya($data)){
+                    if($this->commonModel->addKaryasadanaya($data)){
                         flash('karyasadanaya_message', 'Karyasadanaya Added');
                         redirect('principals/Karyasadanaya');
                     } else {
@@ -428,7 +433,7 @@
                 }
             }else{
                 // Get leave details
-                $karyasadana_details = $this->principalModel->getKaryasadanaDeatail();
+                $karyasadana_details = $this->commonModel->getKaryasadanaDeatail();
 
                 //init data
                 $data = [
@@ -552,9 +557,9 @@
                     // Validated
                     $startDate = $data['resuming_date'];
                     $endDate = $data['commencing_date'];
-                    $difference = $this->principalModel->getDateDifference($startDate, $endDate);
+                    $difference = $this->commonModel->getDateDifference($startDate, $endDate);
                     $interval = $difference->format('%a days');
-                    if($this->principalModel->submitLeaveForm($data, $interval)){
+                    if($this->commonModel->submitLeaveForm($data, $interval)){
                         redirect('principals/LeaveForm');
                     } else {
                         die('Something went wrong');
@@ -581,7 +586,7 @@
 
             }else {
                 // Get leave details
-                $leave_details = $this->principalModel->getLeaveDeatail();
+                $leave_details = $this->commonModel->getLeaveDeatail();
 
                 // Init data
                 $data = [
@@ -609,8 +614,8 @@
         //leave view
         public function LeaveView($id){
             // Get Leave Details
-            $leave = $this->principalModel->getLeaveById($id);
-            $leave_details = $this->principalModel->getLeaveDeatail();
+            $leave = $this->commonModel->getLeaveById($id);
+            $leave_details = $this->commonModel->getLeaveDeatail();
 
             $data = [
                 'leave' => $leave,
@@ -626,7 +631,7 @@
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 //sanitize post data
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-                $submitted_issues = $this->principalModel->getSubmittedIssues($_SESSION['user_id']);
+                $submitted_issues = $this->commonModel->getSubmittedIssues($_SESSION['user_id']);
 
                 $data = [
                     'issue_type' => trim($_POST['issue_type']),
@@ -652,7 +657,7 @@
                 //make sure errors are empty
                 if(empty($data['description_err']) && empty($data['issue_cat_err'])){
                     //validated
-                    if($this->principalModel->addIssue($data)){
+                    if($this->commonModel->addIssue($data)){
                         flash('issue_message', 'Issue Added');
                         redirect('principals/report_issue');
                     } else {
@@ -663,7 +668,7 @@
                     $this->view('principals/report_issue', $data);
                 }
             } else {
-                $submitted_issues = $this->principalModel->getSubmittedIssues($_SESSION['user_id']);
+                $submitted_issues = $this->commonModel->getSubmittedIssues($_SESSION['user_id']);
                 //init data
                 $data = [
                     'issue_type' => '',
@@ -711,7 +716,7 @@
                 //make sure errors are empty
                 if(empty($data['reason_err'])){
                     //validated
-                    if($this->principalModel->addAppointment($data)){
+                    if($this->commonModel->addAppointment($data)){
                         flash('appointment_message', 'Appointment Added');
                         redirect('principals/appointments');
                     } else {
@@ -741,5 +746,18 @@
                 //load view
                 $this->view('principals/appointments', $data);
             }
+        }
+
+        //school details
+        public function school_details(){
+            // Get school details
+            $school = $this->principalModel->getSchoolByUserId();
+            $school_name = $school->school;
+
+            $data = [
+                'schools' => $this->commonModel->getSchoolDetails($school_name),
+            ];
+
+            $this->view('principals/school_details', $data);
         }
     }

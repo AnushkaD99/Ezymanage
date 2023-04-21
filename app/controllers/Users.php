@@ -89,7 +89,7 @@
                     redirect('schoolClerks/index');
                     break;
                 case 'Clerk Salary':
-                    redirect('salaryClerks/index');
+                    redirect('salaryclerks/index');
                     break;
                 case 'Clerk Transfer':
                     redirect('transferclerks/index');
@@ -107,4 +107,6 @@
             session_destroy();
             redirect('users/login');
         }
+
+        
     }
