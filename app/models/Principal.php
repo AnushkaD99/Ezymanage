@@ -124,15 +124,31 @@ class Principal
   //Leave management
   public function getLeaves()
   {
-    $this->db->query('SELECT users_tbl.name_with_initials as name,
-      users_tbl.designation as designation,
-      users_tbl.emp_no as emp_no,
-      leaves_tbl.leave_id as leave_id,
-      leaves_tbl.commencing_date as commencing_date,
-      leaves_tbl.resuming_date as resuming_date,
-      leaves_tbl.reason as reason,
-      leaves_tbl.leave_type as leave_type
-       FROM leaves_tbl INNER JOIN users_tbl ON leaves_tbl.emp_no = users_tbl.emp_no WHERE leaves_tbl.status = 0');
+    // $this->db->query('SELECT users_tbl.name_with_initials as name,
+    //   users_tbl.designation as designation,
+    //   users_tbl.emp_no as emp_no,
+    //   leaves_tbl.leave_id as leave_id,
+    //   leaves_tbl.commencing_date as commencing_date,
+    //   leaves_tbl.resuming_date as resuming_date,
+    //   leaves_tbl.reason as reason,
+    //   leaves_tbl.status as status,
+    //   leaves_tbl.leave_type as leave_type
+    //    FROM leaves_tbl INNER JOIN users_tbl ON leaves_tbl.emp_no = users_tbl.emp_no');
+
+       $this->db->query('SELECT users_tbl.name_with_initials as name,
+       users_tbl.designation as designation,
+       users_tbl.emp_no as emp_no,
+       leaves_tbl.leave_id as leave_id,
+       leaves_tbl.commencing_date as commencing_date,
+       leaves_tbl.resuming_date as resuming_date,
+       leaves_tbl.reason as reason,
+       leaves_tbl.status as status,
+       leaves_tbl.leave_type as leave_type,
+       teacher_tbl.school as school
+        FROM leaves_tbl
+        INNER JOIN users_tbl ON leaves_tbl.emp_no = users_tbl.emp_no
+        INNER JOIN teacher_tbl ON users_tbl.emp_no = teacher_tbl.emp_no');
+       
 
     $results = $this->db->resultSet();
     return $results;
@@ -142,29 +158,25 @@ class Principal
   public function updateStatus($data)
   {
     $table = $data['title'];
-    $id = '';
-    if ($table == 'leave_tbl') {
-      $id = 'leave_id';
-    } else if ($table == 'karyasadana_tbl') {
-      $id = 'karyasadana_id';
-    } else if ($table == 'issue_tbl') {
-      $id = 'issue_id';
+    if ($table == "leaves_tbl") {
+      $id = "leave_id";
+    }
+    
+    if ($table == "karyasadana_tbl") {
+      $id = "karyasadana_id";
     }
 
-    $status = '';
-    if ($data['status'] == 'Approve') {
-      $status = 1;
-    } else if ($data['status'] == 'Reject') {
-      $status = -1;
-    } else {
-      // Set a default value for status
-      $status = 0;
+      if ($table == "issue_tbl") {
+      $id = "issue_id";
     }
 
+    $status = $data['status'];
     $this->db->query("UPDATE $table SET status = :status WHERE $id = :id");
     // Bind values
     $this->db->bind(':status', $status);
     $this->db->bind(':id', $data['form_id']);
+    // $query = "UPDATE $table SET status = $status WHERE $id = $data[form_id]";
+    // exit($query);
 
     // Execute
     if ($this->db->execute()) {

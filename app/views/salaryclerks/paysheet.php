@@ -37,27 +37,30 @@
                 <a href="<?php echo URLROOT; ?>/salaryclerks/deductions">
                     <div class="button3 button">Deductions</div>
                 </a>
+                <a href="<?php echo URLROOT; ?>/salaryclerks/basicSalary">
+                    <div class="button4 button">Manage Basic Salary</div>
+                </a>
             </div>
             <div class="content">
                 <table id="table-customize">
                     <tr>
+                        <th><input type="checkbox" onClick="toggle(this)" /></th>
                         <th>Employee ID</th>
                         <th>Employee Name</th>
                         <th>Designation</th>
-                        <th>Basic Salary</th>
-                        <th>Net Salary</th>
                         <th>Actions</th>
                     </tr>
                     <?php foreach ($data['paysheet'] as $paysheet) : ?>
                         <tr>
+                            <td> <input type="checkbox" name="chkId[]" value="<?php echo $paysheet->emp_no; ?>" /> </td>
                             <td><?php echo $paysheet->emp_no; ?></td>
                             <td><?php echo $paysheet->full_name; ?></td>
                             <td><?php echo $paysheet->designation; ?></td>
-                            <!-- <td><?php echo $paysheet->basic_salary; ?></td>
-                            <td><?php echo $paysheet->net_salary; ?></td> -->
                             <td>
-                                <a href="<?php echo URLROOT; ?>/salaryclerks/edit/<?php echo $paysheet->id; ?>" class="btn btn-primary"><i class="fa-solid fa-circle-info"></i></a>
-                                <a href="<?php echo URLROOT; ?>/salaryclerks/delete/<?php echo $paysheet->id; ?>" class="btn btn-danger"><i class="fa-solid fa-trash" style="color: #ff0000;"></i></a>
+                                <a href="<?php echo URLROOT; ?>/salaryclerks/payslip/<?php echo $paysheet->emp_no; ?>"><button class="btn btn-primary"><i class="fa-solid fa-gears"></i></a></button>
+                                <button class="btn btn-primary edit_payslip" data-url="<?php echo URLROOT; ?>/salaryclerks/payslip/<?php echo $paysheet->emp_no; ?>" type="button"><i class="fa-solid fa-pen-to-square"></i></button>
+                                <button class="btn btn-primary view_payslip" data-url="<?php echo URLROOT; ?>/salaryclerks/payslip/<?php echo $paysheet->emp_no; ?>" type="button"><i class="fa-solid fa-circle-info"></i></button>
+                                <button><a href="<?php echo URLROOT; ?>/salaryclerks/delete/<?php echo $paysheet->id; ?>" class="btn btn-danger"><i class="fa-solid fa-trash" style="color: #ff0000;"></i></a></button>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -65,4 +68,38 @@
             </div>
     </div>
 </div>
+
+<script>
+    function toggle(source) {
+        checkboxes = document.getElementsByName('chkId[]');
+        for (var i = 0, n = checkboxes.length; i < n; i++) {
+            checkboxes[i].checked = source.checked;
+        }
+    }
+
+
+    function view_paysheet() {
+        document.getElementById("myModal_info").style.display = "block";
+    }
+
+    function closeModal() {
+        document.getElementById("myModal_info").style.display = "none";
+    }
+
+    $(document).ready(function() {
+        $('.view_payslip').click(function() {
+            var url = $(this).attr('data-url');
+            $('<div>').dialog({
+                title: 'Payslip',
+                width: 800,
+                height: 800,
+                modal: true,
+                open: function() {
+                    $(this).load(url);
+                }
+            });
+        });
+    });
+</script>
+
 <?php require APPROOT . '/views/inc/footer.php'; ?>

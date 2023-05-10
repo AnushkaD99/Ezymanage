@@ -1,6 +1,10 @@
 <?php
 class AdminClerks extends Controller
 {
+    private $adminClerkModel;
+    private $userModel;
+
+
     public function __construct()
     {
         if (!isLoggedIn()) {
@@ -482,9 +486,9 @@ class AdminClerks extends Controller
 
             //init data
             $data = [
-                'username' => trim($_POST['username']),
-                'password' => trim($_POST['password']),
-                'confirm_password' => trim($_POST['confirmPassword']),
+                'username' => '',
+                'password' => '',
+                'emp_no' => trim($_POST['emp_no']),
                 'full_name' => trim($_POST['fullName']),
                 'name_with_initials' => trim($_POST['nameWithInitials']),
                 'gender' => trim($_POST['gender']),
@@ -496,10 +500,9 @@ class AdminClerks extends Controller
                 'dp' => 'default.jpg',
                 'school' => trim($_POST['school']),
                 'grade' => trim($_POST['grade']),
+                'step' => trim($_POST['step']),
                 'designation' => 'Teacher',
-                'username_err' => '',
-                'password_err' => '',
-                'confirm_password_err' => '',
+                'emp_no_err' => '',
                 'designation_err' => '',
                 'full_name_err' => '',
                 'name_with_initials_err' => '',
@@ -512,8 +515,18 @@ class AdminClerks extends Controller
                 'dp_err' => '',
                 'school_err' => '',
                 'grade_err' => '',
+                'step_err' => '',
                 'school_list' => $school_list
             ];
+
+            //Craete User name
+            $name = $data['full_name'];
+            $words = explode(' ', $name);
+            $data['username'] = $words[0];
+
+            //Create password
+            $data['password'] = $data['nic'];
+
 
             //validate
             //check if any of the fields are empty
@@ -528,9 +541,6 @@ class AdminClerks extends Controller
             }
             if (empty($data['name_with_initials'])) {
                 $data['name_with_initials_err'] = 'Please enter name with initials';
-            }
-            if (empty($data['username'])) {
-                $data['username_err'] = 'Please enter username';
             }
             if (empty($data['address'])) {
                 $data['address_err'] = 'Please enter address';
@@ -547,16 +557,8 @@ class AdminClerks extends Controller
             if (empty($data['nic'])) {
                 $data['NIC_err'] = 'Please enter NIC';
             }
-            if (empty($data['password'])) {
-                $data['password_err'] = 'Please enter password';
-            }
-            if (empty($data['confirm_password'])) {
-                $data['confirm_password_err'] = 'Please confirm password';
-            }
-
-            //check if password and confirm password match
-            if ($data['password'] != $data['confirm_password']) {
-                $data['confirm_password_err'] = 'Passwords do not match';
+            if (empty($data['step'])){
+                $data['step_err'] = 'Please enter salary step';
             }
 
             //check if email is valid
@@ -570,7 +572,7 @@ class AdminClerks extends Controller
             // }
 
             //make sure errors are empty
-            if (empty($data['email_err']) && empty($data['contact_err']) && empty($data['full_name_err']) && empty($data['name_with_initials_err']) && empty($data['address_err']) && empty($data['birthday_err']) && empty($data['school_err']) && empty($data['designation_err']) && empty($data['NIC_err']) && empty($data['password_err']) && empty($data['confirm_password_err'])) {
+            if (empty($data['email_err']) && empty($data['contact_err']) && empty($data['full_name_err']) && empty($data['name_with_initials_err']) && empty($data['address_err']) && empty($data['birthday_err']) && empty($data['school_err']) && empty($data['designation_err']) && empty($data['NIC_err'])) {
                 //validated
                 //hash password
                 $data['hashed_password'] = password_hash($data['password'], PASSWORD_DEFAULT);
@@ -591,7 +593,7 @@ class AdminClerks extends Controller
             $data = [
                 'username' => '',
                 'password' => '',
-                'confirm_password' => '',
+                'emp_no' => '',
                 'designation' => '',
                 'full_name' => '',
                 'name_with_initials' => '',
@@ -604,6 +606,8 @@ class AdminClerks extends Controller
                 'dp' => '',
                 'school' => '',
                 'grade' => '',
+                'step' => '',
+                'emp_no_err' => '',
                 'username_err' => '',
                 'password_err' => '',
                 'confirm_password_err' => '',
@@ -619,6 +623,7 @@ class AdminClerks extends Controller
                 'dp_err' => '',
                 'school_err' => '',
                 'grade_err' => '',
+                'step_err' => '',
                 'school_list' => $school_list
             ];
             //load view
@@ -1037,7 +1042,8 @@ class AdminClerks extends Controller
     }
 
     //add clerk of the zonal education office
-    public function add_zonalClerk(){
+    public function add_zonalClerk()
+    {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             //sanitize post data
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
@@ -1179,7 +1185,8 @@ class AdminClerks extends Controller
     }
 
     //view more details about volunteers
-    public function volunteers_moreDetails($id){
+    public function volunteers_moreDetails($id)
+    {
         //get volunteers
         $volunteers = $this->adminClerkModel->getVolunteerDetailsByID($id);
 

@@ -3,7 +3,7 @@
     <!-- Start navbar -->
     <?php require_once APPROOT . '/views/inc/navbar.php'; ?>
     <!-- Start sidebar -->
-    <!-- <div class="sidebar">
+    <div class="sidebar">
         <ul>
             <li>
                 <a href="<?php echo URLROOT; ?>/adminclerks/index"><i class="fa-solid fa-house"></i><span class="link">Home</span></a>
@@ -25,7 +25,7 @@
             <hr>
             <a href="<?php echo URLROOT; ?>/users/logout"><i class="fa-solid fa-sign-out"></i><span class="link">Logout</span></a>
         </div>
-    </div> -->
+    </div>
     <!-- End sidebar -->
     <div class="main">
         <div class="tittle">
@@ -53,12 +53,12 @@
                 </div>
                 <div class="main-editprofile-block">
                     <div class="main-editprofile-left">
-                        User Name :
+                        Employee Number :
                     </div>
                     <div class="main-editprofile-right">
-                        <input type="text" name="username" class="textBox">
+                        <input type="text" name="emp_no" class="textBox">
                     </div>
-                    <span class="error"><?php echo $data['username_err'] ?></span>
+                    <span class="error"><?php echo $data['emp_no_err'] ?></span>
                 </div>
                 <div class="main-editprofile-block">
                     <div class="main-editprofile-left">
@@ -132,10 +132,18 @@
                             <option value="Second Class First Grade">Second Class First Grade</option>
                             <option value="Second Class Second Grade">Second Class Second Grade</option>
                             <option value="Third Class First Grade">Third Class First Grade</option>
-                            <option value="Third Class Second Grade">Third Class Second Grade</option>
                         </select>
                     </div>
                     <span class="error"><?php echo $data['confirm_password_err'] ?></span>
+                </div>
+                <div class="main-editprofile-block">
+                    <div class="main-editprofile-left">
+                        Salary Step :
+                    </div>
+                    <div class="main-editprofile-right">
+                        <input type="int" name="step" class="textBox">
+                    </div>
+                    <span class="error"><?php echo $data['step_err'] ?></span>
                 </div>
                 <div class="main-editprofile-block">
                     <div class="main-editprofile-left">
@@ -145,24 +153,6 @@
                         <input type="text" name="nic" class="textBox">
                     </div>
                     <span class="error"><?php echo $data['nic_err'] ?></span>
-                </div>
-                <div class="main-editprofile-block">
-                    <div class="main-editprofile-left">
-                        Password :
-                    </div>
-                    <div class="main-editprofile-right">
-                        <input type="text" name="password" class="textBox">
-                    </div>
-                    <span class="error"><?php echo $data['password_err'] ?></span>
-                </div>
-                <div class="main-editprofile-block">
-                    <div class="main-editprofile-left">
-                        Confirm Password :
-                    </div>
-                    <div class="main-editprofile-right">
-                        <input type="text" name="confirmPassword" class="textBox">
-                    </div>
-                    <span class="error"><?php echo $data['confirm_password_err'] ?></span>
                 </div>
                 <input type="submit" value="Submit" class="submit-btn">
             </div>

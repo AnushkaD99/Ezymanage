@@ -37,32 +37,132 @@
                 <a href="<?php echo URLROOT; ?>/salaryclerks/deductions">
                     <div class="button3 button">Deductions</div>
                 </a>
+                <a href="<?php echo URLROOT; ?>/salaryclerks/basicSalary">
+                    <div class="button4 button">Manage Basic Salary</div>
+                </a>
             </div>
             <div class="content">
+                <button onclick="openModal_add()">Add Allowance</button>
+                <h3>Allowances</h3>
                 <table id="table-customize">
                     <tr>
-                        <th>Employee ID</th>
-                        <th>Employee Name</th>
-                        <th>Designation</th>
-                        <th>Basic Salary</th>
-                        <th>Net Salary</th>
-                        <th>Actions</th>
+                        <th>#</th>
+                        <th>name</th>
+                        <th>amount(Rs)</th>
+                        <th id="action">Actions</th>
                     </tr>
                     <?php foreach ($data['allowance'] as $allowance) : ?>
                         <tr>
-                            <td><?php echo $allowance->emp_no; ?></td>
-                            <td><?php echo $allowance->full_name; ?></td>
-                            <td><?php echo $allowance->designation; ?></td>
-                            <!-- <td><?php echo $allowance->basic_salary; ?></td>
-                            <td><?php echo $allowance->net_salary; ?></td> -->
+                            <td><?php echo $allowance->id; ?></td>
+                            <td class="name"><?php echo $allowance->name; ?></td>
+                            <td class="amount"><?php echo $allowance->amount; ?></td>
                             <td>
-                                <a href="<?php echo URLROOT; ?>/salaryclerks/edit/<?php echo $allowance->id; ?>" class="btn btn-primary"><i class="fa-solid fa-circle-info"></i></a>
-                                <a href="<?php echo URLROOT; ?>/salaryclerks/delete/<?php echo $allowance->id; ?>" class="btn btn-danger"><i class="fa-solid fa-trash" style="color: #ff0000;"></i></a>
+                                <div class="action_btns">
+                                    <div class="edit_btn">
+                                        <button class="edt_btn" onclick="openModal_edit('<?php echo $allowance->id; ?>' , '<?php echo $allowance->name; ?>' , '<?php echo $allowance->amount; ?>')"><i class="fa-solid fa-pen-to-square"></i></button>
+                                    </div>
+                                    <div class="delete_btn">
+                                        <form action="" method="POST">
+                                            <input type="hidden" name="id" value="<?php echo $allowance->id; ?>">
+                                            <button type="submit" name="dlt" class="dlt_btn"><i class="fa-solid fa-trash"></i></button>
+                                        </form>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     <?php endforeach; ?>
+
                 </table>
             </div>
     </div>
 </div>
+
+<!-- Edit allowance popup -->
+<div id="myModal_edit" class="modal">
+    <div class="modal-content">
+        <div class="close" onclick="closeModal_edit()">&times;</div>
+        <div>
+            <form action="" method="POST">
+                <h3>Edit Allowance</h3>
+                <div class="main-editprofile-block">
+                    <div class="main-editprofile-left">
+                        Name of the Allowance :
+                    </div>
+                    <div class="main-editprofile-right">
+                        <input type="text" name="name" class="textBox" id=all_name>
+                    </div>
+                </div>
+                <div class="main-editprofile-block">
+                    <div class="main-editprofile-left">
+                        Amount :
+                    </div>
+                    <div class="main-editprofile-right">
+                        <input type="int" name="amount" class="textBox" id=all_amount>
+                    </div>
+                </div>
+                <div class="col-2-btn">
+                    <input type="hidden" name="id" id="all_id">
+                    <input type="submit" name="edit_allowance" id="submit" value="Submit" class="fullBtn">
+                    <input type="reset" value="Reset" class="fullBtn">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Add allowance popup -->
+<div id="myModal_add" class="modal">
+    <div class="modal-content">
+        <div class="close" onclick="closeModal_add()">&times;</div>
+        <div>
+            <form action="" method="POST">
+                <h3>Add Allowance</h3>
+                <div class="main-editprofile-block">
+                    <div class="main-editprofile-left">
+                        Name of the Allowance :
+                    </div>
+                    <div class="main-editprofile-right">
+                        <input type="text" name="name" class="textBox" placeholder="Enter Starting Step Basic Salary">
+                    </div>
+                </div>
+                <div class="main-editprofile-block">
+                    <div class="main-editprofile-left">
+                        Amount :
+                    </div>
+                    <div class="main-editprofile-right">
+                        <input type="int" name="amount" class="textBox" placeholder="Enter here">
+                    </div>
+                </div>
+                <div class="col-2-btn">
+                    <input type="submit" name="submit_allowance" id="submit" value="Submit" class="fullBtn">
+                    <input type="reset" value="Reset" class="fullBtn">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- JavaScript -->
+<script>
+    function openModal_edit(id, name, amount) {
+        document.getElementById("myModal_edit").style.display = "block";
+
+        // Set the existing subject and details in the input fields
+        document.getElementById('all_name').value = name;
+        document.getElementById('all_amount').value = amount;
+        document.getElementById('all_id').value = id;
+    }
+
+    function openModal_add() {
+        document.getElementById("myModal_add").style.display = "block";
+    }
+
+    function closeModal_edit() {
+        document.getElementById("myModal_edit").style.display = "none";
+    }
+
+    function closeModal_add() {
+        document.getElementById("myModal_add").style.display = "none";
+    }
+</script>
+
 <?php require APPROOT . '/views/inc/footer.php'; ?>

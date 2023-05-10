@@ -88,17 +88,32 @@
                         <tr>
                             <td><?php echo $leave_details->name ?></td>
                             <td><?php echo $leave_details->designation ?></td>
-                            <td><?php echo $data['school'] ?></td>
+                            <td><?php echo $leave_details->school ?></td>
                             <td><?php echo $leave_details->commencing_date ?></td>
                             <td><?php echo $leave_details->resuming_date ?></td>
                             <td><?php echo $leave_details->leave_type ?></td>
                             <td><?php echo $leave_details->reason ?></td>
-                            <form action="" method="POST">
-                                <input type="hidden" name="title" value="leaves_tbl">
-                                <input type="hidden" name="form_id" value="<?php echo $leave_details->leave_id ?>">
-                                <td><input type="submit" name="status" class="approve-btn" value="Appprove"></td>
-                                <td><input type="submit" name="status" class="reject-btn" value="Reject"></td>
-                            </form>
+                            <?php
+                            if ($leave_details->status == 0) { ?>
+                                <form action="" method="POST">
+                                    <input type="hidden" name="title" value="leaves_tbl">
+                                    <input type="hidden" name="form_id" value="<?php echo $leave_details->leave_id ?>">
+                                    <td><input type="submit" name="status" class="approve-btn" value="Approve"></td>
+                                    <td><input type="submit" name="status" class="reject-btn" value="Reject"></td>
+                                </form>
+                            <?php
+                            } elseif ($leave_details->status == 1) { ?>
+                                <td colspan=2>
+                                    <div class="approved">Approved</div>
+                                </td>
+                            <?php
+                            } elseif ($leave_details->status == -1) { ?>
+                                <td colspan=2>
+                                    <div class="rejected">Rejected</div>
+                                </td>
+                            <?php
+                            } ?>
+
                         </tr>
                     <?php endforeach; ?>
                 </table>
@@ -124,12 +139,26 @@
                             <td><?php echo $karyasadana_details->school ?></td>
                             <td><?php echo $karyasadana_details->submitted_date ?></td>
                             <td><a href="<?php echo URLROOT; ?>/teachers/LeaveView/<?php echo $karyasadana_details->karyasadana_id; ?>" class="view-btn">view</a></td>
-                            <form action="" method="POST">
-                                <input type="hidden" name="title" value="karyasadana_tbl">
-                                <input type="hidden" name="form_id" value="<?php echo $karyasadana_details->karyasadana_id ?>">
-                                <td><input type="submit" name="status" class="approve-btn" value="Appprove"></td>
-                                <td><input type="submit" name="status" class="reject-btn" value="Reject"></td>
-                            </form>
+                            <?php
+                            if ($karyasadana_details->status == 0) { ?>
+                                <form action="" method="POST">
+                                    <input type="hidden" name="title" value="karyasadana_tbl">
+                                    <input type="hidden" name="form_id" value="<?php echo $karyasadana_details->karyasadana_id ?>">
+                                    <td><input type="submit" name="status" class="approve-btn" value="Appprove"></td>
+                                    <td><input type="submit" name="status" class="reject-btn" value="Reject"></td>
+                                </form>
+                            <?php
+                            } elseif ($karyasadana_details->status == 1) { ?>
+                                <td colspan=2>
+                                    <div class="approved">Approved</div>
+                                </td>
+                            <?php
+                            } elseif ($karyasadana_details->status == -1) { ?>
+                                <td colspan=2>
+                                    <div class="rejected">Rejected</div>
+                                </td>
+                            <?php
+                            } ?>
                         </tr>
                     <?php endforeach; ?>
                 </table>
@@ -157,12 +186,26 @@
                             <td><?php echo $issue_details->submitted_date ?></td>
                             <td><?php echo $issue_details->issue_cat ?></td>
                             <td><?php echo $issue_details->issue ?></td>
-                            <form action="" method="POST">
-                                <input type="hidden" name="title" value="issue_tbl">
-                                <input type="hidden" name="form_id" value="<?php echo $issue_details->issue_id ?>">
-                                <td><input type="submit" name="status" class="approve-btn" value="Appprove"></td>
-                                <td><input type="submit" name="status" class="reject-btn" value="Reject"></td>
-                            </form>
+                            <?php
+                            if ($issue_details->status == 0) { ?>
+                                <form action="" method="POST">
+                                    <input type="hidden" name="title" value="issue_tbl">
+                                    <input type="hidden" name="form_id" value="<?php echo $issue_details->issue_id ?>">
+                                    <td><input type="submit" name="status" class="approve-btn" value="Appprove"></td>
+                                    <td><input type="submit" name="status" class="reject-btn" value="Reject"></td>
+                                </form>
+                            <?php
+                            } elseif ($issue_details->status == 1) { ?>
+                                <td colspan=2>
+                                    <div class="approved">Approved</div>
+                                </td>
+                            <?php
+                            } elseif ($issue_details->status == -1) { ?>
+                                <td colspan=2>
+                                    <div class="rejected">Rejected</div>
+                                </td>
+                            <?php
+                            } ?>
                         </tr>
                     <?php endforeach; ?>
                 </table>

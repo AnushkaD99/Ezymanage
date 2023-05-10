@@ -339,10 +339,11 @@ class AdminClerk
   //add_teacher
   public function addTeacher($data)
   {
-    $this->db->query('INSERT INTO users_tbl(username, password, designation, full_name, name_with_initials, gender, birthday, nic, address, contact_num, email, dp)
-      VALUES(:username, :password, :designation, :full_name, :name_with_initials, :gender, :birthday, :nic, :address, :contact_num, :email, :dp)');
+    $this->db->query('INSERT INTO users_tbl(emp_no, username, password, designation, full_name, name_with_initials, gender, birthday, nic, address, contact_num, email, dp)
+      VALUES(:emp_no, :username, :password, :designation, :full_name, :name_with_initials, :gender, :birthday, :nic, :address, :contact_num, :email, :dp)');
 
     // Bind values
+    $this->db->bind(':emp_no', $data['emp_no']);
     $this->db->bind(':username', $data['username']);
     $this->db->bind(':password', $data['hashed_password']);
     $this->db->bind(':designation', $data['designation']);
@@ -355,6 +356,7 @@ class AdminClerk
     $this->db->bind(':contact_num', $data['contact']);
     $this->db->bind(':email', $data['email']);
     $this->db->bind(':dp', $data['dp']);
+    
 
     // Execute
     if ($this->db->execute()) {
@@ -363,13 +365,14 @@ class AdminClerk
       $row = $this->db->single();
       $emp_no = $row->emp_no;
 
-      $this->db->query('INSERT INTO teacher_tbl(emp_no, school, grade)
-      VALUES(:emp_no, :school, :grade)');
+      $this->db->query('INSERT INTO teacher_tbl(emp_no, school, grade, step)
+      VALUES(:emp_no, :school, :grade, :step)');
 
       // Bind values
       $this->db->bind(':emp_no', $emp_no);
       $this->db->bind(':school', $data['school']);
       $this->db->bind(':grade', $data['grade']);
+      $this->db->bind(':step', $data['step']);
 
       // Execute second query
       if ($this->db->execute()) {

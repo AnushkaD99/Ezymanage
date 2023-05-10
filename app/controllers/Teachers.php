@@ -1,5 +1,9 @@
 <?php
     class Teachers extends Controller {
+        private $teacherModel;
+        private $commonModel;
+        private $userModel;
+        
         public function __construct(){
             if(!isLoggedIn()){
                 redirect('users/login');
