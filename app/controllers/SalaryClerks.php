@@ -1603,7 +1603,7 @@ class SalaryClerks extends Controller
     </head>
     <body>
         <p><center>Welcome to <b>Ezymanage</b></center><br>
-            Use the following link to access your account and change the password.
+            Use the following otp to change the password.
         </p>
         <p>Otp : <b>$otp</b></p>
     </body>
