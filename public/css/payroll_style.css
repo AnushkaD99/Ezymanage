@@ -1,0 +1,174 @@
+:root {
+    --blue: #000D2F;
+    --blue-light: #549FE2;
+    --gray: rgba(215, 226, 255, 0.6);
+    --background: #EEF3FF;
+    --black: black;
+    --white: white;
+    --reject: #DA6E60;
+    --normal-text: 15px;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-areas: "button1 button2 button3 button4";
+    grid-gap: 0px;
+    margin: 1rem;
+}
+
+.button1 {
+    grid-area: button1;
+}
+
+.button2 {
+    grid-area: button2;
+}
+
+.button3 {
+    grid-area: button3;
+}
+
+.button4 {
+    grid-area: button4;
+}
+
+.button{
+    background-color: var(--blue);
+    color: var(--white);
+    border: none;
+    padding: 18px;
+    width: 100%;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+}
+
+.button.active {
+    background-color: #19376D;
+}
+
+.button:hover {
+    background-color: #19376D;
+}
+
+.button a{
+    color: var(--white);
+    text-decoration: none;
+    font-size: 15px;
+}
+
+.col2{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "col2_left col2_right";
+    grid-gap: 50px;
+    margin: 1rem;
+}
+
+.col2_left{
+    grid-area: col2_left;
+}
+
+.col2_right{
+    grid-area: col2_right;
+}
+
+.col4{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-areas: "col4a col4b col4c col4d";
+    grid-gap: 0px;
+}
+
+.col4a{
+    grid-area: col4a;
+}
+
+.col4b{
+    grid-area: col4b;
+}
+
+.col4c{
+    grid-area: col4c;
+}
+
+.col4d{
+    grid-area: col4d;
+}
+
+#action{
+    width: 100px;
+}
+
+
+/*action btns*/
+.action_btns{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "edit_btn delete_btn";
+    grid-gap: 5px;
+}
+
+.edit_btn{
+    grid-area: edit_btn;
+}
+
+.delete_btn{
+    grid-area: delete_btn;
+}
+
+.edt_btn{
+    background-color: #f0ad4e;
+    color: var(--white);
+    border: none;
+    padding: 10px;
+    border-radius: 100%;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+}
+
+.dlt_btn{
+    background-color: #c9302c;
+    color: var(--white);
+    border: none;
+    padding: 10px;
+    border-radius: 100%;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+}
+
+/*popup*/
+.white-popup {
+    background: var(--background);
+    padding: 50px;
+    width: auto;
+    max-width: 50%;
+    margin: 20px auto;
+    text-align: center;
+    position: relative;
+  }
+
+  .green{
+    background-color: #5cb85c;
+    color: var(--white);
+    border: none;
+    width: fit-content;
+    padding: 0 5px;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+  }
+
+  .red{
+    background-color: #d9534f;
+    color: var(--white);
+    border: none;
+    width: fit-content;
+    padding: 0 5px;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+  }

@@ -1,0 +1,76 @@
+body {
+  font-family: poppins, sans-serif;
+  margin: 0;
+
+}
+
+a {
+  color: #000D2F;
+}
+
+
+.input-group {
+  margin: 10px 0px;
+}
+
+.input-group input {
+  height: 30px;
+  width: 500px;
+  padding: 5px 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid gray;
+  margin-bottom: 10px;
+}
+
+.error {
+  color: red;
+  font-size: small;
+}
+
+.fa-solid,
+.fa-eye {
+  margin-left: -40px;
+  cursor: pointer;
+  color: gray;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  margin: auto;
+  background-color: rgba(215, 226, 255, 0.6);
+  padding: 50px;
+  width: auto;
+  height: auto;
+  border-radius: 20px;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+}
+
+.loginbtn {
+  width: 500px;
+  height: 40px;
+  font-size: 15px;
+  color: white;
+  background: #000D2F;
+  border: none;
+  border-radius: 5px;
+}
+
+.logo {
+  width: 500px;
+}
+
+.form{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  padding: auto;
+  min-height: 100vh;
+}
+
+.reg-btn{
+  text-align: center;
+}
