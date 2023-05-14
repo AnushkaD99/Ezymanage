@@ -64,7 +64,7 @@
                             <div class="border-box">
                                 <label for="reason">Reason for appointment</label><br>
                                 <textarea name="reason" placeholder="Reason"></textarea><br>
-                                <?php //echo $reason_err; ?>
+                                <?php echo $data['reason_err']; ?>
                                 <div class="space"></div>
                                 <label for="date">Appointment Required Date :</label><br>
                                 <input type="date" name="date">

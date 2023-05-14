@@ -150,3 +150,26 @@
     text-align: center;
     position: relative;
   }
+
+  .green{
+    background-color: #5cb85c;
+    color: var(--white);
+    border: none;
+    width: fit-content;
+    padding: 0 5px;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+  }
+
+  .red{
+    background-color: #d9534f;
+    color: var(--white);
+    border: none;
+    width: fit-content;
+    padding: 0 5px;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+  }
+  

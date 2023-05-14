@@ -41,7 +41,11 @@
                     <div class="button4 button">Manage Basic Salary</div>
                 </a>
             </div>
+
             <div class="content">
+
+            <button><a href="<?php echo URLROOT; ?>/salaryclerks/all_paysheet">All paysheets</a></button>
+
                 <table id="table-customize">
                     <tr>
                         <th><input type="checkbox" onClick="toggle(this)" /></th>
@@ -57,10 +61,7 @@
                             <td><?php echo $paysheet->full_name; ?></td>
                             <td><?php echo $paysheet->designation; ?></td>
                             <td>
-                                <a href="<?php echo URLROOT; ?>/salaryclerks/payslip/<?php echo $paysheet->emp_no; ?>"><button class="btn btn-primary"><i class="fa-solid fa-gears"></i></a></button>
-                                <button class="btn btn-primary edit_payslip" data-url="<?php echo URLROOT; ?>/salaryclerks/payslip/<?php echo $paysheet->emp_no; ?>" type="button"><i class="fa-solid fa-pen-to-square"></i></button>
-                                <button class="btn btn-primary view_payslip" data-url="<?php echo URLROOT; ?>/salaryclerks/payslip/<?php echo $paysheet->emp_no; ?>" type="button"><i class="fa-solid fa-circle-info"></i></button>
-                                <button><a href="<?php echo URLROOT; ?>/salaryclerks/delete/<?php echo $paysheet->id; ?>" class="btn btn-danger"><i class="fa-solid fa-trash" style="color: #ff0000;"></i></a></button>
+                                <a href="<?php echo URLROOT; ?>/salaryclerks/generate_payslip/<?php echo $paysheet->emp_no; ?>"><button class="btn btn-primary"><i class="fa-solid fa-gears"></i></a></button>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -100,6 +101,7 @@
             });
         });
     });
+    
 </script>
 
 <?php require APPROOT . '/views/inc/footer.php'; ?>

@@ -14,9 +14,9 @@
                 <li>
                     <a href="<?php echo URLROOT; ?>/adminclerks/volunteers"><i class="fa-solid fa-handshake-angle"></i><span class="link">Volunteers</span></a>
                 </li>
-                <li>
+                <!-- <li>
                     <a href="<?php echo URLROOT; ?>/adminclerks/verifyDetails"><i class="fa-solid fa-user-check"></i><span class="link">Verify Details</span></a>
-                </li>
+                </li> -->
                 <li>
                     <a href="<?php echo URLROOT; ?>/adminclerks/profile"  class="active"><i class="fa-solid fa-circle-user"></i><span class="link">Profile</span></a>
                 </li>

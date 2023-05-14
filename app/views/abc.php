@@ -1,89 +1,73 @@
-//Salary Prepaeration
-    public function  choose_basic($id){
-        $user = $this->commonModel->getUser($id);
-        $user_role = $user->designation;
+<?php
+require_once('../dbconn.php');
 
-        if($user_role == 'Teacher'){
-            $teacher = $this->commonModel->getTeacher($id);
-            $grade = $teacher->grade;
-            $step = $teacher->step;
-            $basic = $this->commonModel->getTeachersBasicSalary($grade, $step);
+$err = "";
+$suc = "";
+
+if (isset($_POST['signup_btn'])) {
+
+    $mail = $_POST['mail'];
+    $pass1 = $_POST['pass1'];
+    $pass2 = $_POST['pass2'];
+    $fname = $_POST['fname'];
+    $lname = $_POST['lname'];
+    $address = $_POST['address'];
+    $contact = $_POST['contact'];
+    $nic = $_POST['nic'];
+    $role = "customer";
+
+    $check1 = "SELECT * from user where email='$mail' OR nic='$nic' OR contact='$contact'";
+    $confirm1 = mysqli_query($conn, $check1);
+
+    if ($row = mysqli_fetch_assoc($confirm1)) {
+
+        $err = "Already Registered user";
+    } elseif ($pass1 != $pass2) {
+        $err = "Password not matching";
+    } elseif (empty($pass1) || empty($pass2) || empty($mail) || empty($fname) || empty($lname) || empty($address) || empty($contact) || empty($nic)) {
+
+        $err = "Please fill all the fields";
+    } elseif (strlen($pass1) < 5 || !preg_match("/[A-Z]/", $pass1) || !preg_match("/[a-z]/", $pass1) || !preg_match("/[0-9]/", $pass1)) {
+
+        $err = "Require at least 5 characters, lower and upper case, and numbers";
+    } elseif (!preg_match("/^[a-zA-Z]+$/", $fname) || !preg_match("/^[a-zA-Z]+$/", $lname)) {
+
+        $err = "Only letters are valid in the name";
+    } else {
+
+        if (preg_match("/^0[0-9]{9}$/", $contact) && ctype_digit($contact)) {
+            if (preg_match("/^[0-9]{9}V$/", $nic) || preg_match("/^[0-9]{12}$/", $nic)) {
+
+                $pic = $_FILES['pic'];
+                $directory = "../assets/";
+
+                $images   = $_FILES["pic"]["name"];
+                $size_check = getimagesize($_FILES["pic"]["tmp_name"]);
+                $img_type  = strtolower(pathinfo($_FILES["pic"]["name"], PATHINFO_EXTENSION));
+                $path  = $directory . basename($images);
+
+                if ($size_check !== false) {
+                    if ($_FILES["pic"]["size"] < 50000000) {
+                        if ($img_type == 'jpg' || $img_type == 'jpeg' || $img_type == 'png') {
+                            $output = move_uploaded_file($_FILES["pic"]["tmp_name"], $path);
+                            if ($output) {
+                                $query = "INSERT INTO user(email, password, address, contact, firstname, lastname, nic, role, photo)VALUES('$mail','$pass1','$address','$contact','$fname','$lname','$nic','$role','$path')";
+                                $result = mysqli_query($conn, $query);
+
+                                if ($result) {
+                                    header("location:../login.php");
+                                } else {
+                                    $err = "Error occured";
+                                }
+                            }
+                        }
+                    }
+                }
+            } else {
+                $err = "Inalid NIC";
+            }
+        } else {
+            $err = "Invalid Phone Number";
         }
-        if($user_role == 'Principal'){
-            $principal = $this->commonModel->getPrincipal($id);
-            $grade = $principal->grade;
-            $step = $principal->step;
-            $basic = $this->commonModel->getPrincipalsBasicSalary();
-        }
-            
-        return $basic;
     }
-
-    public function  cal_gross_pay($id){
-        $data = [
-            'int_all_1' => $this->commonModel->getNecAll1(),
-            'c.o.l' => $this->commonModel->getCOL(),
-            'basic' => $this->choose_basic($id),
-            'sub_total' => 0,
-            'gross_pay' => 0,
-
-        ];
-
-        $data['sub_total'] = $data['basic'] + $data['int_all_1'];
-        $user = $this->commonModel->getUser($id);
-        $user_role = $user->designation;
-        if($user_role == 'Principal'){
-            $data=[
-                'telephone_all' => $this->commonModel->getTlpAll(),
-                'executive_all' => $this->commonModel->getExcAll(),
-                'allowances' => 0
-            ];
-            $data['allowances'] = $data['telephone_all'] + $data['executive_all'];
-        }
-        else{
-            $data=[
-                'telephone_all' => 0,
-                'executive_all' => 0,
-                'allowances' => 0
-            ]; 
-            $data['allowances'] = $data['telephone_all'] + $data['executive_all'];
-        }
-
-        $data['gross_pay'] = $data['sub_total'] + $data['allowances'];
-
-        return($data);
-    }
-
-    public function  cal_tot_ded($id){
-        $data =[
-            'w&op_rate' => $this->commonModel->getWANDOP(),
-            'basic' => $this->choose_basic($id),
-            'w&op' => 0,
-            'stamp' => $this->commonModel->getStampDed(),
-            'agrahara' => $this->commonModel->getAgraharaDed($id),
-            'agrahara_amount' => 0,
-            'other_ded' => 0,
-            'total_ded' => 0,
-        ];
-
-        $data['w&op'] = $data['basic'] * $data['w&op_rate']->amount;
-        
-        //agrahara
-        $agrahara = $data['agrahara'];
-        $data['agrahara_amount'] = $this->commonModel->getAgraharaAmount($agrahara);
-
-        //Total Deduction
-        $data['total_ded'] = $data['w&op'] + $data['stamp'] + $data['agrahara'] + $data['other_ded'];
-
-        return $data;
-
-    }
-
-    public function  calc_sal(){
-        $gross_pay =  $this->cal_gross_pay($id)->$data['gross_pay'];
-        $tot_ded = $this->cal_tot_ded($id)->$data['gross_pay'];
-
-        $net_sal = $gross_pay + $tot_ded;
-
-        return $net_sal;
-    }
+}

@@ -574,6 +574,12 @@ body {
   width: 150px;
 }
 
+.user_nav{
+  height: 50px;
+  border-radius: 50%;
+  width: 50px;
+}
+
 /*Main-Close-Edit-Profile*/
 
 /*Main-view Details*/

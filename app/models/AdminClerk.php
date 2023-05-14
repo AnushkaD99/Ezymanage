@@ -93,7 +93,7 @@ class AdminClerk
 
   public function getTeacherDeatail()
   {
-    $this->db->query('SELECT * FROM users_tbl INNER JOIN teacher_tbl ON users_tbl.emp_no = teacher_tbl.emp_no');
+    $this->db->query('SELECT * FROM users_tbl WHERE designation = "Teacher"');
 
     $results = $this->db->resultSet();
 
@@ -523,6 +523,24 @@ class AdminClerk
     $this->db->bind(':contact_num', $data['contact']);
     $this->db->bind(':email', $data['email']);
     $this->db->bind(':dp', $data['dp']);
+
+    // Execute
+    if ($this->db->execute()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  //Save token
+  public function insertAccessToken($data)
+  {
+    $this->db->query('INSERT INTO account_access_tbl(access_token, email)
+      VALUES(:token, :emp_no)');
+
+    // Bind values
+    $this->db->bind(':token', $data['token']);
+    $this->db->bind(':emp_no', $data['email']);
 
     // Execute
     if ($this->db->execute()) {

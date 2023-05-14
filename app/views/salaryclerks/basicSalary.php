@@ -47,7 +47,7 @@
                     <!-- <button id="add_step">Add Basic Salary Step</button> -->
                     <div class="col4">
                         <div class="col4a">
-                        <button id="edit_basic_3-i"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button id="edit_basic_3-i"><i class="fa-solid fa-pen-to-square"></i></button>
                             <table id="table-customize">
                                 <tr>
                                     <th colspan="2">Class 3-i</th>
@@ -65,7 +65,7 @@
                             </table>
                         </div>
                         <div class="col4b">
-                        <button id="edit_basic_2-ii"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button id="edit_basic_2-ii"><i class="fa-solid fa-pen-to-square"></i></button>
                             <table id="table-customize">
                                 <tr>
                                     <th colspan="2">Class 2-ii</th>
@@ -83,7 +83,7 @@
                             </table>
                         </div>
                         <div class="col4c">
-                        <button id="edit_basic_2-i"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button id="edit_basic_2-i"><i class="fa-solid fa-pen-to-square"></i></button>
                             <table id="table-customize">
                                 <tr>
                                     <th colspan="2">Class 2-i</th>
@@ -101,7 +101,7 @@
                             </table>
                         </div>
                         <div class="col4d">
-                        <button id="edit_basic_1"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button id="edit_basic_1"><i class="fa-solid fa-pen-to-square"></i></button>
                             <table id="table-customize">
                                 <tr>
                                     <th colspan="2">Class 1</th>
@@ -120,14 +120,72 @@
                         </div>
                     </div>
                 </div>
+                <!-- pricipal Side -->
                 <div class="col2_right">
-
+                    <!-- <button id="add_step_p">Add Basic Salary Step</button> -->
+                    <h3 id="center">Principal's Basic Salary</h3>
+                    <div class="col4">
+                        <div class="col4b">
+                            <button id="edit_slps_3"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <table id="table-customize">
+                                <tr>
+                                    <th colspan="2">SLPS 3</th>
+                                </tr>
+                                <?php foreach ($data['basic_p'] as $basic) :
+                                ?>
+                                    <tr>
+                                        <?php if ($basic->class == 'SLPS 3') { ?>
+                                            <td><?php echo $basic->step; ?></td>
+                                            <td><?php echo $basic->basic_salary; ?></td>
+                                        <?php } ?>
+                                    </tr>
+                                <?php endforeach;
+                                ?>
+                            </table>
+                        </div>
+                        <div class="col4c">
+                            <button id="edit_slps_2"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <table id="table-customize">
+                                <tr>
+                                    <th colspan="2">SLPS 2</th>
+                                </tr>
+                                <?php foreach ($data['basic_p'] as $basic) :
+                                ?>
+                                    <tr>
+                                        <?php if ($basic->class == 'SLPS 2') { ?>
+                                            <td><?php echo $basic->step; ?></td>
+                                            <td><?php echo $basic->basic_salary; ?></td>
+                                        <?php } ?>
+                                    </tr>
+                                <?php endforeach;
+                                ?>
+                            </table>
+                        </div>
+                        <div class="col4d">
+                            <button id="edit_slps_1"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <table id="table-customize">
+                                <tr>
+                                    <th colspan="2">SLPS 1</th>
+                                </tr>
+                                <?php foreach ($data['basic_p'] as $basic) :
+                                ?>
+                                    <tr>
+                                        <?php if ($basic->class == 'SLPS 1') { ?>
+                                            <td><?php echo $basic->step; ?></td>
+                                            <td><?php echo $basic->basic_salary; ?></td>
+                                        <?php } ?>
+                                    </tr>
+                                <?php endforeach;
+                                ?>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
     </div>
 </div>
 
-<!-- Add basic Salary Step popup -->
+<!-- Add Techer's basic Salary Step popup -->
 <div class="mfp-hide white-popup personal_info" id="new_step">
     <form action="" method="POST">
         <h3>Add Basic Salary Step</h3>
@@ -159,6 +217,53 @@
             </div>
             <div class="main-editprofile-right">
                 <input type="b_slary" name="b_salary" class="textBox" placeholder="Enter here">
+            </div>
+        </div>
+        <div class="col-2-btn">
+            <input type="submit" name="submit" id="submit" value="Submit" class="fullBtn">
+            <input type="reset" value="Reset" class="fullBtn">
+        </div>
+    </form>
+</div>
+
+<!-- Add Principal's basic Salary Step popup -->
+<div class="mfp-hide white-popup personal_info" id="new_step_p">
+    <form action="<?php echo URLROOT; ?>/salaryclerks/add_basic_sal_principal" method="POST">
+        <h3>Add Basic Salary Step</h3>
+        <div class="main-editprofile-block">
+            <div class="main-editprofile-left">
+                Class :
+            </div>
+            <div class="main-editprofile-right">
+                <select name="class" id="class" class="textBox">
+                    <option value="SLPS 1">SLPS 1</option>
+                    <!-- <option value="SLPS 2">SLPS 2</option>
+                    <option value="SLPS 3">SLPS 3</option> -->
+                </select>
+            </div>
+        </div>
+        <!-- <div class="main-editprofile-block">
+            <div class="main-editprofile-left">
+                Step :
+            </div>
+            <div class="main-editprofile-right">
+                <input type="step" name="step" class="textBox" placeholder="Enter here">
+            </div>
+        </div> -->
+        <div class="main-editprofile-block">
+            <div class="main-editprofile-left">
+                Basic Salary :
+            </div>
+            <div class="main-editprofile-right">
+                <input type="b_slary" name="b_salary" class="textBox" placeholder="Enter here">
+            </div>
+        </div>
+        <div class="main-editprofile-block">
+            <div class="main-editprofile-left">
+                Defferent Between two Steps :
+            </div>
+            <div class="main-editprofile-right">
+                <input type="b_slary" name="defferent" class="textBox" placeholder="Enter here">
             </div>
         </div>
         <div class="col-2-btn">
@@ -260,11 +365,91 @@
                 Increment Amount :
             </div>
             <div class="main-editprofile-right">
-            <input type="int" name="increment_3-i" class="textBox" placeholder="Enter here">
+                <input type="int" name="increment_3-i" class="textBox" placeholder="Enter here">
             </div>
         </div>
         <div class="col-2-btn">
             <input type="submit" name="submit_3-i" id="submit" value="Submit" class="fullBtn">
+            <input type="reset" value="Reset" class="fullBtn">
+        </div>
+    </form>
+</div>
+
+
+<!-- Edit Principal's Basic Salary -->
+<div class="mfp-hide white-popup personal_info" id="new_basic_p1">
+    <form action="<?php echo URLROOT; ?>/salaryclerks/edit_basic_sal_principal_1" method="POST">
+        <h3>Class 1 Basic Salary</h3>
+        <div class="main-editprofile-block">
+            <div class="main-editprofile-left">
+                Starting Step Basic Salary :
+            </div>
+            <div class="main-editprofile-right">
+                <input type="text" name="st_basic_1" class="textBox" placeholder="Enter Starting Step Basic Salary">
+            </div>
+        </div>
+        <div class="main-editprofile-block">
+            <div class="main-editprofile-left">
+                Increment Amount :
+            </div>
+            <div class="main-editprofile-right">
+                <input type="int" name="b_salary" class="textBox" placeholder="Enter here">
+            </div>
+        </div>
+        <div class="col-2-btn">
+            <input type="submit" name="submit_1" id="submit" value="Submit" class="fullBtn">
+            <input type="reset" value="Reset" class="fullBtn">
+        </div>
+    </form>
+</div>
+
+<div class="mfp-hide white-popup personal_info" id="new_basic_p2">
+    <form action="<?php echo URLROOT; ?>/salaryclerks/edit_basic_sal_principal_2" method="POST">
+        <h3>Class 1 Basic Salary</h3>
+        <div class="main-editprofile-block">
+            <div class="main-editprofile-left">
+                Starting Step Basic Salary :
+            </div>
+            <div class="main-editprofile-right">
+                <input type="text" name="b_salary" class="textBox" placeholder="Enter Starting Step Basic Salary">
+            </div>
+        </div>
+        <div class="main-editprofile-block">
+            <div class="main-editprofile-left">
+                Increment Amount :
+            </div>
+            <div class="main-editprofile-right">
+                <input type="int" name="increment_2" class="textBox" placeholder="Enter here">
+            </div>
+        </div>
+        <div class="col-2-btn">
+            <input type="submit" name="submit_1" id="submit" value="Submit" class="fullBtn">
+            <input type="reset" value="Reset" class="fullBtn">
+        </div>
+    </form>
+</div>
+
+<div class="mfp-hide white-popup personal_info" id="new_basic_p3">
+    <form action="<?php echo URLROOT; ?>/salaryclerks/edit_basic_sal_principal_3" method="POST">
+        <h3>Class 1 Basic Salary</h3>
+        <div class="main-editprofile-block">
+            <div class="main-editprofile-left">
+                Starting Step Basic Salary :
+            </div>
+            <div class="main-editprofile-right">
+                <input type="text" name="b_salary" class="textBox" placeholder="Enter Starting Step Basic Salary">
+            </div>
+        </div>
+        <div class="main-editprofile-block">
+            <div class="main-editprofile-left">
+                Increment Amount :
+            </div>
+            <div class="main-editprofile-right">
+                <input type="int" name="increment_3" class="textBox" placeholder="Enter here">
+            </div>
+        </div>
+        <div class="col-2-btn">
+            <input type="submit" name="submit_1" id="submit" value="Submit" class="fullBtn">
             <input type="reset" value="Reset" class="fullBtn">
         </div>
     </form>
@@ -286,6 +471,15 @@
     });
 
     $(document).ready(function() {
+        $('#add_step_p').magnificPopup({
+            items: {
+                src: '#new_step_p'
+            },
+            type: 'inline',
+        });
+    });
+
+    $(document).ready(function() {
         $('#edit_basic_1').magnificPopup({
             items: {
                 src: '#new_basic_1'
@@ -293,7 +487,7 @@
             type: 'inline',
         });
     });
-    
+
     $(document).ready(function() {
         $('#edit_basic_2-i').magnificPopup({
             items: {
@@ -314,6 +508,33 @@
         $('#edit_basic_3-i').magnificPopup({
             items: {
                 src: '#new_basic_3-i'
+            },
+            type: 'inline',
+        });
+    });
+
+    $(document).ready(function() {
+        $('#edit_slps_1').magnificPopup({
+            items: {
+                src: '#new_basic_p1'
+            },
+            type: 'inline',
+        });
+    });
+
+    $(document).ready(function() {
+        $('#edit_slps_2').magnificPopup({
+            items: {
+                src: '#new_basic_p2'
+            },
+            type: 'inline',
+        });
+    });
+
+    $(document).ready(function() {
+        $('#edit_slps_3').magnificPopup({
+            items: {
+                src: '#new_basic_p3'
             },
             type: 'inline',
         });

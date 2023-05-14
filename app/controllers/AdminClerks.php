@@ -1,7 +1,14 @@
 <?php
+require_once "D:/installed apps/XAMPP/htdocs/Ezymanage/app/vendor/autoload.php";
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\SMTP;
+
 class AdminClerks extends Controller
 {
     private $adminClerkModel;
+    private $commonModel;
     private $userModel;
 
 
@@ -12,6 +19,7 @@ class AdminClerks extends Controller
         }
 
         $this->adminClerkModel = $this->model('AdminClerk');
+        $this->commonModel = $this->model('Common');
         $this->userModel = $this->model('User');
     }
 
@@ -40,13 +48,13 @@ class AdminClerks extends Controller
             ];
 
             if (empty($data['search'])) {
-                $data['teachers'] = $this->adminClerkModel->getTeacherDeatail();
+                $data['teachers'] = $this->commonModel->getTeacherDeatail();
             } else {
-                $data['teachers'] = $this->adminClerkModel->searchTeachers($data);
+                $data['teachers'] = $this->commonModel->searchTeachers($data);
             }
         } else {
             $data = [
-                'teachers' => $this->adminClerkModel->getTeacherDeatail(),
+                'teachers' => $this->commonModel->getTeacherDeatail(),
                 'search' => '',
                 'schools_err' => '',
             ];
@@ -69,13 +77,13 @@ class AdminClerks extends Controller
             ];
 
             if (empty($data['search'])) {
-                $data['principals'] = $this->adminClerkModel->getPrincipalDeatail();
+                $data['principals'] = $this->commonModel->getPrincipalDeatail();
             } else {
-                $data['principals'] = $this->adminClerkModel->searchPrincipals($data);
+                $data['principals'] = $this->commonModel->searchPrincipals($data);
             }
         } else {
             $data = [
-                'principals' => $this->adminClerkModel->getPrincipalDeatail(),
+                'principals' => $this->commonModel->getPrincipalDeatail(),
                 'search' => '',
                 'schools_err' => '',
             ];
@@ -97,13 +105,13 @@ class AdminClerks extends Controller
             ];
 
             if (empty($data['search'])) {
-                $data['directors'] = $this->adminClerkModel->getDirectorDeatail();
+                $data['directors'] = $this->commonModel->getDirectorDeatail();
             } else {
-                $data['directors'] = $this->adminClerkModel->searchDirectors($data);
+                $data['directors'] = $this->commonModel->searchDirectors($data);
             }
         } else {
             $data = [
-                'directors' => $this->adminClerkModel->getDirectorDeatail(),
+                'directors' => $this->commonModel->getDirectorDeatail(),
                 'search' => '',
                 'schools_err' => '',
             ];
@@ -125,13 +133,13 @@ class AdminClerks extends Controller
             ];
 
             if (empty($data['search'])) {
-                $data['schoolClerks'] = $this->adminClerkModel->getSchoolClerksDetail();
+                $data['schoolClerks'] = $this->commonModel->getSchoolClerksDetail();
             } else {
-                $data['schoolClerks'] = $this->adminClerkModel->searchSchoolClerks($data);
+                $data['schoolClerks'] = $this->commonModel->searchSchoolClerks($data);
             }
         } else {
             $data = [
-                'schoolClerks' => $this->adminClerkModel->getSchoolClerksDetail(),
+                'schoolClerks' => $this->commonModel->getSchoolClerksDetail(),
                 'search' => '',
                 'schools_err' => '',
             ];
@@ -153,13 +161,13 @@ class AdminClerks extends Controller
             ];
 
             if (empty($data['search'])) {
-                $data['transferClerks'] = $this->adminClerkModel->getTransferDeatail();
+                $data['transferClerks'] = $this->commonModel->getTransferDeatail();
             } else {
-                $data['transferClerks'] = $this->adminClerkModel->searchTransferClerks($data);
+                $data['transferClerks'] = $this->commonModel->searchTransferClerks($data);
             }
         } else {
             $data = [
-                'transferClerks' => $this->adminClerkModel->getTransferClerksDeatail(),
+                'transferClerks' => $this->commonModel->getTransferClerksDeatail(),
                 'search' => '',
                 'schools_err' => '',
             ];
@@ -181,13 +189,13 @@ class AdminClerks extends Controller
             ];
 
             if (empty($data['search'])) {
-                $data['zonalClerks'] = $this->adminClerkModel->getZonalClerkDetail();
+                $data['zonalClerks'] = $this->commonModel->getZonalClerkDetail();
             } else {
-                $data['zonalClerks'] = $this->adminClerkModel->searchZonalClerks($data);
+                $data['zonalClerks'] = $this->commonModel->searchZonalClerks($data);
             }
         } else {
             $data = [
-                'zonalClerks' => $this->adminClerkModel->getZonalClerkDetail(),
+                'zonalClerks' => $this->commonModel->getZonalClerkDetail(),
                 'search' => '',
                 'schools_err' => '',
             ];
@@ -210,13 +218,13 @@ class AdminClerks extends Controller
             ];
 
             if (empty($data['search'])) {
-                $data['schools'] = $this->adminClerkModel->getSchoolDeatail();
+                $data['schools'] = $this->commonModel->getSchoolDeatail();
             } else {
-                $data['schools'] = $this->adminClerkModel->searchSchools($data);
+                $data['schools'] = $this->commonModel->searchSchools($data);
             }
         } else {
             $data = [
-                'schools' => $this->adminClerkModel->getSchoolDeatail(),
+                'schools' => $this->commonModel->getSchoolDeatail(),
                 'search' => '',
                 'schools_err' => '',
             ];
@@ -557,7 +565,7 @@ class AdminClerks extends Controller
             if (empty($data['nic'])) {
                 $data['NIC_err'] = 'Please enter NIC';
             }
-            if (empty($data['step'])){
+            if (empty($data['step'])) {
                 $data['step_err'] = 'Please enter salary step';
             }
 
@@ -579,10 +587,23 @@ class AdminClerks extends Controller
 
                 //register user
                 if ($this->adminClerkModel->addTeacher($data)) {
-                    flash('register_success', 'Teacher added successfully');
+                    $data['result'] = true;
+                    $accessToken = $this->generateToken();
+                    $data['token'] = $accessToken['code'];
+                    $this->adminClerkModel->insertAccessToken($data);
+                    if ($this->sendAccessEmail($data)) {
+                        $data['result'] = true;
+                    } else {
+                        $data['result'] = false;
+                        $data['alert'] = "Teacher registered but email not sent.";
+                    }
+                    $_SESSION['status'] = 'success';
+                    $_SESSION['tittle'] = 'Success';
+                    $_SESSION['message'] = 'Teacher added successfully';
                     redirect('adminclerks/viewDetails');
                 } else {
-                    die('Something went wrong');
+                    $data['result'] = false;
+                    $this->view('adminclerks/add_teacher');
                 }
             } else {
                 $this->view('adminclerks/add_teacher', $data);
@@ -735,7 +756,19 @@ class AdminClerks extends Controller
 
                 //register user
                 if ($this->adminClerkModel->addPrincipal($data)) {
-                    flash('register_success', 'You are registered and can log in');
+                    $data['result'] = true;
+                    $accessToken = $this->generateToken();
+                    $data['token'] = $accessToken['code'];
+                    $this->adminClerkModel->insertAccessToken($data);
+                    if ($this->sendAccessEmail($data)) {
+                        $data['result'] = true;
+                    } else {
+                        $data['result'] = false;
+                        $data['alert'] = "Teacher registered but email not sent.";
+                    }
+                    $_SESSION['status'] = 'success';
+                    $_SESSION['tittle'] = 'Success';
+                    $_SESSION['message'] = 'Principal added successfully';
                     redirect('adminclerks/viewDetails_principal');
                 } else {
                     die('Something went wrong');
@@ -883,7 +916,19 @@ class AdminClerks extends Controller
 
                 //register user
                 if ($this->adminClerkModel->addSchoolClerk($data)) {
-                    flash('register_success', 'You are registered and can log in');
+                    $data['result'] = true;
+                    $accessToken = $this->generateToken();
+                    $data['token'] = $accessToken['code'];
+                    $this->adminClerkModel->insertAccessToken($data);
+                    if ($this->sendAccessEmail($data)) {
+                        $data['result'] = true;
+                    } else {
+                        $data['result'] = false;
+                        $data['alert'] = "Teacher registered but email not sent.";
+                    }
+                    $_SESSION['status'] = 'success';
+                    $_SESSION['tittle'] = 'Success';
+                    $_SESSION['message'] = 'school Clerk added successfully';
                     redirect('adminclerks/viewDetails_schoolClerk');
                 } else {
                     die('Something went wrong');
@@ -1000,7 +1045,9 @@ class AdminClerks extends Controller
             if (empty($data['name_err']) && empty($data['address_err']) && empty($data['contact_num_err']) && empty($data['email_err']) && empty($data['moto_err']) && empty($data['vision_err']) && empty($data['mission_err']) && empty($data['principal_err']) && empty($data['school_type_err']) && empty($data['student_count_err']) && empty($data['teacher_count_err'])) {
                 //validated
                 if ($this->adminClerkModel->addSchool($data)) {
-                    flash('register_success', 'School added successfully');
+                    $_SESSION['status'] = 'success';
+                    $_SESSION['tittle'] = 'Success';
+                    $_SESSION['message'] = 'Teacher added successfully';
                     redirect('adminclerks/viewDetails_schools');
                 } else {
                     die('Something went wrong');
@@ -1137,7 +1184,19 @@ class AdminClerks extends Controller
 
                 //register user
                 if ($this->adminClerkModel->addZonalClerk($data)) {
-                    flash('register_success', 'You are registered and can log in');
+                    $data['result'] = true;
+                    $accessToken = $this->generateToken();
+                    $data['token'] = $accessToken['code'];
+                    $this->adminClerkModel->insertAccessToken($data);
+                    if ($this->sendAccessEmail($data)) {
+                        $data['result'] = true;
+                    } else {
+                        $data['result'] = false;
+                        $data['alert'] = "Teacher registered but email not sent.";
+                    }
+                    $_SESSION['status'] = 'success';
+                    $_SESSION['tittle'] = 'Success';
+                    $_SESSION['message'] = 'Clerk added successfully';
                     redirect('adminclerks/viewDetails_zonalClerks');
                 } else {
                     die('Something went wrong');
@@ -1195,5 +1254,96 @@ class AdminClerks extends Controller
         ];
 
         $this->view('adminclerks/volunteers_moreDetails', $data);
+    }
+
+    public function generateToken()
+    {
+        $token['code'] = bin2hex(random_bytes(16));
+        // $token['time'] = time();
+        // $token['expire'] = $token['time'] + (60*60*24);
+
+        return $token;
+    }
+
+    public function sendEmail($to, $subject, $message)
+    {
+        // Load PHPMailer
+        $mail = new PHPMailer(true);
+
+        try {
+            // Configure mail settings
+            $mail->isSMTP();
+            $mail->Host = 'smtp.gmail.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = 'ezymanagems@gmail.com';
+            $mail->Password = 'kgjaqizhqkzxfxlm';
+            $mail->SMTPSecure = 'ssl';
+            $mail->Port = 465;
+
+            // Set sender and recipient
+            $mail->setFrom('ezymanagems@gmail.com', 'Ezymanage Admin');
+            $mail->addAddress($to);
+
+            // Set email content
+            $mail->isHTML(true);
+            $mail->Subject = $subject;
+            $mail->Body    = $message;
+
+            // Send the email
+            $mail->send();
+            return true;
+        } catch (Exception $e) {
+            // Log the error or display an error message
+            error_log("Email could not be sent. PHPMailer Error: {$mail->ErrorInfo}");
+            return false;
+        }
+    }
+
+    public function sendAccessEmail($data)
+    {
+        $accessLink = URLROOT . "/users/setPassword/{$data['token']}";
+        $phpmailer = new PHPMailer();
+        $phpmailer->isSMTP();
+        $phpmailer->Host = 'smtp.gmail.com';
+        $phpmailer->SMTPAuth = true;
+        $phpmailer->SMTPSecure = 'ssl';
+        $phpmailer->Port = 465;
+        $phpmailer->Username = 'ezymanagems@gmail.com';
+        $phpmailer->Password = 'kgjaqizhqkzxfxlm';
+
+
+        $phpmailer->setFrom('ezymanagems@gmail.com', 'Ezymanage Admin');
+        $phpmailer->addAddress($data['email'], $data['full_name']);
+        $phpmailer->Subject = 'Link to access account';
+        $phpmailer->msgHTML($this->getAccessEmail($accessLink));
+        $phpmailer->AltBody = 'Use this link to access your account';
+
+
+        if ($phpmailer->send()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function getAccessEmail($link)
+    {
+        return "
+    <!DOCTYPE html>
+    <html lang=\"en\">
+    <head>
+        <meta charset=\"UTF-8\">
+        <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">
+        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
+        <title>Account Access</title>
+    </head>
+    <body>
+        <p><center>Welcome to <b>Ezymanage</b></center><br>
+            Use the following link to access your account and change the password.
+        </p>
+        <a href=\"{$link}\">Access my account</a>
+    </body>
+    </html>
+    ";
     }
 }

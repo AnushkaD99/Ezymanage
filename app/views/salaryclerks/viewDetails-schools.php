@@ -57,7 +57,7 @@
                     <div class="search-bar">
                         <div class="form">
                             <form action="" method="POST">
-                                <input type="text" placeholder="Search by school registration number or school name" class="search-tab" name="search"><!-- gap 
+                                <input type="text" placeholder="Search by School Registration number or name" class="search-tab" id="search-input" name="search"><!-- gap 
                                     --><button type="submit" class="search-btn"><i class="fa-solid fa-search"></i>Search</button>
                             </form>
                         </div>
@@ -69,12 +69,20 @@
                     <tr>
                         <th>School Reg.No</th>
                         <th>Name</th>
+                        <th>School type</th>
+                        <th>Name of the Principal</th>
+                        <th>Phone Number</th>
+                        <th>Address</th>
                         <th>View more details</th>
                     </tr>
                     <?php foreach ($data['schools'] as $school) : ?>
-                        <tr>
-                            <td> <?php echo $school->school_id; ?></td>
-                            <td> <?php echo $school->name; ?></td>
+                        <tr class="employee-row">
+                            <td class="emp-id"> <?php echo $school->school_id; ?></td>
+                            <td class="emp-name"> <?php echo $school->name; ?></td>
+                            <td> <?php echo $school->type; ?></td>
+                            <td> <?php echo $school->principal; ?></td>
+                            <td> <?php echo $school->contact_num; ?></td>
+                            <td> <?php echo $school->address; ?></td>
                             <td id="center"> <a href="<?php echo URLROOT; ?>/salaryclerks/viewMoreSchoolDetails/<?php echo $school->school_id; ?>" class="btn3">More</a></td>
                         </tr>
                     <?php endforeach; ?>

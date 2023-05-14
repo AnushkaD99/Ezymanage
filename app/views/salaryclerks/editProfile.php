@@ -7,6 +7,10 @@
         <div class="edit_btn">Edit</div>
     </div>
     <img src="<?php echo URLROOT; ?>/img/uploads/<?php echo $data['users']->dp ?>" alt="user" class="user">
+    <form action="<?php echo URLROOT; ?>/salaryclerks/updateProfilePicture" method="POST" enctype="multipart/form-data">
+        <input type="file" name="fileImg">
+        <input type="submit" value="Upload">
+    </form>
 </div>
 
 <!-- Change Personal info -->
@@ -39,6 +43,14 @@
         </div>
         <div class="main-editprofile-block">
             <div class="main-editprofile-left">
+                NIC :
+            </div>
+            <div class="main-editprofile-right">
+                <input type="text" name="nic" class="textBox" value="<?php echo $data['users']->nic ?>">
+            </div>
+        </div>
+        <div class="main-editprofile-block">
+            <div class="main-editprofile-left">
                 Birthday :
             </div>
             <div class="main-editprofile-right">
@@ -47,26 +59,10 @@
         </div>
         <div class="main-editprofile-block">
             <div class="main-editprofile-left">
-                Contact number :
+                Gender :
             </div>
             <div class="main-editprofile-right">
-                <input type="text" name="contact_num" class="textBox" value="<?php echo $data['users']->contact_num ?>">
-            </div>
-        </div>
-        <div class="main-editprofile-block">
-            <div class="main-editprofile-left">
-                Email :
-            </div>
-            <div class="main-editprofile-right">
-                <input type="text" name="email" class="textBox" value="<?php echo $data['users']->email ?>">
-            </div>
-        </div>
-        <div class="main-editprofile-block">
-            <div class="main-editprofile-left">
-                Address :
-            </div>
-            <div class="main-editprofile-right">
-                <input type="text" name="address" class="textBox" value="<?php echo $data['users']->address ?>">
+                <input type="text" name="gender" class="textBox" value="<?php echo $data['users']->gender ?>">
             </div>
         </div>
         <div class="col-2-btn">

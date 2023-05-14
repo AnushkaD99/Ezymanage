@@ -56,8 +56,8 @@
                     <div class="space"></div>
                     <div class="search-bar">
                         <div class="form">
-                            <form action="" method="POST">
-                                <input type="text" placeholder="Search by Employee number or name" class="search-tab" name="search"><!-- gap 
+                        <form action="" method="POST">
+                                <input type="text" placeholder="Search by Employee number or name" class="search-tab" id="search-input" name="search"><!-- gap 
                                     --><button type="submit" class="search-btn"><i class="fa-solid fa-search"></i>Search</button>
                             </form>
                         </div>
@@ -69,12 +69,18 @@
                     <tr>
                         <th>Emp no:</th>
                         <th>Name</th>
+                        <th>Name with Initials</th>
+                        <th>Email</th>
+                        <th>Contact Number</th>
                         <th>View more details</th>
                     </tr>
                     <?php foreach ($data['directors'] as $directors) : ?>
-                        <tr>
-                            <td> <?php echo $directors->emp_no; ?></td>
-                            <td> <?php echo $directors->full_name; ?></td>
+                        <tr class="employee-row">
+                            <td class="emp-id"> <?php echo $directors->emp_no; ?></td>
+                            <td class="emp-name"> <?php echo $directors->full_name; ?></td>
+                            <td class="emp-name-with-initials"> <?php echo $directors->name_with_initials; ?></td>
+                            <td class="emp-email"> <?php echo $directors->email; ?></td>
+                            <td class="emp-contact-number"> <?php echo $directors->contact_num; ?></td>
                             <td id="center"> <a href="<?php echo URLROOT; ?>/salaryclerks/viewMoreDirectorDetails/<?php echo $directors->emp_no; ?>" class="btn3">More</a></td>
                         </tr>
                     <?php endforeach; ?>

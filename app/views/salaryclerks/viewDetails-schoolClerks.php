@@ -55,10 +55,10 @@
                 <div class="space"></div>
                 <div class="search-bar">
                     <div class="form">
-                        <form action="" method="POST">
-                            <input type="text" placeholder="Search by Employee number or name" class="search-tab" name="search"><!--gap
-                                --><button type="submit" class="search-btn"><i class="fa-solid fa-search"></i>Search</button>
-                        </form>
+                    <form action="" method="POST">
+                                <input type="text" placeholder="Search by Employee number or name" class="search-tab" id="search-input" name="search"><!-- gap 
+                                    --><button type="submit" class="search-btn"><i class="fa-solid fa-search"></i>Search</button>
+                            </form>
                     </div>
                     <!-- <div class="add">
                             <a href="<?php echo URLROOT; ?>/salaryclerks/add_schoolClerk"><div class="btn3"><i class="fa-solid fa-plus"></i> Add School Clerk</div></a>
@@ -67,21 +67,21 @@
                 <br>
                 <tr>
                     <th>Emp No</th>
-                    <th>Name</th>
+                    <th>Full Name</th>
+                    <th>Name eith initials</th>
                     <th>School</th>
-                    <th>Address</th>
+                    <th>Email</th>
                     <th>Contact Number</th>
-                    <th>Birthday</th>
                     <th>NIC</th>
                 </tr>
                 <?php foreach ($data['schoolClerks'] as $schoolClerks) : ?>
-                    <tr>
-                        <td><?php echo $schoolClerks->emp_no; ?></td>
-                        <td><?php echo $schoolClerks->name_with_initials; ?></td>
+                    <tr class="employee-row">
+                        <td class="emp-id"><?php echo $schoolClerks->emp_no; ?></td>
+                        <td class="emp-fname"><?php echo $schoolClerks->full_name; ?></td>
+                        <td class="emp-name"><?php echo $schoolClerks->name_with_initials; ?></td>
                         <td><?php echo $schoolClerks->school; ?></td>
-                        <td><?php echo $schoolClerks->address; ?></td>
+                        <td><?php echo $schoolClerks->email; ?></td>
                         <td><?php echo $schoolClerks->contact_num; ?></td>
-                        <td><?php echo $schoolClerks->birthday; ?></td>
                         <td> <?php echo $schoolClerks->nic; ?></td>
                     </tr>
                 <?php endforeach; ?>

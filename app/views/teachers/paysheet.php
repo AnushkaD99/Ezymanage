@@ -1,9 +1,9 @@
 <?php require_once APPROOT . '/views/inc/header.php'; ?>
-    <div class="container">
-        <!-- Start navbar -->
-        <?php require_once APPROOT . '/views/inc/navbar.php'; ?>
-        <!-- Start sidebar -->
-        <div class="sidebar">
+<div class="container">
+    <!-- Start navbar -->
+    <?php require_once APPROOT . '/views/inc/navbar.php'; ?>
+    <!-- Start sidebar -->
+    <div class="sidebar">
         <ul>
             <li>
                 <a href="<?php echo URLROOT; ?>/teachers/index"><i class="fa-solid fa-house"></i><span class="link">Home</span></a>
@@ -43,116 +43,106 @@
             <hr>
             <a href="<?php echo URLROOT; ?>/users/logout"><i class="fa-solid fa-sign-out"></i><span class="link">Logout</span></a>
         </div>
-        </div>
-        <!-- End sidebar -->
-        <div class="main">
-            <div class="main-2col">
-                <div class="main-2col-left">
-                    <div class="tittle">
-                        <h1>PAY REPORT</h1>
-                    </div>
-                    <div class="content">
-                        <div class="border-box">
-                            <h3>ZONAL EDUCATION OFFICE - COLOMBO</h3>
-                            <h3>PAY REPORT FOR MON : OCTOBER 2022</h3>
-                            <h3>Emp No.     :  000001</h3>
-                            <h3>Mr. Dutugemunu H.S</h3>
-                            <h3>Teacher</h3>
-                            <h3>Nalanda College</h3>
-                            <hr class="dashed_line">
-                            <h3>EARNINGS</h3>
-                            <div class="sub-content">
-                                <table>
-                                    <tr>
-                                        <td>Basic</td>
-                                        <td class="align-right">: 40000.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>INT  ALL 3</td>
-                                        <td class="align-right">: 5000.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>SUB TOTAL</td>
-                                        <td class="align-right">: 45000.00</td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <hr class="dashed_line">
+    </div>
+    <!-- End sidebar -->
+    <div class="main">
+        <div class="main-2col">
+            <div class="main-2col-left">
+                <div class="tittle">
+                    <h1>PAY REPORT</h1>
+                </div>
+                <div class="content">
+                    <div class="border-box">
+                        <h3>ZONAL EDUCATION OFFICE - COLOMBO</h3>
+                        <h3>PAY REPORT FOR MON : OCTOBER 2022</h3>
+                        <h3>Emp No. : <?php echo $data['user']->emp_no; ?></h3>
+                        <h3>Name : <?php echo $data['user']->name_with_initials; ?></h3>
+                        <h3>Position : <?php echo $data['user']->designation; ?></h3>
+                        <h3>School : <?php echo $data['school']; ?></h3>
+                        <hr class="dashed_line">
+                        <h3>EARNINGS</h3>
+                        <div class="sub-content">
                             <table>
                                 <tr>
-                                    <td>C.O.L</td>
-                                    <td class="align-right">: 2000.00</td>
+                                    <td>Basic</td>
+                                    <td class="align-right">: <?php echo number_format($data['payslip']->basic_salary, 2); ?></td>
                                 </tr>
-                            </table>
-                            <hr class="dashed_line">
-                            <table>
-                                <tr>
-                                    <td>GROSS PAY</td>
-                                    <td class="align-right">: 47000.00</td>
-                                </tr>
-                            </table>
-                            <h3>DEDUCTIONS</h3>
-                            <div class="sub-content">
-                                <table>
+                                <?php foreach ($data['allowances'] as $allowance) : ?>
                                     <tr>
-                                        <td>W. & O. P</td>
-                                        <td class="align-right">: 1575.00</td>
+                                        <td><?php echo $allowance->allowance_name; ?></td>
+                                        <td class="align-right">: <?php echo number_format($allowance->amount, 2); ?></td>
                                     </tr>
-                                    <tr>
-                                        <td>STAMP</td>
-                                        <td class="align-right">: 25.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>AGRAHARA</td>
-                                        <td class="align-right">: 500.00</td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <table>
-                                <tr>
-                                    <td>TOT. DED.</td>
-                                    <td class="align-right">: 2100.00</td>
-                                </tr>
-                            </table>
-                            <hr class="dashed_line">
-                            <table>
-                                <tr>
-                                    <td>NET PAY</td>
-                                    <td class="align-right">: 44900.00</td>
-                                </tr>
+                                <?php endforeach; ?>
                             </table>
                         </div>
-                        <button class="submit-btn">APPROVE</button>
-                    </div>
-                </div>
-                <div class="main-2col-right">
-                    <div class="content">
-                        <div class="submit-btn">Download Paysheet</div>
-                        <div class="submit-btn">Print Paysheet</div>
-                    </div>
-                    <div class="content" id="center">
-                        <h3>PAYSHEET STATUS</h3>
-                        Principal Appproval : <span class="status">Pending</span>
-                    </div>
-                    <div class="content">
-                        <h3 id="center">PAYSHEETS</h3>
-                        <table class="row-space">
+                        <hr class="dashed_line">
+                        <table>
                             <tr>
-                                <td>2023 January</td>
-                                <td class="view-btn">View</td>
+                                <td>GROSS PAY</td>
+                                <td class="align-right">: <?php echo number_format($data['gross_pay'], 2); ?></td>
                             </tr>
-                            <tr>
-                                <td>2022 December</td>
-                                <td class="view-btn">View</td>
-                            </tr>
-                            <tr>
-                                <td>2022 November</td>
-                                <td class="view-btn">View</td>
                         </table>
-                        <div class="submit-btn">See More</div>
+                        <h3>DEDUCTIONS</h3>
+                        <div class="sub-content">
+                            <table>
+                                <?php foreach ($data['deductions'] as $deduction) : ?>
+                                    <tr>
+                                        <td><?php echo $deduction->name; ?></td>
+                                        <?php $amount = $deduction->amount;
+                                        if ($deduction->name == 'W. & O. P.') {
+                                            $amount = $data['payslip']->basic_salary * $amount / 100;
+                                        }
+                                        ?>
+                                        <td class="align-right">: <?php echo number_format($amount, 2); ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </table>
+                        </div>
+                        <table>
+                            <tr>
+                                <td>TOT. DED.</td>
+                                <td class="align-right">: <?php echo number_format($data['payslip']->deductions, 2); ?></td>
+                            </tr>
+                        </table>
+                        <hr class="dashed_line">
+                        <table>
+                            <tr>
+                                <td>NET PAY</td>
+                                <td class="align-right">: <?php echo number_format($data['payslip']->net_salary, 2); ?></td>
+                            </tr>
+                        </table>
                     </div>
+                    <button class="submit-btn">APPROVE</button>
+                </div>
+            </div>
+            <div class="main-2col-right">
+                <div class="content">
+                    <div class="submit-btn">Download Paysheet</div>
+                    <div class="submit-btn">Print Paysheet</div>
+                </div>
+                <div class="content" id="center">
+                    <h3>PAYSHEET STATUS</h3>
+                    Principal Appproval : <span class="status">Pending</span>
+                </div>
+                <div class="content">
+                    <h3 id="center">PAYSHEETS</h3>
+                    <table class="row-space">
+                        <tr>
+                            <td>2023 January</td>
+                            <td class="view-btn">View</td>
+                        </tr>
+                        <tr>
+                            <td>2022 December</td>
+                            <td class="view-btn">View</td>
+                        </tr>
+                        <tr>
+                            <td>2022 November</td>
+                            <td class="view-btn">View</td>
+                    </table>
+                    <div class="submit-btn">See More</div>
                 </div>
             </div>
         </div>
     </div>
-<?php require APPROOT . '/views/inc/footer.php'; ?>   
+</div>
+<?php require APPROOT . '/views/inc/footer.php'; ?>

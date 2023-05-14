@@ -42,7 +42,7 @@
                 </a>
             </div>
             <div class="content">
-                <button id="add">Add Deduction</button>
+            <button onclick="openModal_add()">Add Deduction</button>
                 <h3>deductions</h3>
                 <table id="table-customize">
                     <tr>
@@ -59,13 +59,10 @@
                             <td>
                                 <div class="action_btns">
                                     <div class="edit_btn">
-                                        <button class="edt_btn" onclick="openPopup('<?php echo $deduction->name; ?>', '<?php echo $deduction->amount; ?>')"><i class="fa-solid fa-pen-to-square"></i></button>
+                                        <button class="edt_btn" onclick="openModal_edit('<?php echo $deduction->id; ?>' , '<?php echo $deduction->name; ?>' , '<?php echo $deduction->amount; ?>')"><i class="fa-solid fa-pen-to-square"></i></button>
                                     </div>
                                     <div class="delete_btn">
-                                        <form action="" method="POST">
-                                            <input type="hidden" value="<?php echo $deduction->id; ?>">
-                                            <button type="submit" class="dlt_btn"><i class="fa-solid fa-trash"></i></button>
-                                        </form>
+                                    <a href="<?php echo URLROOT; ?>/salaryclerks/delete_deduction/<?php echo $deduction->id; ?>"><button class="dlt_btn"><i class="fa-solid fa-trash"></i></button></a>
                                     </div>
                                 </div>
                             </td>
@@ -78,57 +75,71 @@
 </div>
 
 <!-- Edit deduction popup -->
-<div class="mfp-hide white-popup personal_info" id="edit_deduction">
-    <form action="" method="POST">
-        <h3>Add deduction</h3>
-        <div class="main-editprofile-block">
-            <div class="main-editprofile-left">
-                Name of the deduction :
-            </div>
-            <div class="main-editprofile-right">
-                <input type="text" name="name" class="textBox" id=all_name>
-            </div>
+
+
+<div id="myModal_edit" class="modal">
+    <div class="modal-content">
+        <div class="close" onclick="closeModal_edit()">&times;</div>
+        <div>
+            <form action="" method="POST">
+                <h3>Add deduction</h3>
+                <div class="main-editprofile-block">
+                    <div class="main-editprofile-left">
+                        Name of the deduction :
+                    </div>
+                    <div class="main-editprofile-right">
+                        <input type="text" name="name" class="textBox" id=ded_name>
+                    </div>
+                </div>
+                <div class="main-editprofile-block">
+                    <div class="main-editprofile-left">
+                        Amount :
+                    </div>
+                    <div class="main-editprofile-right">
+                        <input type="int" name="amount" class="textBox" id=ded_amount>
+                    </div>
+                </div>
+                <div class="col-2-btn">
+                    <input type="hidden" name="id" id="ded_id">
+                    <input type="submit" name="edit_ded" id="submit" value="Submit" class="fullBtn">
+                    <input type="reset" value="Reset" class="fullBtn">
+                </div>
+            </form>
         </div>
-        <div class="main-editprofile-block">
-            <div class="main-editprofile-left">
-                Amount :
-            </div>
-            <div class="main-editprofile-right">
-                <input type="int" name="amount" class="textBox" placeholder="Enter here">
-            </div>
-        </div>
-        <div class="col-2-btn">
-            <input type="submit" name="submit_all" id="submit" value="Submit" class="fullBtn">
-            <input type="reset" value="Reset" class="fullBtn">
-        </div>
-    </form>
+    </div>
 </div>
 
 <!-- Add deduction popup -->
-<div class="mfp-hide white-popup personal_info" id="add_deductions">
-    <form action="" method="POST">
-        <h3>Add Deduction</h3>
-        <div class="main-editprofile-block">
-            <div class="main-editprofile-left">
-                Name of the Deduction :
-            </div>
-            <div class="main-editprofile-right">
-                <input type="text" name="name" class="textBox" placeholder="Enter Starting Step Basic Salary">
-            </div>
+
+<div id="myModal_add" class="modal">
+    <div class="modal-content">
+        <div class="close" onclick="closeModal_add()">&times;</div>
+        <div>
+            <form action="" method="POST">
+                <h3>Add Deduction</h3>
+                <div class="main-editprofile-block">
+                    <div class="main-editprofile-left">
+                        Name of the Deduction :
+                    </div>
+                    <div class="main-editprofile-right">
+                        <input type="text" name="name" class="textBox" placeholder="Enter Starting Step Basic Salary">
+                    </div>
+                </div>
+                <div class="main-editprofile-block">
+                    <div class="main-editprofile-left">
+                        Amount :
+                    </div>
+                    <div class="main-editprofile-right">
+                        <input type="int" name="amount" class="textBox" placeholder="Enter here">
+                    </div>
+                </div>
+                <div class="col-2-btn">
+                    <input type="submit" name="submit_deduction" id="submit" value="Submit" class="fullBtn">
+                    <input type="reset" value="Reset" class="fullBtn">
+                </div>
+            </form>
         </div>
-        <div class="main-editprofile-block">
-            <div class="main-editprofile-left">
-                Amount :
-            </div>
-            <div class="main-editprofile-right">
-                <input type="int" name="amount" class="textBox" placeholder="Enter here">
-            </div>
-        </div>
-        <div class="col-2-btn">
-            <input type="submit" name="submit_deduction" id="submit" value="Submit" class="fullBtn">
-            <input type="reset" value="Reset" class="fullBtn">
-        </div>
-    </form>
+    </div>
 </div>
 
 <!-- Include jQuery and Magnific-Popup JavaScript -->
@@ -136,23 +147,26 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
 
 <script>
-    $(document).ready(function() {
-        $('#add').magnificPopup({
-            items: {
-                src: '#add_deductions'
-            },
-            type: 'inline',
-        });
-    });
+    function openModal_edit(id, name, amount) {
+        document.getElementById("myModal_edit").style.display = "block";
 
-    $(document).ready(function() {
-        $('#get_form').magnificPopup({
-            items: {
-                src: '#edit_deduction'
-            },
-            type: 'inline',
-        });
-    });
+        // Set the existing subject and details in the input fields
+        document.getElementById('ded_name').value = name;
+        document.getElementById('ded_amount').value = amount;
+        document.getElementById('ded_id').value = id;
+    }
+
+    function openModal_add() {
+        document.getElementById("myModal_add").style.display = "block";
+    }
+
+    function closeModal_edit() {
+        document.getElementById("myModal_edit").style.display = "none";
+    }
+
+    function closeModal_add() {
+        document.getElementById("myModal_add").style.display = "none";
+    }
 </script>
 
 <?php require APPROOT . '/views/inc/footer.php'; ?>

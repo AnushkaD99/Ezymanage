@@ -6,23 +6,16 @@
             echo ('<script>alert("Prescription Successfully Submited")</script>'); // print_r($_GET);
         }
         ?> -->
-<section>
-    <div class="slide-show-container">
-        <div class="wrapper-one">
-            <div class="wrapper-text"></div>
-        </div>
-        <div class="wrapper-two">
-            <div class="wrapper-text"></div>
-        </div>
-        <div class="wrapper-three">
-            <div class="wrapper-text"></div>
-        </div>
+<section class="section1">
+    <div class="main-cont">
+        <h4>"Welcome to our revolutionary web application, empowering education management. </h4>
+        <h4>Experience efficient and effective education administration like never before!" </h4> 
     </div>
 </section>
 
 <section class="features">
     <div class="features-inner">
-        <div class="features-card" style="border-radius:15px 0px 0px 15px">
+        <div class="features-card" style="border-radius:15px 0px 0px 15px; background-color:#D7E2FF;">
 
             <div style="font-size: 3rem;">
                 <i class="fa fa-phone-square" aria-hidden="true"></i>
@@ -30,28 +23,27 @@
 
             <h2>Emergency Cases</h2>
 
-            <p>Please feel free to contact our friendly reception staff with any general or
-                medical enquiry.<br></p>
+            <p>Please feel free to contact our friendly reception staff with any general enquiry.<br></p>
         </div>
 
-        <div class="features-card" style="background-color:#2d4990;">
+        <div class="features-card" style="background-color:#D7E2FF;">
 
             <div style="font-size: 3rem;">
-                <i class="fa fa-medkit " aria-hidden="true"></i>
+                <i class="fa fa-book " aria-hidden="true"></i>
             </div>
 
-            <h2>Health Checkup</h2>
+            <h2>Volanteer</h2>
 
-            <p>Make an appointment with our panel of expert physicians and learn about maintaining a wholesome lifestyle and good health.</p>
+            <p>Those who are passionate about teaching and want to make a difference can register their interest for volunteer teaching.</p>
 
         </div>
-        <div class="features-card" style="background-color:#21cdc0;border-radius:0px 15px 15px 0px">
+        <div class="features-card" style="background-color:#D7E2FF; border-radius:0px 15px 15px 0px">
 
             <div style="font-size: 3rem;">
-                <i class="fa fa-truck" aria-hidden="true"></i>
+                <i class="fa fa-money" aria-hidden="true"></i>
             </div>
-            <h2>Online Pharmacy</h2>
-            <p>Order medicine online with few clicks and recieve medicine to your doorsteps </p>
+            <h2>Donation</h2>
+            <p>Empower the next generation with your donation to support school projects.</p>
         </div>
 
     </div>
@@ -63,15 +55,14 @@
 <section id="about" class="about">
     <div class="about-left">
         <h1>About Us</h1><br><br>
-        <h2>Ensuring the Best in the Industry</h2><br>
-        <p>MDK Hospitals is the most accredited hospital in the Sri Lankan<br> healthcare sector. Since 2011, MDK Hospitals has revolutionized<br> the healthcare industry through infrastructure development <br>and advancement of products and services, with a view to deliver<br> healthcare that is on par with global medical standards.
-        </p>
-
-
+        <p>"At <b>Ezymanage,</b> we believe that education is the cornerstone of progress and development. 
+        That's why we're passionate about using the power of technology to improve education management and support teachers and students alike. 
+        Our team of dedicated professionals is committed to delivering innovative solutions that streamline processes, enhance collaboration, and foster data-driven decision-making. 
+        Join us on our mission to create a brighter future for education!"</p>
     </div>
 
     <div class="about-right">
-        <img src="<?php echo URLROOT ?>/public/images/c1.jpg">
+        <img style="padding-top:200px" src="<?php echo URLROOT ?>/public/img/logo.png">
     </div>
 
 
@@ -81,22 +72,24 @@
 </section>
 
 
-
 <section id="op" class="op">
-    <div class="op-right">
-        <h1>Online Pharmacy</h1><br><br>
-        <h2>Order your medicine to the doorsteps during <br>the pandemic</h2><br>
-        <p>MDK Hospitals is committed to provide compassionate care <br> and excellent service that transcends conventional healthcare.<br> Easily order your medicines by uploading your prescriptions<br> to the MDK Hospitals online website and recieve your medicine <br> to your doorstep <br><br><br>
-
-            <a href="<?php echo URLROOT; ?>/pages/upload"><button style="padding:10px 20px 10px 20px;" class="button"><span>Upload Prescription </span></button></a>
-        </p>
-
-
-
+    <div class="op-left">
+        <h1>Volunteering</h1><br><br>
+        <h2>Become a Volunteer Teacher</h2><br>
+        <p>Are you passionate about teaching and making a difference in the 
+        lives of students? Do you want to give back to your community 
+        and help build a brighter future for the next generation? If 
+        so, we invite you to register your interest for volunteer teaching! By 
+        joining our volunteer teaching program, you can share your expertise 
+        and inspire students in your local area. Whether you have years of 
+        teaching experience or are just starting out, we welcome your enthusiasm
+         and dedication to education. Register your interest now and let's work 
+         together to create a better tomorrow!
+            <br><br><br></p>
     </div>
 
-    <div class="op-left">
-        <img src="<?php echo URLROOT ?>/public/images/op.jpg">
+    <div class="op-right">
+        <a href="<?php echo URLROOT; ?>/pages/volunteerRegistration"><button style="padding:10px 20px 10px 20px;" class="button"><span>Register as a Volunteer </span></button></a>
     </div>
 
 </section>
@@ -105,22 +98,27 @@
 <!-- facilities -->
 <section id="fac" class="fac">
     <h1>Our Facilities</h1>
-    <p>MDK Hospitals is committed to provide <br>compassionate care
-        and excellent service that transcends conventional healthcare.
+    <p>
+    Our facility offers a range of features such as teacher and principal registration, appointment management, pay sheet management, teacher transfer management, ability to donate for school projects, volunteer registration, and issue reporting.
     </p><br><br><br>
     <div class="row">
         <div class="fac-col">
-            <h3>Surgery</h3>
-            <p>MDK Hospitals has become a regional leader in complex fields of surgeries with their cutting edge technology. With the help of the expertise in different sectors, our staff offers a total care approach to our people.
+            <h3>Teacher</h3>
+            <p>
+            "This system empowers teachers to schedule appointments, manage pay sheets, view transfer lists, and donate to school projects, promoting efficient communication and streamlining the education process."    
             </p>
         </div>
         <div class="fac-col">
-            <h3>Dental</h3>
-            <p>With a dedicated team of local specialist dentists, highly trained nurses and access to the most up-to-date technology, MDK hospital is able to provide the best dental service in the area. </p>
+            <h3>Principal</h3>
+            <p>
+                "The principal can register the school, manage teacher transfers, and review complaints using the education management system, ensuring efficient school management."
+            </p>
         </div>
         <div class="fac-col">
-            <h3>Pharmacy</h3>
-            <p>MDK Hospitals Pharmacies promote rational use of medicine by providing a well-defined dispensing process with the help of professional, qualified staff in conveniently located, safe and reliable outlets. </p>
+            <h3>Director</h3>
+            <p>
+            "Directors can manage appointments with teachers, view the appointment list, and accept appointments through the system."
+            </p>
         </div>
     </div>
 
@@ -148,7 +146,7 @@
 
         </div>
         <br><br>
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3962.4554387451667!2d80.06169371460474!3d6.714141722780812!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae24b7291210f21%3A0xac1a58f519a84bf2!2sMDK%20Hospital!5e0!3m2!1sen!2slk!4v1634207145593!5m2!1sen!2slk" width="1400px" height="350px" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        <!-- <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3962.4554387451667!2d80.06169371460474!3d6.714141722780812!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae24b7291210f21%3A0xac1a58f519a84bf2!2sMDK%20Hospital!5e0!3m2!1sen!2slk!4v1634207145593!5m2!1sen!2slk" width="1400px" height="350px" style="border:0;" allowfullscreen="" loading="lazy"></iframe> -->
     </div>
 </section>
 <br>
@@ -156,15 +154,6 @@
 <?php
 require APPROOT . '/views/inc/landfooter.php';
 ?>
-
-
-
-
-
-
-
-
-
 
 <!-- JavaScript-->
 

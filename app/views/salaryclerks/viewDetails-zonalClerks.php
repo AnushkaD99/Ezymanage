@@ -56,8 +56,8 @@
                 <div class="search-bar">
                     <div class="form">
                         <form action="" method="POST">
-                            <input type="text" placeholder="Search by Employee number or name" class="search-tab" name="search"><!-- gap 
-                                --><button type="submit" class="search-btn"><i class="fa-solid fa-search"></i>Search</button>
+                            <input type="text" placeholder="Search by Employee number or name" class="search-tab" id="search-input" name="search"><!-- gap 
+                                    --><button type="submit" class="search-btn"><i class="fa-solid fa-search"></i>Search</button>
                         </form>
                     </div>
                     <!-- <div class="add">
@@ -67,21 +67,21 @@
                 <br>
                 <tr>
                     <th>Emp No</th>
-                    <th>Name</th>
-                    <th>Role</th>
-                    <th>Address</th>
+                    <th>Full Name</th>
+                    <th>Name eith initials</th>
+                    <th>Position</th>
+                    <th>Email</th>
                     <th>Contact Number</th>
-                    <th>Birthday</th>
                     <th>NIC</th>
                 </tr>
                 <?php foreach ($data['zonalClerks'] as $zonalClerks) : ?>
-                    <tr>
-                        <td><?php echo $zonalClerks->emp_no; ?></td>
-                        <td><?php echo $zonalClerks->name_with_initials; ?></td>
+                    <tr class="employee-row">
+                        <td class="emp-id"><?php echo $zonalClerks->emp_no; ?></td>
+                        <td class="emp-id"><?php echo $zonalClerks->full_name; ?></td>
+                        <td class="emp-name"><?php echo $zonalClerks->name_with_initials; ?></td>
                         <td><?php echo $zonalClerks->designation; ?></td>
-                        <td><?php echo $zonalClerks->address; ?></td>
+                        <td><?php echo $zonalClerks->email; ?></td>
                         <td><?php echo $zonalClerks->contact_num; ?></td>
-                        <td><?php echo $zonalClerks->birthday; ?></td>
                         <td><?php echo $zonalClerks->nic; ?></td>
                     </tr>
                 <?php endforeach; ?>

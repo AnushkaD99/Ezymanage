@@ -14,9 +14,9 @@
             <li>
                 <a href="<?php echo URLROOT; ?>/adminclerks/volunteers"><i class="fa-solid fa-handshake-angle"></i><span class="link">Volunteers</span></a>
             </li>
-            <li>
+            <!-- <li>
                 <a href="<?php echo URLROOT; ?>/adminclerks/verifyDetails"><i class="fa-solid fa-user-check"></i><span class="link">Verify Details</span></a>
-            </li>
+            </li> -->
             <li>
                 <a href="<?php echo URLROOT; ?>/adminclerks/profile"><i class="fa-solid fa-circle-user"></i><span class="link">Profile</span></a>
             </li>
@@ -73,13 +73,21 @@
                     <br>
                     <tr>
                         <th>Emp No</th>
-                        <th>Name</th>
+                        <th>Full Name</th>
+                        <th>Name with Initials</th>
+                        <th>School</th>
+                        <th>Grade</th>
+                        <th>Email</th>
                         <th>View more details</th>
                     </tr>
                     <?php foreach ($data['principals'] as $principal) : ?>
-                        <tr>
-                            <td> <?php echo $principal->emp_no; ?></td>
-                            <td> <?php echo $principal->full_name; ?></td>
+                        <tr class="employee-row">
+                            <td class="emp-id"> <?php echo $principal->emp_no; ?></td>
+                            <td class="emp-fname"> <?php echo $principal->full_name; ?></td>
+                            <td class="emp-name"><?php echo $principal->name_with_initials; ?></td>
+                            <td><?php echo $principal->school; ?></td>
+                            <td><?php echo $principal->grade; ?></td>
+                            <td><?php echo $principal->email; ?></td>
                             <td id="center"> <a href="<?php echo URLROOT; ?>/adminclerks/viewMorePrincipalDetails/<?php echo $principal->emp_no; ?>" class="btn3">More</a></td>
                         </tr>
                     <?php endforeach; ?>

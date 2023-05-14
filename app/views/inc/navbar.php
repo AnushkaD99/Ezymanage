@@ -1,7 +1,7 @@
 <div class="navbar">
     <div class="navbar__left">
         <div id="sidebar-toggle" class="nav-icon" onclick="toggleSidebar()">
-            <i class="fa-solid fa-bars" ></i>
+            <i class="fa-solid fa-bars"></i>
         </div>
         <div class="logo">
             <img src="<?php echo URLROOT; ?>/img/logo.png" alt="logo">
@@ -16,7 +16,7 @@
             </li>
             <li>
                 <a href="#">
-                    <i class="fa-solid fa-circle-user"></i>
+                    <img src="<?php echo URLROOT; ?>/img/uploads/<?php echo $_SESSION['dp'] ?>" alt="user" class="user_nav">
                 </a>
             </li>
             <li>

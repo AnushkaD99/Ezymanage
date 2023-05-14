@@ -1,0 +1,23 @@
+.column-2 {
+    display: grid;
+    grid-template-columns: 0.5fr 1fr;
+    grid-template-areas: "column-2-left column-2-right";
+    height: 100%;
+}
+
+.column-2-left {
+    grid-area: column-2-left;
+}
+
+.column-2-right {
+    grid-area: column-2-right;
+}
+
+.card-set{
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    border: 2px solid #c9cbce9f;
+    border-radius: 7px;
+    padding: 2% 5%;
+}

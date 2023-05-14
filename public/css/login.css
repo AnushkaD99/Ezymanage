@@ -74,3 +74,13 @@ a {
 .reg-btn{
   text-align: center;
 }
+
+.input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  padding: auto;
+  width: 100%;
+  flex-direction: row;
+}

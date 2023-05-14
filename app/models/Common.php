@@ -247,7 +247,7 @@ class Common
 
   public function getPrincipalDeatail()
   {
-    $this->db->query('SELECT * FROM users_tbl WHERE designation = "Principal"');
+    $this->db->query('SELECT * FROM users_tbl INNER JOIN principal_tbl ON users_tbl.emp_no = principal_tbl.emp_no WHERE designation = "Principal"');
 
     $results = $this->db->resultSet();
 
@@ -256,7 +256,7 @@ class Common
 
   public function getTeacherDeatail()
   {
-    $this->db->query('SELECT * FROM users_tbl INNER JOIN teacher_tbl ON users_tbl.emp_no = teacher_tbl.emp_no');
+    $this->db->query('SELECT * FROM users_tbl INNER JOIN teacher_tbl ON users_tbl.emp_no = teacher_tbl.emp_no WHERE designation = "Teacher"');
 
     $results = $this->db->resultSet();
 
@@ -274,14 +274,7 @@ class Common
 
   public function getSchoolClerksDetail()
   {
-    $this->db->query('SELECT users_tbl.emp_no as emp_no,
-    users_tbl.name_with_initials as name_with_initials,
-    users_tbl.address as address,
-    users_tbl.contact_num as contact_num,
-    users_tbl.birthday as birthday,
-    users_tbl.nic as nic,
-    school_clerk_tbl.school as school
-    FROM users_tbl INNER JOIN school_clerk_tbl ON users_tbl.emp_no = school_clerk_tbl.emp_no WHERE designation = "Clerk School"');
+    $this->db->query('SELECT *FROM users_tbl INNER JOIN school_clerk_tbl ON users_tbl.emp_no = school_clerk_tbl.emp_no WHERE designation = "Clerk School"');
 
     $results = $this->db->resultSet();
 
@@ -516,17 +509,39 @@ class Common
     $this->db->query('SELECT basic_salary FROM teacher_salary_details_tbl WHERE class = :grade AND step = :step');
 
     //bind values
-    if($grade == 'Third Class First Grade'){
+    if ($grade == 'Third Class First Grade') {
       $grade = 'Class 3-i';
     }
-    if($grade == 'Second Class Second Grade'){
+    if ($grade == 'Second Class Second Grade') {
       $grade = 'Class 2-ii';
     }
-    if($grade == 'Second Class First Grade'){
+    if ($grade == 'Second Class First Grade') {
       $grade = 'Class 2-i';
     }
-    if($grade == 'First Class'){
+    if ($grade == 'First Class') {
       $grade = 'Class 1';
+    }
+    $this->db->bind(':grade', $grade);
+    $this->db->bind(':step', $step);
+
+    $row = $this->db->single();
+
+    return $row;
+  }
+
+  public function getPrincipalsBasicSalary($grade, $step)
+  {
+    $this->db->query('SELECT basic_salary FROM principal_salary_details_tbl WHERE class = :grade AND step = :step');
+
+    //bind values
+    if ($grade == 'SLPS 1') {
+      $grade = 'SLPS 1';
+    }
+    if ($grade == 'SLPS 2') {
+      $grade = 'SLPS 2';
+    }
+    if ($grade == 'SLPS 3') {
+      $grade = 'SLPS 3';
     }
     $this->db->bind(':grade', $grade);
     $this->db->bind(':step', $step);
@@ -599,7 +614,6 @@ class Common
     $row = $this->db->single();
 
     return $row;
-
   }
 
   public function getWANDOP()
@@ -613,49 +627,120 @@ class Common
   public function getAgraharaAmount($agrahara)
   {
     $this->db->query('SELECT amount FROM agrahara_tbl WHERE scheme = :name');
-      //bind values
-      $this->db->bind(':name', $agrahara);
-      $row = $this->db->single();
+    //bind values
+    $this->db->bind(':name', $agrahara);
+    $row = $this->db->single();
 
-      return $row;
+    return $row;
   }
 
   public function getAllowances($id)
   {
-    $this->db->query('SELECT allowance_id FROM user_allowances_tbl WHERE emp_no = :emp_no');
-      //bind values
-      $this->db->bind(':emp_no', $id);
-      $results = $this->db->resultSet();
+    $this->db->query('SELECT at.name AS allowance_name, at.amount AS amount FROM user_allowances_tbl AS ua JOIN allowance_tbl AS at ON ua.allowance_id = at.id WHERE emp_no = :emp_no;');
+    //bind values
+    $this->db->bind(':emp_no', $id);
+    $results = $this->db->resultSet();
 
-      return $results;
+    return $results;
   }
 
-  public function getAllowances_amount($all_id)
-  {
-    $this->db->query('SELECT amount FROM allowance_tbl WHERE id = :all_id');
-      //bind values
-      $this->db->bind(':all_id', $all_id);
-      $row = $this->db->single();
+  // public function getAllowances_amount($all_id)
+  // {
+  //   $this->db->query('SELECT amount FROM allowance_tbl WHERE id = :all_id');
+  //     //bind values
+  //     $this->db->bind(':all_id', $all_id);
+  //     $row = $this->db->single();
 
-      return $row;
-  }
+  //     return $row;
+  // }
 
   public function getDeductions($id)
   {
-    $this->db->query('SELECT deduction_id FROM user_deductions_tbl WHERE emp_no = :emp_no');
-      //bind values
-      $this->db->bind(':emp_no', $id);
-      $results = $this->db->resultSet();
+    $this->db->query('SELECT dt.name AS name, dt.amount AS amount FROM user_deductions_tbl AS ud JOIN deduction_tbl AS dt ON ud.deduction_id = dt.id WHERE emp_no = :emp_no;');
+    //bind values
+    $this->db->bind(':emp_no', $id);
+    $results = $this->db->resultSet();
 
-      return $results;
+    return $results;
   }
 
-  public function getDeductions_amount($ded_id)
+  // public function getDeductions_amount($ded_id)
+  // {
+  //   $this->db->query('SELECT * FROM deduction_tbl WHERE id = :ded_id');
+  //     //bind values
+  //     $this->db->bind(':ded_id', $ded_id);
+  //     $row = $this->db->single();
+  //     return $row;
+  // }
+
+  public function getSalaryDetails($id)
   {
-    $this->db->query('SELECT * FROM deduction_tbl WHERE id = :ded_id');
-      //bind values
-      $this->db->bind(':ded_id', $ded_id);
-      $row = $this->db->single();
-      return $row;
+    $this->db->query('SELECT * FROM salary_tbl WHERE emp_no = :emp_no');
+    //bind values
+    $this->db->bind(':emp_no', $id);
+    $row = $this->db->single();
+
+    return $row;
+  }
+
+  public function getPayslip($id)
+  {
+    $this->db->query('SELECT ut.emp_no AS emp_no,
+    ut.full_name AS full_name,
+    ut.name_with_initials AS name_with_initials,
+    ut.designation AS designation,
+    st.salary_id AS id,
+    st.basic_salary AS basic_salary,
+    st.allowances AS allowances,
+    st.deductions AS deductions,
+    st.net_salary AS net_salary,
+    st.caculated_date AS date,
+    st.send AS status
+    FROM users_tbl AS ut JOIN salary_tbl AS st ON ut.emp_no = st.emp_no WHERE ut.emp_no = :emp_no;');
+    //bind values
+    $this->db->bind(':emp_no', $id);
+    $results = $this->db->resultSet();
+
+    return $results;
+  }
+
+  public function getSinglePayslip($id)
+  {
+    $this->db->query('SELECT ut.emp_no AS emp_no,
+    ut.full_name AS full_name,
+    ut.name_with_initials AS name_with_initials,
+    ut.designation AS designation,
+    st.salary_id AS id,
+    st.basic_salary AS basic_salary,
+    st.allowances AS allowances,
+    st.deductions AS deductions,
+    st.net_salary AS net_salary,
+    st.caculated_date AS date,
+    st.send AS status
+    FROM users_tbl AS ut JOIN salary_tbl AS st ON ut.emp_no = st.emp_no WHERE ut.emp_no = :emp_no;');
+    //bind values
+    $this->db->bind(':emp_no', $id);
+    $row = $this->db->single();
+
+    return $row;
+  }
+
+  public function getPaysheets()
+  {
+    $this->db->query('SELECT ut.emp_no AS emp_no,
+    ut.full_name AS full_name,
+    ut.name_with_initials AS name_with_initials,
+    ut.designation AS designation,
+    st.salary_id AS id,
+    st.basic_salary AS basic_salary,
+    st.allowances AS allowances,
+    st.deductions AS deductions,
+    st.net_salary AS net_salary,
+    st.caculated_date AS date,
+    st.send AS status
+    FROM users_tbl AS ut INNER JOIN salary_tbl AS st ON ut.emp_no = st.emp_no;');
+    $results = $this->db->resultSet();
+
+    return $results;
   }
 }

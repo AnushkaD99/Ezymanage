@@ -57,7 +57,7 @@
                     <div class="search-bar">
                         <div class="form">
                             <form action="" method="POST">
-                                <input type="text" placeholder="Search by Employee number or name" class="search-tab" name="search"><!-- gap 
+                                <input type="text" placeholder="Search by Employee number or name" class="search-tab" id="search-input" name="search"><!-- gap 
                                     --><button type="submit" class="search-btn"><i class="fa-solid fa-search"></i>Search</button>
                             </form>
                         </div>
@@ -68,13 +68,21 @@
                     <br>
                     <tr>
                         <th>Emp No</th>
-                        <th>Name</th>
+                        <th>Full Name</th>
+                        <th>Name with initials</th>
+                        <th>School</th>
+                        <th>Grade</th>
+                        <th>Email</th>
                         <th>View more details</th>
                     </tr>
                     <?php foreach ($data['teachers'] as $teacher) : ?>
-                        <tr>
-                            <td> <?php echo $teacher->emp_no; ?></td>
-                            <td> <?php echo $teacher->full_name; ?></td>
+                        <tr class="employee-row">
+                            <td class="emp-id"> <?php echo $teacher->emp_no; ?></td>
+                            <td class="emp-fname"> <?php echo $teacher->full_name; ?></td>
+                            <td class="emp-name"><?php echo $teacher->name_with_initials; ?></td>
+                            <td><?php echo $teacher->school; ?></td>
+                            <td><?php echo $teacher->grade; ?></td>
+                            <td><?php echo $teacher->email; ?></td>
                             <td id="center"> <a href="<?php echo URLROOT; ?>/salaryclerks/viewMoreTeacherDetails/<?php echo $teacher->emp_no; ?>" class="btn3">More</a></td>
                         </tr>
                     <?php endforeach; ?>
@@ -83,4 +91,5 @@
         </div>
     </div>
 </div>
+
 <?php require APPROOT . '/views/inc/footer.php'; ?>

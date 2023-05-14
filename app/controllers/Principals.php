@@ -2,6 +2,8 @@
 class Principals extends Controller
 {
     private $principalModel;
+    private $commonModel;
+    private $userModel;
     public function __construct()
     {
         if (!isLoggedIn()) {

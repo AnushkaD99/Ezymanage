@@ -1,4 +1,10 @@
 <?php
+require_once "D:/installed apps/XAMPP/htdocs/Ezymanage/app/vendor/autoload.php";
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\SMTP;
+
 class SalaryClerks extends Controller
 {
     private $commonModel;
@@ -290,10 +296,9 @@ class SalaryClerks extends Controller
                     'username' => trim($_POST['username']),
                     'full_name' => trim($_POST['full_name']),
                     'name_with_initials' => trim($_POST['name_with_initials']),
+                    'nic' => trim($_POST['nic']),
                     'birthday' => trim($_POST['birthday']),
-                    'address' => trim($_POST['address']),
-                    'contact_num' => trim($_POST['contact_num']),
-                    'email' => trim($_POST['email']),
+                    'gender' => trim($_POST['nic']),
                     'username_err' => '',
                     'email_err' => '',
                 ];
@@ -462,7 +467,7 @@ class SalaryClerks extends Controller
                 $data = [
                     'users' => $this->transferClerkModel->getUser($id),
                     'email' => trim($_POST['email']),
-                    'address_err' => '',
+                    'email_err' => '',
                 ];
                 if (!empty($data['email'])) {
                     if ($this->salaryClerkModel->findUserByEmail($data['email'])) {
@@ -477,19 +482,16 @@ class SalaryClerks extends Controller
                     $data['email_err'] = 'Please enter email';
                 }
 
-
-
-
-
-
                 //make sure errors are empty
-                if (empty($data['address_err'])) {
+                if (empty($data['email_err'])) {
                     //validated
                     if ($this->salaryClerkModel->updateAddress($data)) {
-                        $_SESSION['status'] = 'success';
-                        $_SESSION['tittle'] = 'Success';
-                        $_SESSION['message'] = 'Address updated successfully';
-                        redirect('salaryclerks/profile');
+                        if ($this->userModel->addOtp($data)) {
+                            $this->sendOtpEmail($data);
+                            redirect('salaryclerks/profile');
+                        } else {
+                            die('something went wrong');
+                        }
                     } else {
                         die('Something went wrong');
                     }
@@ -534,6 +536,43 @@ class SalaryClerks extends Controller
             $this->view('salaryclerks/profile', $data);
         }
     }
+
+    //edit profile -dp
+    // Controller: SalaryClerks.php
+
+    public function updateProfilePicture()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $id = $_SESSION['user_id'];
+            $data['dp'] = $_FILES['fileImg']['name'];
+            $data['image_tmp'] = $_FILES['fileImg']['tmp_name'];
+
+            $target_dir = "D:/installed apps/XAMPP/htdocs/Ezymanage/public/img/uploads/";
+            $img_name = basename("$id." . pathinfo($_FILES["fileImg"]["name"], PATHINFO_EXTENSION));
+            $target_file = $target_dir . basename("$id." . pathinfo($_FILES["fileImg"]["name"], PATHINFO_EXTENSION));
+            $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+            //register user
+            if ($this->salaryClerkModel->updateProfilePicture($img_name)) { // Remove extra $ sign
+                if (move_uploaded_file($_FILES["fileImg"]["tmp_name"], $target_file)) {
+                    echo "The file " . basename($_FILES["fileImg"]["name"]) . " has been uploaded.";
+                } else {
+                    echo "Sorry, there was an error uploading your file.";
+                }
+                $_SESSION['status'] = 'success';
+                $_SESSION['title'] = 'Success'; // Fix typo in 'title'
+                $_SESSION['message'] = 'Profile Picture updated successfully';
+                redirect('salaryclerks/profile');
+            } else {
+                die('Something went wrong');
+            }
+        } else {
+            // Display form
+            $data['users'] = $this->commonModel->getUser($_SESSION['user_id']);
+            $this->view('salaryclerks/profile', $data);
+        }
+    }
+
+
 
     public function editProfile()
     {
@@ -740,7 +779,7 @@ class SalaryClerks extends Controller
                         $_SESSION['status'] = 'success';
                         $_SESSION['tittle'] = 'Success';
                         $_SESSION['message'] = 'New Allowance added successfully';
-                        $this->view('salaryclerks/allowance', $data);
+                        redirect('salaryclerks/allowance', $data);
                     } else {
                         die($data['name_err']);
                     }
@@ -776,7 +815,7 @@ class SalaryClerks extends Controller
                         $_SESSION['status'] = 'success';
                         $_SESSION['tittle'] = 'Success';
                         $_SESSION['message'] = 'Allowance updated successfully';
-                        $this->view('salaryclerks/allowance', $data);
+                        redirect('salaryclerks/allowance', $data);
                     } else {
                         die('Something went wrong');
                     }
@@ -797,7 +836,7 @@ class SalaryClerks extends Controller
                     $_SESSION['status'] = 'success';
                     $_SESSION['tittle'] = 'Success';
                     $_SESSION['message'] = 'Allowance deleted successfully';
-                    $this->view('salaryclerks/allowance', $data);
+                    redirect('salaryclerks/allowance', $data);
                 } else {
                     die('Something went wrong');
                 }
@@ -848,7 +887,7 @@ class SalaryClerks extends Controller
                         $_SESSION['status'] = 'success';
                         $_SESSION['tittle'] = 'Success';
                         $_SESSION['message'] = 'New deduction added successfully';
-                        $this->view('salaryclerks/deductions', $data);
+                        redirect('salaryclerks/deductions', $data);
                     } else {
                         die('Something went wrong');
                     }
@@ -858,17 +897,39 @@ class SalaryClerks extends Controller
                 }
             }
 
-            if (isset($_POST['edit_deduction'])) {
+            if (isset($_POST['edit_ded'])) {
                 //init data
                 $data = [
                     'deduction' => $this->salaryClerkModel->getdeductions(),
-                    'all' => $this->salaryClerkModel->getall($_POST['deduction_id']),
-                    'deduction_id' => trim($_POST['deduction_id']),
-                    'deduction_name' => trim($_POST['deduction_name']),
-                    'deduction_amount' => trim($_POST['deduction_amount']),
-                    'deduction_name_err' => '',
-                    'deduction_amount_err' => '',
+                    'id' => trim($_POST['id']),
+                    'name' => trim($_POST['name']),
+                    'amount' => trim($_POST['amount']),
+                    'name_err' => '',
+                    'amount_err' => '',
+                    'step' => '',
                 ];
+                //validate basic salary
+                if (empty($data['name'])) {
+                    $data['name_err'] = 'Please enter the value';
+                }
+                if (empty($data['amount'])) {
+                    $data['amount_err'] = 'Please enter the value';
+                }
+
+                //make sure errors are empty
+                if (empty($data['name_err']) && empty($data['amount_err'])) {
+                    if ($this->salaryClerkModel->update_deduction($data)) {
+                        $_SESSION['status'] = 'success';
+                        $_SESSION['tittle'] = 'Success';
+                        $_SESSION['message'] = 'Deduction updated successfully';
+                        redirect('salaryclerks/deductions', $data);
+                    } else {
+                        die('Something went wrong');
+                    }
+                } else {
+                    //load view with errors
+                    $this->view('salaryclerks/deductions', $data);
+                }
             }
         } else {
 
@@ -921,6 +982,7 @@ class SalaryClerks extends Controller
                 //init data
                 $data = [
                     'basic' => $this->salaryClerkModel->getBasicSalary(),
+                    'basic_p' => $this->salaryClerkModel->getPBasicSalary(),
                     'st_basic_1' => trim($_POST['st_basic_1']),
                     'increment_1' => trim($_POST['increment_1']),
                     'st_basic_1_err' => '',
@@ -959,6 +1021,7 @@ class SalaryClerks extends Controller
                 //init data
                 $data = [
                     'basic' => $this->salaryClerkModel->getBasicSalary(),
+                    'basic_p' => $this->salaryClerkModel->getPBasicSalary(),
                     'st_basic_2-i' => trim($_POST['st_basic_2-i']),
                     'increment_2-i' => trim($_POST['increment_2-i']),
                     'st_basic_2-i_err' => '',
@@ -993,6 +1056,7 @@ class SalaryClerks extends Controller
                 //init data
                 $data = [
                     'basic' => $this->salaryClerkModel->getBasicSalary(),
+                    'basic_p' => $this->salaryClerkModel->getPBasicSalary(),
                     'st_basic_2-ii' => trim($_POST['st_basic_2-ii']),
                     'increment_2-ii' => trim($_POST['increment_2-ii']),
                     'st_basic_2-ii_err' => '',
@@ -1027,6 +1091,7 @@ class SalaryClerks extends Controller
                 //init data
                 $data = [
                     'basic' => $this->salaryClerkModel->getBasicSalary(),
+                    'basic_p' => $this->salaryClerkModel->getPBasicSalary(),
                     'st_basic_3-i' => trim($_POST['st_basic_3-i']),
                     'increment_3-i' => trim($_POST['increment_3-i']),
                     'st_basic_3-i_err' => '',
@@ -1060,6 +1125,7 @@ class SalaryClerks extends Controller
 
             $data = [
                 'basic' => $this->salaryClerkModel->getBasicSalary(),
+                'basic_p' => $this->salaryClerkModel->getPBasicSalary(),
                 'st_basic_1' => '',
                 'increment_1' => '',
                 'st_basic_2-i' => '',
@@ -1084,119 +1150,354 @@ class SalaryClerks extends Controller
     public function payslip($id)
     {
         $data = [
+            'payslip' => $this->commonModel->getSinglePayslip($id),
             'user' => $this->commonModel->getUser($id),
-            'emp_no' => $id,
-            'teacher' => $this->commonModel->getTeacher($id),
-            'principal' => $this->commonModel->getPrincipal($id),
-            'basic' => 0.00,
-            'int_all_3' => 0.00,
-            'c.o.l' => 0.0,
-            'sub_total' => 0.00,
-            'gross_pay' => 0.00,
-            'w&op_rate' => $this->commonModel->getWANDOP(),
-            'w&op' => 0.00,
-            'stamp' => 0.00,
-            'agrahara' => $this->commonModel->getAgraharaDed($id),
-            'agrahara_amount' => 0.00,
-            'other_ded' => 0.00,
-            'total_ded' => 0.00,
-            'net_sal' => 0.00,
-            'all_amount' => 0.00,
-            'ded_amount' => 0.00,
+            'allowances' => $this->commonModel->getAllowances($id),
+            'deductions' => $this->commonModel->getDeductions($id),
         ];
-        //Salary Preparation
-
-        //choose basic
-        // $id = $data['paysheet'] -> id;
-        $user = $this->commonModel->getUser($id);
-        $user_role = $user->designation;
-
-        $int_all_3 = $this->commonModel->getNecAll1();
-        $data['int_all_3'] = $int_all_3->amount;
-
-        $col = $this->commonModel->getCOL();
-        $data['c.o.l'] = $col->amount;
-
-        $stamp = $this->commonModel->getStampDed();
-        $data['stamp'] = $stamp->amount;
-
-
-
-
+        $user_role = $data['user']->designation;
         if ($user_role == 'Teacher') {
+            $teacher = $this->commonModel->getTeacherById($id);
+            $data['school'] = $teacher->school;
+        } else if ($user_role == 'Principal') {
+            $principal = $this->commonModel->getPrincipalById($id);
+            $data['school'] = $principal->school;
+        }
+
+        $data['gross_pay'] = $data['payslip']->basic_salary + $data['payslip']->allowances;
+
+        $this->view('salaryclerks/payslip', $data);
+    }
+
+    public function generate_payslip($id)
+    {
+        $data = [
+            'emp_no' => $id,
+            'user' => $this->commonModel->getUser($id),
+            'basic' => 0,
+
+
+        ];
+
+        //find basic salary
+        $user_role = $data['user']->designation;
+        if ($user_role == 'Teacher') {
+            $data['teacher'] = $this->commonModel->getTeacher($id);
             $grade = $data['teacher']->grade;
             $step = $data['teacher']->step;
             $basic = $this->commonModel->getTeachersBasicSalary($grade, $step);
             $data['basic'] = $basic->basic_salary;
-        }
-        if ($user_role == 'Principal') {
+        } else if ($user_role == 'Principal') {
+            $data['principal'] = $this->commonModel->getPrincipal($id);
             $grade = $data['principal']->grade;
             $step = $data['principal']->step;
             $basic = $this->commonModel->getPrincipalsBasicSalary($grade, $step);
             $data['basic'] = $basic->basic_salary;
         }
 
-        //calculate sub total
-        $data['sub_total'] = $data['basic'] + $data['int_all_3'];
-
-        if ($user_role == 'Principal') {
-            $data['telephone_all'] = $this->commonModel->getTlpAll();
-            $data['executive_all'] = $this->commonModel->getExcAll();
-            $data['allowances'] = $data['telephone_all'] + $data['executive_all'];
-        }
-        if ($user_role == 'Teacher') {
-            $data['telephone_all'] = 0;
-            $data['executive_all'] = 0;
-            $data['allowances'] = 0;
-            $data['allowances'] = $data['telephone_all'] + $data['executive_all'];
-        }
-        $data['gross_pay'] = $data['sub_total'] + $data['allowances'] + $data['c.o.l'];
-
-        $data['w&op'] = $data['basic'] * ($data['w&op_rate']->amount / 100);
-
-
-
-        //agrahara
-        $agrahara = $data['agrahara']->agrahara;
-        $agrahara_amount = $this->commonModel->getAgraharaAmount($agrahara);
-        $data['agrahara_amount'] = $agrahara_amount->amount;
-
-        //Total Deduction
-        $data['total_ded'] = $data['w&op'] + $data['stamp'] + $data['agrahara_amount'] + $data['other_ded'];
-
-        $data['net_sal'] = $data['gross_pay'] - $data['total_ded'];
-
-        //allowances
-        $allowances = $this->commonModel->getAllowances($id);
-        foreach ($allowances as $allowance) :
-            $all_id = $allowance->allowance_id;
-            $all_amount = $this->commonModel->getAllowances_amount($all_id);
-            $all_amount = $all_amount->amount;
-            $data['all_amount'] += $all_amount;
-
+        //calculate allowances
+        foreach ($this->commonModel->getAllowances($id) as $allowance) :
+            $allowance_amount = $allowance->amount;
+            $data['sum_allowances'] += $allowance_amount;
         endforeach;
 
-        //deductions
-        $deductions = $this->commonModel->getDeductions($id);
-        foreach ($deductions as $deduction) :
-            $ded_id = $deduction->deduction_id;
-            $ded_amount = $this->commonModel->getDeductions_amount($ded_id);
-            $amount = $ded_amount->amount;
-            if($ded_amount->name == 'W. & O. P.'){
-                $amount = $data['basic'] * $amount / 100;
+        //calculate deductions
+        foreach ($this->commonModel->getDeductions($id) as $deduction) :
+            $deduction_amount = $deduction->amount;
+            if ($deduction->name == 'W. & O. P.') {
+                $deduction_amount = $data['basic'] * $deduction_amount / 100;
             }
-            $data['ded_amount'] += $amount;
-
+            $data['sum_deductions'] += $deduction_amount;
         endforeach;
 
+        //calculate gross pay
+        $data['gross_pay'] = $data['basic'] + $data['sum_allowances'];
+
+        //calculate net pay
+        $data['net_pay'] = $data['gross_pay'] - $data['sum_deductions'];
+
+        //save payslip
         if ($this->salaryClerkModel->recordSalary($data)) {
             $_SESSION['status'] = 'success';
             $_SESSION['tittle'] = 'Success';
             $_SESSION['message'] = 'Salary Calculation Successfully';
-            redirect('salaryclerks/paysheet');
+            redirect('salaryclerks/paysheet_details/' . $id);
         } else {
             die('Something went wrong');
         }
-        //$this->view('salaryclerks/payslip', $data, $user_role);
+    }
+
+    // public function send_payslip($id)
+    // {
+    //     if ($this->salaryClerkModel->sendPayslip($id)) {
+    //         $_SESSION['status'] = 'success';
+    //         $_SESSION['tittle'] = 'Success';
+    //         $_SESSION['message'] = 'Payslip send Successfully';
+    //         redirect('salaryclerks/all_paysheet');
+    //     } else {
+    //         die('Something went wrong');
+    //     }
+    // }
+
+    public function paysheet_details($id)
+    {
+        $data = [
+            'payslip' => $this->commonModel->getPayslip($id),
+        ];
+        $this->view('salaryclerks/paysheet_details', $data);
+    }
+
+    public function all_paysheet()
+    {
+
+        $data['payslip'] = $this->commonModel->getPaysheets();
+        $this->view('salaryclerks/paysheet_details', $data);
+    }
+
+    // public function delete_payslip($id)
+    // {
+    //     die('success');
+    //     if ($this->salaryClerkModel->deletePayslip($id)) {
+    //         $_SESSION['status'] = 'success';
+    //         $_SESSION['tittle'] = 'Success';
+    //         $_SESSION['message'] = 'Payslip Deleted Successfully';
+    //         redirect('salaryclerks/all_paysheet');
+    //     } else {
+    //         die('Something went wrong');
+    //     }
+    // }
+
+    public function delete_allowance($id)
+    {
+        if ($this->salaryClerkModel->deleteAllowance($id)) {
+            $_SESSION['status'] = 'success';
+            $_SESSION['tittle'] = 'Success';
+            $_SESSION['message'] = 'Allowance Deleted Successfully';
+            redirect('salaryclerks/allowance');
+        } else {
+            die('Something went wrong');
+        }
+    }
+
+    public function delete_deduction($id)
+    {
+        if ($this->salaryClerkModel->deleteDeduction($id)) {
+            $_SESSION['status'] = 'success';
+            $_SESSION['tittle'] = 'Success';
+            $_SESSION['message'] = 'Deduction Deleted Successfully';
+            redirect('salaryclerks/deductions');
+        } else {
+            die('Something went wrong');
+        }
+    }
+
+    public function add_basic_sal_principal()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Sanitize POST data
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+            // Init data
+            $data = [
+                'class' => trim($_POST['class']),
+                'b_salary' => trim($_POST['b_salary']),
+                'defferent' => trim($_POST['defferent']),
+            ];
+
+            if (!empty($data['class']) && !empty($data['b_salary']) && !empty($data['defferent'])) {
+                if ($this->salaryClerkModel->submitBasicPrincipal($data)) {
+                    $_SESSION['status'] = 'success';
+                    $_SESSION['tittle'] = 'Success';
+                    $_SESSION['message'] = 'Salary Step Submitted';
+                    redirect('salaryclerks/basicSalary');
+                } else {
+                    die('Something went wrong');
+                }
+            }
+        }
+    }
+
+    public function edit_basic_sal_principal_1()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Sanitize POST data
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+            // Init data
+            $data = [
+                'class' => 'SLPS 1',
+                'b_salary' => trim($_POST['b_salary']),
+                'defferent' => trim($_POST['increment_1']),
+            ];
+
+            if (!empty($data['class']) && !empty($data['b_salary']) && !empty($data['defferent'])) {
+                if ($this->salaryClerkModel->editBasicPrincipal($data)) {
+                    $_SESSION['status'] = 'success';
+                    $_SESSION['tittle'] = 'Success';
+                    $_SESSION['message'] = 'Salary Step Submitted';
+                    redirect('salaryclerks/basicSalary');
+                } else {
+                    die('Something went wrong');
+                }
+            }
+        }
+    }
+
+    public function edit_basic_sal_principal_2()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Sanitize POST data
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+            // Init data
+            $data = [
+                'class' => 'SLPS 2',
+                'b_salary' => trim($_POST['b_salary']),
+                'defferent' => trim($_POST['increment_2']),
+            ];
+
+            if (!empty($data['class']) && !empty($data['b_salary']) && !empty($data['defferent'])) {
+                if ($this->salaryClerkModel->editBasicPrincipal($data)) {
+                    $_SESSION['status'] = 'success';
+                    $_SESSION['tittle'] = 'Success';
+                    $_SESSION['message'] = 'Salary Step Submitted';
+                    redirect('salaryclerks/basicSalary');
+                } else {
+                    die('Something went wrong');
+                }
+            }
+        }
+    }
+
+    public function edit_basic_sal_principal_3()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Sanitize POST data
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+            // Init data
+            $data = [
+                'class' => 'SLPS 3',
+                'b_salary' => trim($_POST['b_salary']),
+                'defferent' => trim($_POST['increment_3']),
+            ];
+
+            if (!empty($data['class']) && !empty($data['b_salary']) && !empty($data['defferent'])) {
+                if ($this->salaryClerkModel->editBasicPrincipal($data)) {
+                    $_SESSION['status'] = 'success';
+                    $_SESSION['tittle'] = 'Success';
+                    $_SESSION['message'] = 'Salary Step Submitted';
+                    redirect('salaryclerks/basicSalary');
+                } else {
+                    die('Something went wrong');
+                }
+            }
+        }
+    }
+
+    public function pay_slip_actions()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == "POST") {
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            if (isset($_POST['chkId'])) {
+                $chkId = $_POST['chkId'];
+                if (isset($_POST['delete'])) {
+                    foreach ($chkId as $id) {
+                        $this->salaryClerkModel->deletePayslip($id);
+                    }
+                } else if (isset($_POST['send'])) {
+                    foreach ($chkId as $id) {
+                        $this->salaryClerkModel->sendPayslip($id);
+                    }
+                }
+                else{
+                    die('Something went wrong');
+                }
+            }
+            redirect('salaryclerks/all_paysheet');
+        }
+    }
+
+    //send Email
+    public function sendEmail($to, $subject, $message)
+    {
+        // Load PHPMailer
+        $mail = new PHPMailer(true);
+
+        try {
+            // Configure mail settings
+            $mail->isSMTP();
+            $mail->Host = 'smtp.gmail.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = 'ezymanagems@gmail.com';
+            $mail->Password = 'kgjaqizhqkzxfxlm';
+            $mail->SMTPSecure = 'ssl';
+            $mail->Port = 465;
+
+            // Set sender and recipient
+            $mail->setFrom('ezymanagems@gmail.com', 'Ezymanage Admin');
+            $mail->addAddress($to);
+
+            // Set email content
+            $mail->isHTML(true);
+            $mail->Subject = $subject;
+            $mail->Body    = $message;
+
+            // Send the email
+            $mail->send();
+            return true;
+        } catch (Exception $e) {
+            // Log the error or display an error message
+            error_log("Email could not be sent. PHPMailer Error: {$mail->ErrorInfo}");
+            return false;
+        }
+    }
+
+    public function sendOtpEmail($data)
+    {
+        $otp = $data['otp'];
+        $phpmailer = new PHPMailer();
+        $phpmailer->isSMTP();
+        $phpmailer->Host = 'smtp.gmail.com';
+        $phpmailer->SMTPAuth = true;
+        $phpmailer->SMTPSecure = 'ssl';
+        $phpmailer->Port = 465;
+        $phpmailer->Username = 'ezymanagems@gmail.com';
+        $phpmailer->Password = 'kgjaqizhqkzxfxlm';
+
+
+        $phpmailer->setFrom('ezymanagems@gmail.com', 'Ezymanage Admin');
+        $phpmailer->addAddress($data['email'], $data['full_name']);
+        $phpmailer->Subject = 'OTP to change password';
+        $phpmailer->msgHTML($this->getAccessEmail($otp));
+        $phpmailer->AltBody = 'Use this Otp to change your password';
+
+
+        if ($phpmailer->send()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function getAccessEmail($otp)
+    {
+        return "
+    <!DOCTYPE html>
+    <html lang=\"en\">
+    <head>
+        <meta charset=\"UTF-8\">
+        <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">
+        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
+        <title>Account Access</title>
+    </head>
+    <body>
+        <p><center>Welcome to <b>Ezymanage</b></center><br>
+            Use the following link to access your account and change the password.
+        </p>
+        <p>Otp : <b>$otp</b></p>
+    </body>
+    </html>
+    ";
     }
 }

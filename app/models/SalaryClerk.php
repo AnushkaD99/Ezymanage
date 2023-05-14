@@ -82,6 +82,22 @@ class SalaryClerk
     }
   }
 
+  //update dp
+  public function updateProfilePicture($img_name)
+  {
+    $this->db->query('UPDATE users_tbl SET dp = :path WHERE emp_no = :id');
+
+    $this->db->bind(':path', $img_name);
+    $this->db->bind(':id', $_SESSION['user_id']);
+
+
+    if ($this->db->execute()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   //check email already exists
   public function findUserByEmail($email)
   {
@@ -161,6 +177,14 @@ class SalaryClerk
   public function getBasicSalary()
   {
     $this->db->query('SELECT * FROM teacher_salary_details_tbl');
+
+    $results = $this->db->resultSet();
+    return $results;
+  }
+
+  public function getPBasicSalary()
+  {
+    $this->db->query('SELECT * FROM principal_salary_details_tbl');
 
     $results = $this->db->resultSet();
     return $results;
@@ -254,7 +278,8 @@ class SalaryClerk
     return $results;
   }
 
-  public function add_allowance(){
+  public function add_allowance()
+  {
     $this->db->query('INSERT INTO allowance_tbl (name, amount) VALUES (:allowance_name, :allowance_amount)');
     // Bind values
     $this->db->bind(':allowance_name', $_POST['name']);
@@ -267,11 +292,27 @@ class SalaryClerk
     }
   }
 
-  public function update_allowanace($data){
+  public function update_allowanace($data)
+  {
     $this->db->query('UPDATE allowance_tbl SET name = :allowance_name, amount = :allowance_amount WHERE id = :id');
     // Bind values
     $this->db->bind(':allowance_name', $data['name']);
     $this->db->bind(':allowance_amount', $data['amount']);
+    $this->db->bind(':id', $data['id']);
+    // Execute
+    if ($this->db->execute()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public function update_deduction($data)
+  {
+    $this->db->query('UPDATE deduction_tbl SET name = :deduction_name, amount = :deduction_amount WHERE id = :id');
+    // Bind values
+    $this->db->bind(':deduction_name', $data['name']);
+    $this->db->bind(':deduction_amount', $data['amount']);
     $this->db->bind(':id', $data['id']);
     // Execute
     if ($this->db->execute()) {
@@ -289,7 +330,8 @@ class SalaryClerk
     return $results;
   }
 
-  public function add_deduction(){
+  public function add_deduction()
+  {
     $this->db->query('INSERT INTO deduction_tbl (name, amount) VALUES (:deduction_name, :deduction_amount)');
     // Bind values
     $this->db->bind(':deduction_name', $_POST['name']);
@@ -302,7 +344,8 @@ class SalaryClerk
     }
   }
 
-  public function delete_allowance($data){
+  public function delete_allowance($data)
+  {
     $this->db->query('DELETE FROM allowance_tbl WHERE id = :id');
     // Bind values
     $this->db->bind(':id', $data['id']);
@@ -314,7 +357,8 @@ class SalaryClerk
     }
   }
 
-  public function recordSalary($data){
+  public function recordSalary($data)
+  {
     $this->db->query('INSERT INTO salary_tbl
     (emp_no, 
     basic_salary,
@@ -329,16 +373,107 @@ class SalaryClerk
     // Bind values
     $this->db->bind(':emp_no', $data['emp_no']);
     $this->db->bind(':basic_salary', $data['basic']);
-    $this->db->bind(':allowance', $data['all_amount']);
-    $this->db->bind(':deduction', $data['ded_amount']);
-    $this->db->bind(':net_salary', $data['net_sal']);
+    $this->db->bind(':allowance', $data['sum_allowances']);
+    $this->db->bind(':deduction', $data['sum_deductions']);
+    $this->db->bind(':net_salary', $data['net_pay']);
     // Execute
     if ($this->db->execute()) {
       return true;
     } else {
       return false;
     }
-}
+  }
 
+  public function sendPayslip($id)
+  {
+    $this->db->query('UPDATE salary_tbl SET send = :status WHERE salary_id = :id');
+    // Bind values
+    $this->db->bind(':status', 1);
+    $this->db->bind(':id', $id);
 
+    // Execute
+    if ($this->db->execute()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public function deletePayslip($id)
+  {
+    $this->db->query('DELETE FROM salary_tbl WHERE salary_id = :id');
+    // Bind values
+    $this->db->bind(':id', $id);
+
+    // Execute
+    if ($this->db->execute()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public function deleteAllowance($id)
+  {
+    $this->db->query('DELETE FROM allowance_tbl WHERE id = :id');
+    // Bind values
+    $this->db->bind(':id', $id);
+
+    // Execute
+    if ($this->db->execute()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public function deleteDeduction($id)
+  {
+    $this->db->query('DELETE FROM deduction_tbl WHERE id = :id');
+    // Bind values
+    $this->db->bind(':id', $id);
+
+    // Execute
+    if ($this->db->execute()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public function submitBasicPrincipal($data)
+  {
+    $increment = $data['defferent'];
+    for ($i = 1; $i <= 28; $i++) {
+      $basic_salary = $data['b_salary'] + ($increment*($i - 1));
+      $this->db->query('INSERT INTO principal_salary_details_tbl (class, step, basic_salary) VALUES (:class, :step, :basic_salary)');
+      // Bind values
+      $this->db->bind(':basic_salary', $basic_salary);
+      $this->db->bind(':step', $i);
+      $this->db->bind(':class', $data['class']);
+      // Execute
+      if (!$this->db->execute()) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  public function editBasicPrincipal($data)
+  {
+    $increment = $data['defferent'];
+    for ($i = 1; $i <= 28; $i++) {
+      $basic_salary = $data['b_salary'] + ($increment*($i - 1));
+      $this->db->query('UPDATE principal_salary_details_tbl SET basic_salary = :basic_salary WHERE step = :step && class = :class');
+      // Bind values
+      $this->db->bind(':basic_salary', $basic_salary);
+      $this->db->bind(':step', $i);
+      $this->db->bind(':class', $data['class']);
+      // Execute
+      if (!$this->db->execute()) {
+        return false;
+      }
+    }
+    return true;
+  }
 }

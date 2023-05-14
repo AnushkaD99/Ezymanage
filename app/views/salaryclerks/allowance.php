@@ -62,10 +62,7 @@
                                         <button class="edt_btn" onclick="openModal_edit('<?php echo $allowance->id; ?>' , '<?php echo $allowance->name; ?>' , '<?php echo $allowance->amount; ?>')"><i class="fa-solid fa-pen-to-square"></i></button>
                                     </div>
                                     <div class="delete_btn">
-                                        <form action="" method="POST">
-                                            <input type="hidden" name="id" value="<?php echo $allowance->id; ?>">
-                                            <button type="submit" name="dlt" class="dlt_btn"><i class="fa-solid fa-trash"></i></button>
-                                        </form>
+                                        <a href="<?php echo URLROOT; ?>/salaryclerks/delete_allowance/<?php echo $allowance->id; ?>"><button type="submit" name="dlt" class="dlt_btn"><i class="fa-solid fa-trash"></i></button></a>
                                     </div>
                                 </div>
                             </td>
@@ -89,7 +86,7 @@
                         Name of the Allowance :
                     </div>
                     <div class="main-editprofile-right">
-                        <input type="text" name="name" class="textBox" id=all_name>
+                        <input type="text" name="name" class="textBox" id=all_name readonly>
                     </div>
                 </div>
                 <div class="main-editprofile-block">

@@ -57,8 +57,9 @@
                     <div class="search-bar">
                         <div class="form">
                             <form action="" method="POST">
-                                <input type="text" placeholder="Search by Employee number or name" class="search-tab" name="search"><!-- gap 
-                                --><button type="submit" class="search-btn"><i class="fa-solid fa-search"></i>Search</button>
+                            <form action="" method="POST">
+                                <input type="text" placeholder="Search by Employee number or name" class="search-tab" id="search-input" name="search"><!-- gap 
+                                    --><button type="submit" class="search-btn"><i class="fa-solid fa-search"></i>Search</button>
                             </form>
                         </div>
                         <!-- <div class="add">
@@ -70,13 +71,21 @@
                     <br>
                     <tr>
                         <th>Emp No</th>
-                        <th>Name</th>
+                        <th>Full Name</th>
+                        <th>Name with Initials</th>
+                        <th>School</th>
+                        <th>Grade</th>
+                        <th>Email</th>
                         <th>View more details</th>
                     </tr>
                     <?php foreach ($data['principals'] as $principal) : ?>
-                        <tr>
-                            <td> <?php echo $principal->emp_no; ?></td>
-                            <td> <?php echo $principal->full_name; ?></td>
+                        <tr class="employee-row">
+                            <td class="emp-id"> <?php echo $principal->emp_no; ?></td>
+                            <td class="emp-fname"> <?php echo $principal->full_name; ?></td>
+                            <td class="emp-name"><?php echo $principal->name_with_initials; ?></td>
+                            <td><?php echo $principal->school; ?></td>
+                            <td><?php echo $principal->grade; ?></td>
+                            <td><?php echo $principal->email; ?></td>
                             <td id="center"> <a href="<?php echo URLROOT; ?>/salaryclerks/viewMorePrincipalDetails/<?php echo $principal->emp_no; ?>" class="btn3">More</a></td>
                         </tr>
                     <?php endforeach; ?>

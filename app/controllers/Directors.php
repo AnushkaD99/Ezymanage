@@ -1,6 +1,10 @@
 <?php
 class Directors extends Controller
 {
+    private $directorModel;
+    private $commonModel;
+    private $userModel;
+
     public function __construct()
     {
         if (!isLoggedIn()) {
@@ -523,4 +527,8 @@ class Directors extends Controller
             $this->view('directors/school_management', $data);
         }
     }
+
+    //apointments-------------------------------------------------------------------------
+    
+
 }
