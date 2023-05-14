@@ -82,6 +82,21 @@ class SalaryClerk
     }
   }
 
+  //Update Email
+  public function updateEmail($data)
+  {
+    $this->db->query('UPDATE users_tbl SET email = :email WHERE emp_no = :id');
+    // Bind values
+    $this->db->bind(':email', $data['email']);
+    $this->db->bind(':id', $_SESSION['user_id']);
+    // Execute
+    if ($this->db->execute()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   //update dp
   public function updateProfilePicture($img_name)
   {

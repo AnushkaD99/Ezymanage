@@ -459,47 +459,47 @@ class SalaryClerks extends Controller
                     //load view with errors
                     $this->view('salaryclerks/profile', $data);
                 }
-            } else if (isset($_POST['submit_em'])) {
-                //sanitize post data
-                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            }
+            // else if (isset($_POST['submit_em'])) {
+            //     //sanitize post data
+            //     $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-                //init data
-                $data = [
-                    'users' => $this->transferClerkModel->getUser($id),
-                    'email' => trim($_POST['email']),
-                    'email_err' => '',
-                ];
-                if (!empty($data['email'])) {
-                    if ($this->salaryClerkModel->findUserByEmail($data['email'])) {
-                        $data['email_err'] = 'Email already exists';
-                    }
+            //     //init data
+            //     $data = [
+            //         'users' => $this->transferClerkModel->getUser($id),
+            //         'email' => trim($_POST['email']),
+            //         'email_err' => '',
+            //     ];
+            //     if (!empty($data['email'])) {
+            //         if ($this->salaryClerkModel->findUserByEmail($data['email'])) {
+            //             $data['email_err'] = 'Email already exists';
+            //         }
 
-                    //email validation
-                    if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
-                        $data['email_err'] = 'Please enter the correct format';
-                    }
-                } else {
-                    $data['email_err'] = 'Please enter email';
-                }
+            //         //email validation
+            //         if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+            //             $data['email_err'] = 'Please enter the correct format';
+            //         }
+            //     } else {
+            //         $data['email_err'] = 'Please enter email';
+            //     }
 
-                //make sure errors are empty
-                if (empty($data['email_err'])) {
-                    //validated
-                    if ($this->salaryClerkModel->updateAddress($data)) {
-                        if ($this->userModel->addOtp($data)) {
-                            $this->sendOtpEmail($data);
-                            redirect('salaryclerks/profile');
-                        } else {
-                            die('something went wrong');
-                        }
-                    } else {
-                        die('Something went wrong');
-                    }
-                } else {
-                    //load view with errors
-                    $this->view('salaryclerks/profile', $data);
-                }
-            } else {
+            //     //make sure errors are empty
+            //     if (empty($data['email_err'])) {
+            //         //validated
+            //         $data['userData'] = $this->userModel->getUserByEmail($data['email']);
+            //         $data['otp'] = mt_rand(100000, 999999);
+            //         if ($this->userModel->addOtp($data)) {
+            //             $this->sendOtpEmail($data);
+            //             redirect('salaryclerks/profile');
+            //         } else {
+            //             die('something went wrong');
+            //         }
+            //     } else {
+            //         //load view with errors
+            //         $this->view('salaryclerks/profile', $data);
+            //     }
+            // }
+            else {
                 $data = [
                     'users' => $this->transferClerkModel->getUser($id),
                     'current_password' => '',
@@ -1409,12 +1409,121 @@ class SalaryClerks extends Controller
                     foreach ($chkId as $id) {
                         $this->salaryClerkModel->sendPayslip($id);
                     }
-                }
-                else{
+                } else {
                     die('Something went wrong');
                 }
             }
             redirect('salaryclerks/all_paysheet');
+        }
+    }
+
+    public function change_email()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            //sanitize post data
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+            $id = trim($_POST['id']);
+            //init data
+            $data = [
+                'users' => $this->transferClerkModel->getUser($id),
+                'email' => trim($_POST['email']),
+                'email_err' => '',
+            ];
+            if (!empty($data['email'])) {
+                if ($this->salaryClerkModel->findUserByEmail($data['email'])) {
+                    $data['email_err'] = 'Email already exists';
+                }
+
+                //email validation
+                if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+                    $data['email_err'] = 'Please enter the correct format';
+                }
+            } else {
+                $data['email_err'] = 'Please enter email';
+            }
+
+            //make sure errors are empty
+            if (empty($data['email_err'])) {
+                //validated
+                $data['userData'] = $this->userModel->getUserByEmail($data['email']);
+                $data['otp'] = mt_rand(100000, 999999);
+                $data['full_name'] = $data['users']->full_name;
+                if ($this->userModel->addOtp($data)) {
+                    $this->sendOtpEmail($data);
+                    $this->view('salaryclerks/profile', $data);
+                    echo "<script>
+                    document.getElementById('myModal_add_otp').style.display = 'block';
+                    </script>";
+                } else {
+                    die('something went wrong');
+                }
+            } else {
+                //load view with errors
+                $this->view('salaryclerks/profile', $data);
+            }
+        } else {
+            $data = [];
+            //load view
+            $this->view('salaryclerks/profile');
+        }
+    }
+
+    public function getOtp()
+    {
+        $id = $_SESSION['user_id'];
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            // Sanitize POST data
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+            // Init data
+            $data = [
+                'userData' => $this->userModel->getUserById($id),
+                'otp' => trim($_POST['otp']),
+                'otp_error' => '',
+            ];
+
+            $email = $data['userData']->email;
+            $data['realOtp'] = $this->userModel->getOtp($email);
+
+            // Validate Password
+            if (empty($data['otp'])) {
+                $data['otp_err'] = 'Please enter OTP';
+            }
+
+            if ($data['otp'] != $data['realOtp']->access_token) {
+                $data['otp_err'] = 'OTP is incorrect';
+            }
+
+            // Make sure errors are empty
+            if (empty($data['otp_err'])) {
+                // Validated
+                $data['userData'] = $this->userModel->getUserById($id);
+                if($this->salaryClerkModel->updateEmail($data)){
+                    //$this->userModel->deleteToken($data);
+                    $_SESSION['status'] = 'success';
+                    $_SESSION['tittle'] = 'Success';
+                    $_SESSION['message'] = 'Email Changed successfully';
+                    redirect('salaryclerks/profile');
+                }else{
+                    die('Something went wrong');
+                }
+            } else {
+                // Load view with errors
+                $this->view('users/profile', $data);
+            }
+        } else {
+            // Init data
+            $data = [
+                'userData' => $this->userModel->getUserById($id),
+                'otp' => '',
+                'otp_err' => '',
+            ];
+
+            // Load view
+            $this->view('users/profile', $data);
         }
     }
 

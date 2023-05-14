@@ -130,22 +130,28 @@
 </div>
 
 <!-- Edit email -->
-<div class="mfp-hide white-popup personal_info" id="new_em">
-    <form action="" method="POST">
-        <h3>Change email address</h3>
-        <div class="main-editprofile-block">
-            <div class="main-editprofile-left">
-                New email :
-            </div>
-            <div class="main-editprofile-right">
-                <input type="email" name="email" class="textBox" placeholder="Enter here">
-            </div>
+<div id="myModal_edit_email" class="modal">
+    <div class="modal-content">
+        <div class="close" onclick="closeModal_edit_email()">&times;</div>
+        <div>
+            <form action="<?php echo URLROOT; ?>/salaryclerks/change_email" method="POST">
+                <h3>Change email address</h3>
+                <div class="main-editprofile-block">
+                    <div class="main-editprofile-left">
+                        New email :
+                    </div>
+                    <div class="main-editprofile-right">
+                        <input type="email" name="email" class="textBox" placeholder="Enter here">
+                    </div>
+                </div>
+                <input type="hidden" name="id" class="textBox" id="id">
+                <div class="col-2-btn">
+                    <input type="submit" name="submit" id="executeQuery" value="Change" class="fullBtn">
+                    <input type="reset" value="Reset" class="fullBtn">
+                </div>
+            </form>
         </div>
-        <div class="col-2-btn">
-            <input type="submit" name="submit_em" id="submit_em" value="Change" class="fullBtn">
-            <input type="reset" value="Reset" class="fullBtn">
-        </div>
-    </form>
+    </div>
 </div>
 
 <!-- Edit address -->
@@ -168,22 +174,29 @@
 </div>
 
 <!-- OTP -->
-<div class="mfp-hide white-popup personal_info" id="otp">
-    <form action="" method="POST">
-        <h3>OTP</h3>
-        <div class="main-editprofile-block">
-            <div class="main-editprofile-left">
-                OTP :
-            </div>
-            <div class="main-editprofile-right">
-                <input type="text" name="address" class="textBox" placeholder="Enter here">
-            </div>
+
+
+<div id="myModal_add_otp" class="modal">
+    <div class="modal-content">
+        <div class="close" onclick="closeModal_add_otp()">&times;</div>
+        <div>
+            <form action="<?php echo URLROOT; ?>/salaryclerks/getotp" method="POST">
+                <h3>Check your email to otp</h3>
+                <div class="main-editprofile-block">
+                    <div class="main-editprofile-left">
+                        OTP :
+                    </div>
+                    <div class="main-editprofile-right">
+                        <input type="int" name="otp" class="textBox" placeholder="Enter here">
+                    </div>
+                </div>
+                <div class="col-2-btn">
+                    <input type="submit" name="submit_add" value="Change" class="fullBtn">
+                    <input type="reset" value="Reset" class="fullBtn">
+                </div>
+            </form>
         </div>
-        <div class="col-2-btn">
-            <input type="submit" name="submit_add" value="Change" class="fullBtn">
-            <input type="reset" value="Reset" class="fullBtn">
-        </div>
-    </form>
+    </div>
 </div>
 
 <script>
@@ -258,27 +271,9 @@
     });
 
     $(document).ready(function() {
-        $('#edit_em').magnificPopup({
-            items: {
-                src: '#new_em'
-            },
-            type: 'inline',
-        });
-    });
-
-    $(document).ready(function() {
         $('#edit_ad').magnificPopup({
             items: {
                 src: '#new_ad'
-            },
-            type: 'inline',
-        });
-    });
-
-    $(document).ready(function() {
-        $('#submit_em').magnificPopup({
-            items: {
-                src: '#otp'
             },
             type: 'inline',
         });

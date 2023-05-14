@@ -118,7 +118,7 @@
                             </div>
                             <div class="main-editprofile-right">
                                 <input type="text" name="birthday" class="password" value="<?php echo $data['users']->email ?>" readonly>
-                                <i class="fa-solid fa-pen-to-square" id="edit_em"></i>
+                                <i class="fa-solid fa-pen-to-square" onclick="openModal_edit_email('<?php echo $data['users']->emp_no ?>')"></i>
                             </div>
                         </div>
                         <div class="main-editprofile-block">
@@ -144,4 +144,44 @@
     </div>
 </div>
 <?php require 'editProfile.php'; ?>
+
+<script>
+    function openModal_edit_email(id) {
+        document.getElementById("myModal_edit_email").style.display = "block";
+
+        // Set the existing subject and details in the input fields
+        document.getElementById('id').value = id;
+    }
+
+    function openModal_add_otp(id) {
+        document.getElementById("myModal_add_otp").style.display = "block";
+
+        // Set the existing subject and details in the input fields
+        document.getElementById('id').value = id;
+    }
+
+    function closeModal_edit_email() {
+        document.getElementById("myModal_edit_email").style.display = "none";
+    }
+
+    function closeModal_add_otp() {
+        document.getElementById("myModal_add_otp").style.display = "none";
+    }
+
+    // document.getElementById("executeQuery").addEventListener("click", function() {
+    //     $.ajax({
+    //         url: "<?php echo URLROOT; ?>/salaryclerks/change_email",
+    //         type: "POST",
+    //         success: function(response) {
+    //             //alert(response); // Show a popup with the response from the PHP script
+    //             document.getElementById("myModal_add_otp").style.display = "block";
+    //         },
+    //         error: function(xhr, status, error) {
+    //             alert("An error occurred: " + error);
+    //         }
+    //     });
+    // });
+    
+</script>
+
 <?php require APPROOT . '/views/inc/footer.php'; ?>
