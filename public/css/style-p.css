@@ -1,0 +1,82 @@
+:root {
+    --blue: #000D2F;
+    --blue-light: #549FE2;
+    --gray: rgba(215, 226, 255, 0.6);
+    --background: #EEF3FF;
+    --black: black;
+    --white: white;
+    --reject: #DA6E60;
+  }
+  
+/* School management */
+.buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
+        "select-btn1 select-btn2 select-btn3 select-btn4"
+        "select-btn5 select-btn6 select-btn7 select-btn8";
+    grid-gap: 10px;
+    height: auto;
+}
+
+#select-btn1 {
+    grid-area: select-btn1;
+}
+
+.select-btn2 {
+    grid-area: select-btn2;
+}
+
+.select-btn3 {
+    grid-area: select-btn3;
+}
+
+.select-btn4 {
+    grid-area: select-btn4;
+}
+
+.select-btn5 {
+    grid-area: select-btn5;
+}
+
+.select-btn6 {
+    grid-area: select-btn6;
+}
+
+.select-btn7 {
+    grid-area: select-btn7;
+}
+
+/*Approve Button */
+.approve-btn {
+    background-color: var(--blue);
+    color: var(--white);
+    border: none;
+    border-radius: 10px;
+    padding: 0.5rem 1.5rem;
+    font-size: 1rem;
+    text-align: center;
+    width: fit-content;
+}
+
+/*Reject Button */
+.reject-btn {
+    background-color: var(--reject);
+    color: var(--white);
+    border: none;
+    border-radius: 10px;
+    padding: 0.5rem 1.5rem;
+    font-size: 1rem;
+    text-align: center;
+    width: fit-content;
+}
+
+/* School Management */
+#karyasadana {
+    display: none;
+}
+
+#issues {
+    display: none;
+}
