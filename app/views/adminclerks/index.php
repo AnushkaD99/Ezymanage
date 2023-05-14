@@ -43,10 +43,59 @@
                 </table>
             </div>
             <div class="main-single-down-left">
-                <div class="card-button1-set">
-                    <div class="card-button1"><a href="">School Details</a></div>
-                    <div class="card-button1"><a href="">Principal Details</a></div>
-                    <div class="card-button1"><a href="">Teacher Details</a></div>
+                <div class="card-set card-set-margin">
+                    <div class="dashboard-items">
+                        <div>
+                            <div class="h1-dashboard">
+                                <?php echo $data['teacher_count']->count; ?>
+                            </div><br>
+                            <div class="h3-dashboard">
+                                All Teachers
+                            </div>
+                        </div>
+                        <div class="dashboard-icons">
+                            <div class="icon"><i class="fa-solid fa-person-chalkboard"></i></div>
+                        </div>
+                    </div>
+                    <div class="dashboard-items">
+                        <div>
+                            <div class="h1-dashboard">
+                                <?php echo $data['principal_count']->count; ?>
+                            </div><br>
+                            <div class="h3-dashboard">
+                                All Principals
+                            </div>
+                        </div>
+                        <div class="dashboard-icons">
+                            <div class="icon"><i class="fa-solid fa-person-chalkboard"></i></div>
+                        </div>
+                    </div>
+                    <div class="dashboard-items">
+                        <div>
+                            <div class="h1-dashboard">
+                                <?php echo $data['volunteer_count']->count; ?>
+                            </div><br>
+                            <div class="h3-dashboard">
+                                All Volunteers
+                            </div>
+                        </div>
+                        <div class="dashboard-icons">
+                            <div class="icon"><i class="fa-solid fa-person-chalkboard"></i></div>
+                        </div>
+                    </div>
+                    <div class="dashboard-items">
+                        <div>
+                            <div class="h1-dashboard">
+                                <?php echo $data['schools_count']->count; ?>
+                            </div><br>
+                            <div class="h3-dashboard">
+                                All Schools
+                            </div>
+                        </div>
+                        <div class="dashboard-icons">
+                            <div class="icon"><i class="fa-solid fa-person-chalkboard"></i></div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="main-single-down-right">

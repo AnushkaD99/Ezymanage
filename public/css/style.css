@@ -425,7 +425,7 @@ body {
   display: grid;
   height: 100%;
   grid-template-columns: 1fr 0.7fr;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 0.7fr 1fr;
   grid-template-areas:
     "main-single-up main-single-up"
     "main-single-down-left main-single-down-right";
@@ -1347,4 +1347,60 @@ td {
   color: black;
   text-decoration: none;
   cursor: pointer;
+}
+
+
+/* Dashboard Styles */
+.card-set{
+  display: flex;
+  flex-wrap: wrap;
+  margin: 10% 5%;
+  row-gap: 20px;
+  column-gap: 20px;
+  align-items: center;
+  justify-content: space-between;
+}
+.dashboard-items{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  width: 45%;
+  height: fit-content;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 5px 10px rgba(154, 160, 185, 0.05), 0 15px 40px rgba(166, 173, 201, 0.2);
+}
+
+
+.h1-dashboard{
+  margin: 0;
+  padding: 0;
+  font-size: 25px;
+  font-weight: 600;
+  line-height: 0;
+  padding-top: 20px;
+}
+
+.h3-dashboard{
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  font-weight: 500;
+  color: #212529e3;
+}
+
+.dashboard-icons{
+  background-color: rgba(184, 184, 184, 0.247);
+  padding: 20px;
+  border-radius: 7px;
+  margin-left: 40px;
+  margin-right: 0px;
+  
+}
+
+.icon{
+  font-size: 30px;
+  color: #000D2F;
 }

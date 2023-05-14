@@ -1419,15 +1419,15 @@ class SalaryClerks extends Controller
 
     public function change_email()
     {
+        $id = $_SESSION['user_id'];
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             //sanitize post data
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
-            $id = trim($_POST['id']);
             //init data
             $data = [
                 'users' => $this->transferClerkModel->getUser($id),
                 'email' => trim($_POST['email']),
+                'emp_no' => $id,
                 'email_err' => '',
             ];
             if (!empty($data['email'])) {
@@ -1449,7 +1449,7 @@ class SalaryClerks extends Controller
                 $data['userData'] = $this->userModel->getUserByEmail($data['email']);
                 $data['otp'] = mt_rand(100000, 999999);
                 $data['full_name'] = $data['users']->full_name;
-                if ($this->userModel->addOtp($data)) {
+                if ($this->commonModel->addOtp($data)) {
                     $this->sendOtpEmail($data);
                     $this->view('salaryclerks/profile', $data);
                     echo "<script>
@@ -1485,8 +1485,8 @@ class SalaryClerks extends Controller
                 'otp_error' => '',
             ];
 
-            $email = $data['userData']->email;
-            $data['realOtp'] = $this->userModel->getOtp($email);
+            //$email = $data['userData']->email;
+            $data['realOtp'] = $this->commonModel->getOtpbyID($id);
 
             // Validate Password
             if (empty($data['otp'])) {
@@ -1501,8 +1501,9 @@ class SalaryClerks extends Controller
             if (empty($data['otp_err'])) {
                 // Validated
                 $data['userData'] = $this->userModel->getUserById($id);
+                $data['email'] = $data['realOtp']->email;
                 if($this->salaryClerkModel->updateEmail($data)){
-                    //$this->userModel->deleteToken($data);
+                    $this->commonModel->deleteTokenbyID($id);
                     $_SESSION['status'] = 'success';
                     $_SESSION['tittle'] = 'Success';
                     $_SESSION['message'] = 'Email Changed successfully';

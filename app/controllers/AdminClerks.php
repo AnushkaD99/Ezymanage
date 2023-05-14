@@ -26,10 +26,13 @@ class AdminClerks extends Controller
     public function index()
     {
         // Get teachers
-        //$teachers = $this->teacherModel->getTeachers();
+        
 
         $data = [
-            //'teachers' => $teachers
+            'teacher_count' => $this->commonModel->getTeacherCount(),
+            'principal_count' => $this->commonModel->getPrincipalCount(),
+            'volunteer_count' => $this->commonModel->getVolunteerCount(),
+            'schools_count' => $this->commonModel->getSchoolCount(),
         ];
 
         $this->view('adminclerks/index', $data);

@@ -743,4 +743,84 @@ class Common
 
     return $results;
   }
+
+  public function deleteTokenbyID($id)
+    {
+        $this->db->query('DELETE FROM account_access_tbl WHERE emp_no = :emp_no');
+        // Bind values
+        $this->db->bind(':emp_no', $id);
+
+        // Execute
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function addOtp($data)
+    {
+        $this->db->query('INSERT INTO account_access_tbl(access_token, email, emp_no)
+      VALUES(:token, :email, :emp_no)');
+
+        // Bind values
+        $this->db->bind(':token', $data['otp']);
+        $this->db->bind(':email', $data['email']);
+        $this->db->bind(':emp_no', $data['emp_no']);
+
+        // Execute
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //getOtp
+    public function getOtpbyID($id)
+    {
+        $this->db->query('SELECT * FROM account_access_tbl WHERE emp_no = :emp_no');
+        $this->db->bind(':emp_no', $id);
+
+        $row = $this->db->single();
+
+        return $row;
+    }
+
+    //getcounts
+    //get tearcher's count
+    public function getTeacherCount()
+    {
+        $this->db->query('SELECT COUNT(*) AS count FROM users_tbl WHERE designation = "Teacher"');
+        $row = $this->db->single();
+
+        return $row;
+    }
+
+    //get principal's count
+    public function getPrincipalCount()
+    {
+        $this->db->query('SELECT COUNT(*) AS count FROM users_tbl WHERE designation = "Principal"');
+        $row = $this->db->single();
+
+        return $row;
+    }
+
+    //get volunteer's count
+    public function getVolunteerCount()
+    {
+        $this->db->query('SELECT COUNT(*) AS count FROM volunteers_tbl');
+        $row = $this->db->single();
+
+        return $row;
+    }
+
+    //gets schools count
+    public function getSchoolCount()
+    {
+        $this->db->query('SELECT COUNT(*) AS count FROM schools_tbl');
+        $row = $this->db->single();
+
+        return $row;
+    }
 }
