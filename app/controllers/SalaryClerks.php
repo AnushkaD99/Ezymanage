@@ -1218,10 +1218,10 @@ class SalaryClerks extends Controller
 
         //save payslip
         if ($this->salaryClerkModel->recordSalary($data)) {
-            $_SESSION['status'] = 'success';
-            $_SESSION['tittle'] = 'Success';
-            $_SESSION['message'] = 'Salary Calculation Successfully';
-            redirect('salaryclerks/paysheet_details/' . $id);
+            // $_SESSION['status'] = 'success';
+            // $_SESSION['tittle'] = 'Success';
+            // $_SESSION['message'] = 'Salary Calculation Successfully';
+            // redirect('salaryclerks/paysheet_details/' . $id);
         } else {
             die('Something went wrong');
         }
@@ -1409,7 +1409,12 @@ class SalaryClerks extends Controller
                     foreach ($chkId as $id) {
                         $this->salaryClerkModel->sendPayslip($id);
                     }
-                } else {
+                } else if (isset($_POST['calculate'])) {
+                    foreach ($chkId as $id) {
+                        $this->generate_payslip($id);
+                    }
+                }
+                 else {
                     die('Something went wrong');
                 }
             }

@@ -26,7 +26,7 @@
             <li>
                 <a href="<?php echo URLROOT; ?>/teachers/appointments"><i class="fa-solid fa-calendar-plus"></i><span class="link">Appointments</span></a>
             </li>
-            <li>
+            <!-- <li>
                 <a href="<?php echo URLROOT; ?>/teachers/promotions"><i class="fa-solid fa-angles-up"></i><span class="link">Promotions</span></a>
             </li>
             <li>
@@ -34,7 +34,7 @@
             </li>
             <li>
                 <a href="<?php echo URLROOT; ?>/teachers/transfers"><i class="fa-solid fa-arrows-rotate"></i><span class="link">Transfers</span></a>
-            </li>
+            </li> -->
             <li>
                 <a href="<?php echo URLROOT; ?>/teachers/profile"><i class="fa-solid fa-circle-user"></i><span class="link">Profile</span></a>
             </li>

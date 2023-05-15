@@ -369,7 +369,7 @@ class AdminClerk
       VALUES(:emp_no, :school, :grade, :step)');
 
       // Bind values
-      $this->db->bind(':emp_no', $emp_no);
+      $this->db->bind(':emp_no', $data['emp_no']);
       $this->db->bind(':school', $data['school']);
       $this->db->bind(':grade', $data['grade']);
       $this->db->bind(':step', $data['step']);
@@ -385,16 +385,78 @@ class AdminClerk
     }
   }
 
-
-  //add principal
-  public function addPrincipal($data)
+  //add user allowances
+  public function addUserAllowance($data)
   {
-    $this->db->query('INSERT INTO users_tbl(username, password, designation, full_name, name_with_initials, gender, birthday, nic, address, contact_num, email, dp)
-      VALUES(:username, :password, :designation, :full_name, :name_with_initials, :gender, :birthday, :nic, :address, :contact_num, :email, :dp)');
+    $this->db->query('INSERT INTO user_allowances_tbl(emp_no, allowance_id)
+      VALUES(:emp_no, :allowance_id)');
 
     // Bind values
+    $this->db->bind(':emp_no', $data['emp_no']);
+    $this->db->bind(':allowance_id', $data['allowance_id']);
+
+    // Execute
+    if ($this->db->execute()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  //add principal
+  // public function addPrincipanl($data)
+  // {
+  //   $this->db->query('INSERT INTO users_tbl(username, password, designation, full_name, name_with_initials, gender, birthday, nic, address, contact_num, email, dp)
+  //     VALUES(:username, :password, :designation, :full_name, :name_with_initials, :gender, :birthday, :nic, :address, :contact_num, :email, :dp)');
+
+  //   // Bind values
+  //   $this->db->bind(':username', $data['username']);
+  //   $this->db->bind(':password', $data['password']);
+  //   $this->db->bind(':designation', $data['designation']);
+  //   $this->db->bind(':full_name', $data['full_name']);
+  //   $this->db->bind(':name_with_initials', $data['name_with_initials']);
+  //   $this->db->bind(':gender', $data['gender']);
+  //   $this->db->bind(':birthday', $data['birthday']);
+  //   $this->db->bind(':nic', $data['nic']);
+  //   $this->db->bind(':address', $data['address']);
+  //   $this->db->bind(':contact_num', $data['contact']);
+  //   $this->db->bind(':email', $data['email']);
+  //   $this->db->bind(':dp', $data['dp']);
+
+  //   // Execute
+  //   if ($this->db->execute()) {
+  //     $this->db->query('SELECT emp_no FROM users_tbl WHERE username = :username');
+  //     $this->db->bind(':username', $data['username']);
+  //     $row = $this->db->single();
+  //     $emp_no = $row->emp_no;
+
+  //     $this->db->query('INSERT INTO principal_tbl(emp_no, school, grade)
+  //     VALUES(:emp_no, :school, :grade)');
+
+  //     // Bind values
+  //     $this->db->bind(':emp_no', $data['emp_no']);
+  //     $this->db->bind(':school', $data['school']);
+  //     $this->db->bind(':grade', $data['grade']);
+
+  //     // Execute second query
+  //     if ($this->db->execute()) {
+  //       return true;
+  //     } else {
+  //       return false;
+  //     }
+  //   } else {
+  //     return false;
+  //   }
+  // }
+  public function addPrincipal($data)
+  {
+    $this->db->query('INSERT INTO users_tbl(emp_no, username, password, designation, full_name, name_with_initials, gender, birthday, nic, address, contact_num, email, dp)
+      VALUES(:emp_no, :username, :password, :designation, :full_name, :name_with_initials, :gender, :birthday, :nic, :address, :contact_num, :email, :dp)');
+
+    // Bind values
+    $this->db->bind(':emp_no', $data['emp_no']);
     $this->db->bind(':username', $data['username']);
-    $this->db->bind(':password', $data['password']);
+    $this->db->bind(':password', $data['hashed_password']);
     $this->db->bind(':designation', $data['designation']);
     $this->db->bind(':full_name', $data['full_name']);
     $this->db->bind(':name_with_initials', $data['name_with_initials']);
@@ -405,6 +467,7 @@ class AdminClerk
     $this->db->bind(':contact_num', $data['contact']);
     $this->db->bind(':email', $data['email']);
     $this->db->bind(':dp', $data['dp']);
+    
 
     // Execute
     if ($this->db->execute()) {
@@ -413,13 +476,14 @@ class AdminClerk
       $row = $this->db->single();
       $emp_no = $row->emp_no;
 
-      $this->db->query('INSERT INTO principal_tbl(emp_no, school, grade)
-      VALUES(:emp_no, :school, :grade)');
+      $this->db->query('INSERT INTO principal_tbl(emp_no, school, grade, step)
+      VALUES(:emp_no, :school, :grade, :step)');
 
       // Bind values
-      $this->db->bind(':emp_no', $emp_no);
+      $this->db->bind(':emp_no', $data['emp_no']);
       $this->db->bind(':school', $data['school']);
       $this->db->bind(':grade', $data['grade']);
+      $this->db->bind(':step', $data['step']);
 
       // Execute second query
       if ($this->db->execute()) {
@@ -431,6 +495,7 @@ class AdminClerk
       return false;
     }
   }
+
 
   //add school_clerk
   public function addSchoolClerk($data)
@@ -541,6 +606,80 @@ class AdminClerk
     // Bind values
     $this->db->bind(':token', $data['token']);
     $this->db->bind(':emp_no', $data['email']);
+
+    // Execute
+    if ($this->db->execute()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  //get teacher allowannces
+  public function getTeacherAllowances()
+  {
+    $this->db->query('SELECT * FROM allowance_tbl WHERE user = 0 || user = 2');
+    
+    $results = $this->db->resultSet();
+
+    return $results;
+  }
+
+  //Teacher Deductions
+  public function getTeacherDeductions()
+  {
+    $this->db->query('SELECT * FROM deduction_tbl WHERE user = 0 || user = 2');
+    
+    $results = $this->db->resultSet();
+
+    return $results;
+  }
+
+  //get Principal Allowances
+  public function getPrincipalAllowances()
+  {
+    $this->db->query('SELECT * FROM allowance_tbl WHERE user = 1 || user = 2');
+    
+    $results = $this->db->resultSet();
+
+    return $results;
+  }
+
+  //Principal Deductions
+  public function getPrincipalDeductions()
+  {
+    $this->db->query('SELECT * FROM deduction_tbl WHERE user = 1 || user = 2');
+    
+    $results = $this->db->resultSet();
+
+    return $results;
+  }
+
+  //add allowances for users
+  public function addAllowances($data, $id){
+    $this->db->query('INSERT INTO user_allowances_tbl(emp_no, allowance_id)
+      VALUES(:user_id, :allowance_id)');
+
+    // Bind values
+    $this->db->bind(':user_id', $id);
+    $this->db->bind(':allowance_id', $data['allowance_id']);
+
+    // Execute
+    if ($this->db->execute()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  //add deductions for users
+  public function addDeductions($data, $id){
+    $this->db->query('INSERT INTO user_deductions_tbl(emp_no, deduction_id)
+      VALUES(:user_id, :deduction_id)');
+
+    // Bind values
+    $this->db->bind(':user_id', $id);
+    $this->db->bind(':deduction_id', $data['deduction_id']);
 
     // Execute
     if ($this->db->execute()) {

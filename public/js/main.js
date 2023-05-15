@@ -29,7 +29,8 @@ toggleBtn.addEventListener('click', function () {
 
 //searchbar
 var searchInput = document.getElementById('search-input');
-searchInput.addEventListener('input', function() {
+
+searchInput.addEventListener('input', function () {
     var filterValue = this.value.toUpperCase();
     var rows = document.querySelectorAll('.employee-row');
 
@@ -48,3 +49,21 @@ searchInput.addEventListener('input', function() {
         }
     }
 });
+
+
+
+//print
+function printDiv(divId) {
+    var printContents = document.getElementById(divId).innerHTML;
+    var originalContents = document.body.innerHTML;
+
+    // Temporarily replace the page content with the div content
+    document.body.innerHTML = printContents;
+
+    // Print the div content
+    window.print();
+
+    // Restore the original page content
+    document.body.innerHTML = originalContents;
+}
+

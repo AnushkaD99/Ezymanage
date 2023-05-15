@@ -26,7 +26,7 @@
                 <li>
                     <a href="<?php echo URLROOT; ?>/principals/appointments"><i class="fa-solid fa-calendar-plus"></i><span class="link">Appointments</span></a>
                 </li>
-                <li>
+                <!-- <li>
                     <a href="<?php echo URLROOT; ?>/principals/promotions"><i class="fa-solid fa-angles-up"></i><span class="link">Promotions</span></a>
                 </li>
                 <li>
@@ -37,10 +37,10 @@
                 </li>
                 <li>
                     <a href="<?php echo URLROOT; ?>/principals/school_management"><i class="fa-solid fa-chalkboard-user"></i><span class="link">School Management</span></a>
-                </li>
-                <li>
+                </li> -->
+                <!-- <li>
                     <a href="<?php echo URLROOT; ?>/principals/projects"><i class="fa-solid fa-building"></i><span class="link">School Projects</span></a>
-                </li>
+                </li> -->
                 <li>
                     <a href="<?php echo URLROOT; ?>/principals/profile" class="active"><i class="fa-solid fa-circle-user"></i><span class="link">Profile</span></a>
                 </li>
@@ -186,50 +186,5 @@
             </form>
         </div>
     </div>
-    <script>
-        let sidebar = document.querySelector(".sidebar");
-        let navbar = document.querySelector(".navbar");
-        let link = document.querySelector(".link");
-        let container = document.querySelector(".container");
-        let sidebarBtn = document.querySelector(".fa-bars");
-        sidebarBtn.onclick = function() {
-            sidebar.classList.toggle("active");
-            navbar.classList.toggle("active");
-            link.classList.toggle("active");
-            container.classList.toggle("active");
-            if (sidebar.classList.contains("active")) {
-                // sidebarBtn.classList.replace("bx-menu", "bx-menu-alt-right");
-                // link.style.display = 'none';
-            } else
-                // sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
-                // link.style.display = '';
-        }
-
-        document.getElementById("profile-picture").onchange = function(){
-        document.getElementById("image").src = URL.createObjectURL(profile-picture.files[0]); // Preview new image
-
-        document.getElementById("cancel").style.display = "block";
-        document.getElementById("confirm").style.display = "block";
-
-        document.getElementById("upload").style.display = "none";
-      }
-    </script>
-
-<script type="text/javascript">
-      document.getElementById("fileImg").onchange = function(){
-        document.getElementById("image").src = URL.createObjectURL(fileImg.files[0]); // Preview new image
-
-        document.getElementById("upload").style.display = "none";
-      }
-
-    //   var userImage = document.getElementById('image').src;
-    //   document.getElementById("cancel").onclick = function(){
-    //     document.getElementById("image").src = userImage; // Back to previous image
-
-    //     document.getElementById("cancel").style.display = "none";
-    //     document.getElementById("confirm").style.display = "none";
-
-    //     document.getElementById("upload").style.display = "block";
-    //   }
-    </script>
+    
 <?php require APPROOT . '/views/inc/footer.php'; ?>   

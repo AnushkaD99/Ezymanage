@@ -67,7 +67,12 @@
 
                 <lable for="Subjects">Subjects :</lable></br>
                 <input type="checkbox" name="subjects" value="Mathematics">Mathematics<br>
-                <input type="checkbox" name="subjects" value="Sceince">Sceince
+                <input type="checkbox" name="subjects" value="Sceince">Sceince <br>
+                <input type="checkbox" name="subjects" value="English">English <br>
+                <input type="checkbox" name="subjects" value="Sinhala">Sinhala <br>
+                <input type="checkbox" name="subjects" value="Tamil">Tamil <br>
+                <input type="checkbox" name="subjects" value="ICT">ICT <br>
+
 
                 <div class="space"></div>
 

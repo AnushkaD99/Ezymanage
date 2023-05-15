@@ -160,12 +160,12 @@ class Users extends controller
     public function setPassword($token)
     {
 
+
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Process form
 
             // Sanitize POST data
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
             // Init data
             $data = [
                 'userData' => $this->userModel->findUserByToken($token),
@@ -193,7 +193,7 @@ class Users extends controller
             }
 
             // Make sure errors are empty
-            if (empty($data['username_err']) && empty($data['password_err'])) {
+            if (empty($data['password_err']) && empty($data['confirm_password_err'])) {
                 // Hash Password
                 $data['hashed_password'] = password_hash($data['password'], PASSWORD_DEFAULT);
                 $data['email'] = $data['userData']->email;
@@ -232,6 +232,7 @@ class Users extends controller
                 'confirm_password_err' => '',
             ];
 
+
             // Load view
             $this->view('users/setPassword', $data);
         }
@@ -262,8 +263,7 @@ class Users extends controller
                     } else {
                         die('something went wrong');
                     }
-                }
-                else {
+                } else {
                     $data['email_err'] = 'No user found';
                     $this->view('users/forgotPassword', $data);
                 }
@@ -271,7 +271,6 @@ class Users extends controller
                 die('4');
                 $data['email_err'] = 'Please enter email';
                 $this->view('users/forgotPassword', $data);
-
             }
         } else {
             // Init data

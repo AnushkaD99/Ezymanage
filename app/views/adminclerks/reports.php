@@ -6,7 +6,7 @@
     <div class="sidebar">
         <ul>
             <li>
-                <a href="<?php echo URLROOT; ?>/adminclerks/index" class="active"><i class="fa-solid fa-house"></i><span class="link">Home</span></a>
+                <a href="<?php echo URLROOT; ?>/adminclerks/index"><i class="fa-solid fa-house"></i><span class="link">Home</span></a>
             </li>
             <li>
                 <a href="<?php echo URLROOT; ?>/adminclerks/viewDetails"><i class="fa-solid fa-eye"></i><span class="link">Users</span></a>
@@ -15,7 +15,7 @@
                 <a href="<?php echo URLROOT; ?>/adminclerks/volunteers"><i class="fa-solid fa-handshake-angle"></i><span class="link">Volunteers</span></a>
             </li> -->
             <li>
-                <a href="<?php echo URLROOT; ?>/adminclerks/reports"><i class="fa-solid fa-user-check"></i><span class="link">Reports</span></a>
+                <a href="<?php echo URLROOT; ?>/adminclerks/reports" class="active"><i class="fa-solid fa-user-check"></i><span class="link">Reports</span></a>
             </li>
             <li>
                 <a href="<?php echo URLROOT; ?>/adminclerks/profile"><i class="fa-solid fa-circle-user"></i><span class="link">Profile</span></a>
@@ -28,25 +28,14 @@
     </div>
     <!-- End sidebar -->
     <div class="main">
-        <div class="main-single">
-            <div class="main-single-up">
-                <table>
-                    <tr>
-                        <td><img src="<?php echo URLROOT; ?>/img/logo.png" alt="logo"></td>
-                    </tr>
-                    <tr>
-                        <td>Hey<span id="userName"><?php echo $_SESSION['user_name']; ?>,</span></td>
-                    </tr>
-                    <tr>
-                        <td>Welcome to Ezymanage!</td>
-                    </tr>
-                </table>
-            </div>
-            <div class="main-single-down-left">
+        <div class="tittle">
+            <h1>Reports</h1>
+        </div>
+        <div class="content">
+            <div class="card-set">
                 <div class="card-set-margin">
-                    <h2>Status</h2>
                     <div class="card-set">
-                        <div class="dashboard-items">
+                        <a href="<?php echo URLROOT; ?>/adminclerks/teacher_reports" class="dashboard-items">
                             <div>
                                 <div class="h1-dashboard">
                                     <?php echo $data['teacher_count']->count; ?>
@@ -58,8 +47,8 @@
                             <div class="dashboard-icons">
                                 <div class="icon"><i class="fa-solid fa-person-chalkboard"></i></div>
                             </div>
-                        </div>
-                        <div class="dashboard-items">
+                        </a>
+                        <a href="<?php echo URLROOT; ?>/adminclerks/principal_reports" class="dashboard-items">
                             <div>
                                 <div class="h1-dashboard">
                                     <?php echo $data['principal_count']->count; ?>
@@ -69,10 +58,10 @@
                                 </div>
                             </div>
                             <div class="dashboard-icons">
-                                <div class="icon"><i class="fa-solid fa-user-tie"></i></div>
+                                <div class="icon"><i class="fa-solid fa-person"></i></div>
                             </div>
-                        </div>
-                        <div class="dashboard-items">
+                        </a>
+                        <a href="<?php echo URLROOT; ?>/adminclerks/volunteer_reports" class="dashboard-items">
                             <div>
                                 <div class="h1-dashboard">
                                     <?php echo $data['volunteer_count']->count; ?>
@@ -82,10 +71,10 @@
                                 </div>
                             </div>
                             <div class="dashboard-icons">
-                                <div class="icon"><i class="fa-solid fa-users"></i></div>
+                                <div class="icon"><i class="fa-solid fa-handshake"></i></div>
                             </div>
-                        </div>
-                        <div class="dashboard-items">
+                        </a>
+                        <a href="<?php echo URLROOT; ?>/adminclerks/school_reports" class="dashboard-items">
                             <div>
                                 <div class="h1-dashboard">
                                     <?php echo $data['schools_count']->count; ?>
@@ -95,37 +84,39 @@
                                 </div>
                             </div>
                             <div class="dashboard-icons">
-                                <div class="icon"><i class="fa-solid fa-school"></i></div>
+                                <div class="icon"><i class="fa-solid fa-user"></i></div>
                             </div>
-                        </div>
+                        </a>
+                        <!-- <a href="<?php echo URLROOT; ?>/adminclerks/schoolClerks_reports" class="dashboard-items">
+                            <div>
+                                <div class="h1-dashboard">
+                                    <?php echo $data['schools_count']->count; ?>
+                                </div><br>
+                                <div class="h3-dashboard">
+                                    All School Cleks
+                                </div>
+                            </div>
+                            <div class="dashboard-icons">
+                                <div class="icon"><i class="fa-solid fa-user"></i></div>
+                            </div>
+                        </a>
+                        <a href="<?php echo URLROOT; ?>/adminclerks/otherClerks_reports" class="dashboard-items">
+                            <div>
+                                <div class="h1-dashboard">
+                                    <?php echo $data['schools_count']->count; ?>
+                                </div><br>
+                                <div class="h3-dashboard">
+                                    Other Cleks
+                                </div>
+                            </div>
+                            <div class="dashboard-icons">
+                                <div class="icon"><i class="fa-solid fa-user"></i></div>
+                            </div>
+                        </a> -->
                     </div>
-                </div>
-            </div>
-            <div class="main-single-down-right">
-                <div class="card-set-margin">
-                <div class="month">
-                    <i class="fas fa-angle-left prev"></i>
-                    <div class="date">
-                        <h1>Calender</h1>
-                        <span></span>
-                    </div>
-                    <i class="fas fa-angle-right next"></i>
-                </div>
-                <div class="weekdays">
-                    <div>Sun</div>
-                    <div>Mon</div>
-                    <div>Tue</div>
-                    <div>Wed</div>
-                    <div>Thu</div>
-                    <div>Fri</div>
-                    <div>Sat</div>
-                </div>
-                <div class="days"></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<?php require_once APPROOT . '/views/inc/upload_successful_mzg.php'; ?>
 <?php require APPROOT . '/views/inc/footer.php'; ?>
-

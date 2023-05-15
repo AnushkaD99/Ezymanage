@@ -11,12 +11,12 @@
             <li>
                 <a href="<?php echo URLROOT; ?>/adminclerks/viewDetails" class="active"><i class="fa-solid fa-eye"></i><span class="link">Users</span></a>
             </li>
-            <li>
-                <a href="<?php echo URLROOT; ?>/adminclerks/volunteers"><i class="fa-solid fa-handshake-angle"></i><span class="link">Volunteers</span></a>
-            </li>
             <!-- <li>
-                <a href="<?php echo URLROOT; ?>/adminclerks/verifyDetails"><i class="fa-solid fa-user-check"></i><span class="link">Verify Details</span></a>
+                <a href="<?php echo URLROOT; ?>/adminclerks/volunteers"><i class="fa-solid fa-handshake-angle"></i><span class="link">Volunteers</span></a>
             </li> -->
+            <li>
+                <a href="<?php echo URLROOT; ?>/adminclerks/reports"><i class="fa-solid fa-user-check"></i><span class="link">Reports</span></a>
+            </li>
             <li>
                 <a href="<?php echo URLROOT; ?>/adminclerks/profile"><i class="fa-solid fa-circle-user"></i><span class="link">Profile</span></a>
             </li>
@@ -38,7 +38,7 @@
                         Full Name :
                     </div>
                     <div class="main-editprofile-right">
-                        <input type="text" name="fullName" class="textBox">
+                        <input type="text" name="fullName" class="textBox" value="<?php echo $data['fullName']; ?>">
                     </div>
                     <span class="error"><?php echo $data['full_name_err'] ?></span>
                 </div>
@@ -47,37 +47,37 @@
                         Name with Initials :
                     </div>
                     <div class="main-editprofile-right">
-                        <input type="text" name="nameWithInitials" class="textBox">
+                        <input type="text" name="nameWithInitials" class="textBox" value="<?php echo $data['nameWithInitials']; ?>">
                     </div>
                     <span class="error"><?php echo $data['name_with_initials_err'] ?></span>
                 </div>
                 <div class="main-editprofile-block">
                     <div class="main-editprofile-left">
-                        User Name :
+                        Employee Number :
                     </div>
                     <div class="main-editprofile-right">
-                        <input type="text" name="username" class="textBox">
+                        <input type="text" name="emp_no" class="textBox" value="<?php echo $data['emp_no']; ?>">
                     </div>
-                    <span class="error"><?php echo $data['username_err'] ?></span>
+                    <span class="error"><?php echo $data['emp_no_err'] ?></span>
                 </div>
                 <div class="main-editprofile-block">
                     <div class="main-editprofile-left">
                         Gender :
                     </div>
                     <div class="main-editprofile-right">
-                        <select id="gender" name="gender">
+                        <select id="gender" name="gender" class="textBox" value="<?php echo $data['gender']; ?>">
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
                         </select>
                     </div>
-                    <span class="error"><?php echo $data['confirm_password_err'] ?></span>
+                    <span class="error"><?php echo $data['gender_err'] ?></span>
                 </div>
                 <div class="main-editprofile-block">
                     <div class="main-editprofile-left">
                         Birthday :
                     </div>
                     <div class="main-editprofile-right">
-                        <input type="date" name="birthday" class="textBox">
+                        <input type="date" name="birthday" class="textBox" value="<?php echo $data['birthday']; ?>">
                     </div>
                     <span class="error"><?php echo $data['birthday_err'] ?></span>
                 </div>
@@ -86,7 +86,7 @@
                         Email :
                     </div>
                     <div class="main-editprofile-right">
-                        <input type="text" name="email" class="textBox">
+                        <input type="text" name="email" class="textBox" value="<?php echo $data['email']; ?>">
                     </div>
                     <span class="error"><?php echo $data['email_err'] ?></span>
                 </div>
@@ -95,7 +95,7 @@
                         Contact Number :
                     </div>
                     <div class="main-editprofile-right">
-                        <input type="text" name="contact" class="textBox">
+                        <input type="text" name="contact" class="textBox" value="<?php echo $data['contact']; ?>">
                     </div>
                     <span class="error"><?php echo $data['contact_err'] ?></span>
                 </div>
@@ -104,7 +104,7 @@
                         Address :
                     </div>
                     <div class="main-editprofile-right">
-                        <input type="text" name="address" class="textBox">
+                        <input type="text" name="address" class="textBox" value="<?php echo $data['address']; ?>">
                     </div>
                     <span class="error"><?php echo $data['address_err'] ?></span>
                 </div>
@@ -113,56 +113,45 @@
                         School :
                     </div>
                     <div class="main-editprofile-right">
-                        <select id="school" name="school">
-                            <option value="No School">No School</option>
+                        <select id="school" name="school" class="textBox" value="<?php echo $data['school']; ?>">
+                            <option>Select School</option>
                             <?php foreach ($data['school_list'] as $schools) : ?>
                                 <option value="<?php echo $schools->name; ?>"><?php echo $schools->name; ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
-                    <span class="error"><?php echo $data['confirm_password_err'] ?></span>
+                    <span class="error"><?php echo $data['school_err'] ?></span>
                 </div>
                 <div class="main-editprofile-block">
                     <div class="main-editprofile-left">
                         Class and Grade :
                     </div>
                     <div class="main-editprofile-right">
-                        <select id="grade" name="grade">
-                            <option value="First Class">First Class</option>
-                            <option value="Second Class First Grade">Second Class First Grade</option>
-                            <option value="Second Class Second Grade">Second Class Second Grade</option>
-                            <option value="Third Class First Grade">Third Class First Grade</option>
-                            <option value="Third Class Second Grade">Third Class Second Grade</option>
+                        <select id="grade" name="grade" class="textBox" value="<?php echo $data['grade']; ?>">
+                            <option value="SLPS 1">SLPS 1</option>
+                            <option value="SLPS 2">SLPS 2</option>
+                            <option value="SLPS 3">SLPS 3</option>
                         </select>
                     </div>
-                    <span class="error"><?php echo $data['confirm_password_err'] ?></span>
+                    <span class="error"><?php echo $data['grade_err'] ?></span>
+                </div>
+                <div class="main-editprofile-block">
+                    <div class="main-editprofile-left">
+                        Salary Step :
+                    </div>
+                    <div class="main-editprofile-right">
+                        <input type="int" name="step" class="textBox" value="<?php echo $data['step']; ?>">
+                    </div>
+                    <span class="error"><?php echo $data['step_err'] ?></span>
                 </div>
                 <div class="main-editprofile-block">
                     <div class="main-editprofile-left">
                         NIC :
                     </div>
                     <div class="main-editprofile-right">
-                        <input type="text" name="nic" class="textBox">
+                        <input type="text" name="nic" class="textBox" value="<?php echo $data['nic']; ?>">
                     </div>
                     <span class="error"><?php echo $data['nic_err'] ?></span>
-                </div>
-                <div class="main-editprofile-block">
-                    <div class="main-editprofile-left">
-                        Password :
-                    </div>
-                    <div class="main-editprofile-right">
-                        <input type="text" name="password" class="textBox">
-                    </div>
-                    <span class="error"><?php echo $data['password_err'] ?></span>
-                </div>
-                <div class="main-editprofile-block">
-                    <div class="main-editprofile-left">
-                        Confirm Password :
-                    </div>
-                    <div class="main-editprofile-right">
-                        <input type="text" name="confirmPassword" class="textBox">
-                    </div>
-                    <span class="error"><?php echo $data['confirm_password_err'] ?></span>
                 </div>
                 <input type="submit" value="Submit" class="submit-btn">
             </div>

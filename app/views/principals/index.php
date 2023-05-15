@@ -22,7 +22,7 @@
             <li>
                 <a href="<?php echo URLROOT; ?>/principals/appointments"><i class="fa-solid fa-calendar-plus"></i><span class="link">Appointments</span></a>
             </li>
-            <li>
+            <!-- <li>
                 <a href="<?php echo URLROOT; ?>/principals/promotions"><i class="fa-solid fa-angles-up"></i><span class="link">Promotions</span></a>
             </li>
             <li>
@@ -33,10 +33,10 @@
             </li>
             <li>
                 <a href="<?php echo URLROOT; ?>/principals/school_management"><i class="fa-solid fa-chalkboard-user"></i><span class="link">School Management</span></a>
-            </li>
-            <li>
+            </li> -->
+            <!-- <li>
                 <a href="<?php echo URLROOT; ?>/principals/projects"><i class="fa-solid fa-building"></i><span class="link">School Projects</span></a>
-            </li>
+            </li> -->
             <li>
                 <a href="<?php echo URLROOT; ?>/principals/profile"><i class="fa-solid fa-circle-user"></i><span class="link">Profile</span></a>
             </li>

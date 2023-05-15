@@ -476,9 +476,15 @@ class AdminClerks extends Controller
     }
 
     //verify user
-    public function verifyDetails()
+    public function reports()
     {
-        $this->view('adminclerks/verifyDetails');
+        $data = [
+            'teacher_count' => $this->commonModel->getTeacherCount(),
+            'principal_count' => $this->commonModel->getPrincipalCount(),
+            'volunteer_count' => $this->commonModel->getVolunteerCount(),
+            'schools_count' => $this->commonModel->getSchoolCount(),
+        ];
+        $this->view('adminclerks/reports',$data);
     }
 
     //add teacher
@@ -508,7 +514,7 @@ class AdminClerks extends Controller
                 'address' => trim($_POST['address']),
                 'contact' => trim($_POST['contact']),
                 'email' => trim($_POST['email']),
-                'dp' => 'default.jpg',
+                'dp' => 'default.png',
                 'school' => trim($_POST['school']),
                 'grade' => trim($_POST['grade']),
                 'step' => trim($_POST['step']),
@@ -591,6 +597,10 @@ class AdminClerks extends Controller
                 //register user
                 if ($this->adminClerkModel->addTeacher($data)) {
                     $data['result'] = true;
+                    $id = $data['emp_no'];
+                    $user_role = 'teacher';
+                    $this->addAllowances($id, $user_role);
+                    $this->addDeductions($id, $user_role);
                     $accessToken = $this->generateToken();
                     $data['token'] = $accessToken['code'];
                     $this->adminClerkModel->insertAccessToken($data);
@@ -655,18 +665,58 @@ class AdminClerks extends Controller
         }
     }
 
+    public function addAllowances($id, $user_role){
+        $data=[
+            'teacherAllowances' => $this->adminClerkModel->getTeacherAllowances(),
+            'principalAllowances' => $this->adminClerkModel->getPrincipalAllowances(),
+        ];
+        if($user_role == 'teacher'){
+            foreach($data['teacherAllowances'] as $allowance){
+                $data['allowance_id'] = $allowance->id;
+                $this->adminClerkModel->addAllowances($data,$id);
+            }
+        }
+        else if($user_role == 'principal'){
+            foreach($data['principalAllowances'] as $allowance){
+                $data['allowance_id'] = $allowance->id;
+                $this->adminClerkModel->addAllowances($data,$id);
+            }
+        }
+        
+    }
+
+    public function addDeductions($id, $user_role){
+        $data=[
+            'teacherDeductions' => $this->adminClerkModel->getTeacherDeductions(),
+            'principalDeductions' => $this->adminClerkModel->getPrincipalDeductions(),
+        ];
+        if($user_role == 'teacher'){
+            foreach($data['teacherDeductions'] as $deductions){
+                $data['deduction_id'] = $deductions->id;
+                $this->adminClerkModel->addDeductions($data,$id);
+            }
+        }
+        else if($user_role == 'principal'){
+            foreach($data['principalDeductions'] as $deductions){
+                $data['deduction_id'] = $deductions->id;
+                $this->adminClerkModel->addDeductions($data,$id);
+            }
+        }
+    }
+
     //add principal
     public function add_principal()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             //sanitize post data
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            $school_list = $this->adminClerkModel->getSchoolDeatail();
 
             //init data
             $data = [
-                'username' => trim($_POST['username']),
-                'password' => trim($_POST['password']),
-                'confirm_password' => trim($_POST['confirmPassword']),
+                'username' => '',
+                'password' => '',
+                'emp_no' => trim($_POST['emp_no']),
                 'full_name' => trim($_POST['fullName']),
                 'name_with_initials' => trim($_POST['nameWithInitials']),
                 'gender' => trim($_POST['gender']),
@@ -675,13 +725,12 @@ class AdminClerks extends Controller
                 'address' => trim($_POST['address']),
                 'contact' => trim($_POST['contact']),
                 'email' => trim($_POST['email']),
-                'dp' => 'default.jpg',
+                'dp' => 'default.png',
                 'school' => trim($_POST['school']),
                 'grade' => trim($_POST['grade']),
+                'step' => trim($_POST['step']),
                 'designation' => 'Principal',
-                'username_err' => '',
-                'password_err' => '',
-                'confirm_password_err' => '',
+                'emp_no_err' => '',
                 'designation_err' => '',
                 'full_name_err' => '',
                 'name_with_initials_err' => '',
@@ -694,8 +743,17 @@ class AdminClerks extends Controller
                 'dp_err' => '',
                 'school_err' => '',
                 'grade_err' => '',
-                'school_list' => $this->adminClerkModel->getSchoolDeatail()
+                'step_err' => '',
+                'school_list' => $school_list
             ];
+
+            //Craete User name
+            $name = $data['full_name'];
+            $words = explode(' ', $name);
+            $data['username'] = $words[0];
+
+            //Create password
+            $data['password'] = $data['nic'];
 
             //validate data
             if (empty($data['username'])) {
@@ -726,11 +784,6 @@ class AdminClerks extends Controller
                 $data['school_err'] = 'Please enter school';
             }
 
-            //check if passwords match
-            if ($data['password'] != $data['confirm_password']) {
-                $data['confirm_password_err'] = 'Passwords do not match';
-            }
-
             //check if username exists
             if ($this->adminClerkModel->findUserByUsername($data['username'])) {
                 $data['username_err'] = 'Username is already taken';
@@ -752,14 +805,18 @@ class AdminClerks extends Controller
             }
 
             //check if all errors are empty
-            if (empty($data['username_err']) && empty($data['password_err']) && empty($data['confirm_password_err']) && empty($data['full_name_err']) && empty($data['name_with_initials_err']) && empty($data['contact_err']) && empty($data['email_err']) && empty($data['grade_err']) && empty($data['school_err'])) {
+            if (empty($data['username_err']) && empty($data['full_name_err']) && empty($data['name_with_initials_err']) && empty($data['contact_err']) && empty($data['email_err']) && empty($data['grade_err']) && empty($data['school_err'])) {
                 //validated
                 //hash password
-                $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+                $data['hashed_password'] = password_hash($data['password'], PASSWORD_DEFAULT);
 
                 //register user
                 if ($this->adminClerkModel->addPrincipal($data)) {
                     $data['result'] = true;
+                    $id = $data['emp_no'];
+                    $user_role = 'principal';
+                    $this->addAllowances($id, $user_role);
+                    $this->addDeductions($id, $user_role);
                     $accessToken = $this->generateToken();
                     $data['token'] = $accessToken['code'];
                     $this->adminClerkModel->insertAccessToken($data);
@@ -782,39 +839,44 @@ class AdminClerks extends Controller
             }
         }
         //init data
-        $data = [
-            'username' => '',
-            'password' => '',
-            'confirm_password' => '',
-            'full_name' => '',
-            'name_with_initials' => '',
-            'gender' => '',
-            'birthday' => '',
-            'nic' => '',
-            'address' => '',
-            'contact' => '',
-            'email' => '',
-            'dp' => '',
-            'school' => '',
-            'grade' => '',
-            'designation' => '',
-            'username_err' => '',
-            'password_err' => '',
-            'confirm_password_err' => '',
-            'designation_err' => '',
-            'full_name_err' => '',
-            'name_with_initials_err' => '',
-            'gender_err' => '',
-            'birthday_err' => '',
-            'nic_err' => '',
-            'address_err' => '',
-            'contact_err' => '',
-            'email_err' => '',
-            'dp_err' => '',
-            'school_err' => '',
-            'grade_err' => '',
-            'school_list' => $this->adminClerkModel->getSchoolDeatail()
-        ];
+        $school_list = $this->adminClerkModel->getSchoolDeatail();
+            //init data
+            $data = [
+                'username' => '',
+                'password' => '',
+                'emp_no' => '',
+                'designation' => '',
+                'full_name' => '',
+                'name_with_initials' => '',
+                'gender' => '',
+                'birthday' => '',
+                'nic' => '',
+                'address' => '',
+                'contact' => '',
+                'email' => '',
+                'dp' => '',
+                'school' => '',
+                'grade' => '',
+                'step' => '',
+                'emp_no_err' => '',
+                'username_err' => '',
+                'password_err' => '',
+                'confirm_password_err' => '',
+                'designation_err' => '',
+                'full_name_err' => '',
+                'name_with_initials_err' => '',
+                'gender_err' => '',
+                'birthday_err' => '',
+                'nic_err' => '',
+                'address_err' => '',
+                'contact_err' => '',
+                'email_err' => '',
+                'dp_err' => '',
+                'school_err' => '',
+                'grade_err' => '',
+                'step_err' => '',
+                'school_list' => $school_list
+            ];
 
         //load view
         $this->view('adminclerks/add_principal', $data);
@@ -1262,11 +1324,55 @@ class AdminClerks extends Controller
     public function generateToken()
     {
         $token['code'] = bin2hex(random_bytes(16));
-        // $token['time'] = time();
-        // $token['expire'] = $token['time'] + (60*60*24);
 
         return $token;
     }
+
+    //Start Reports--------------------------------------------------------------------------------
+
+    public function teacher_Reports()
+    {
+        $data = [
+            'teacher' => $this->commonModel->getTeacherDeatail(),
+            'school' => $this->commonModel->getSchoolDeatail(),
+            'teacher_count' => $this->commonModel->getTeacherCount(),
+        ];
+
+        $this->view('adminclerks/teacher_Reports', $data);
+    }
+
+    public function principal_Reports()
+    {
+        $data = [
+            'principal' => $this->commonModel->getPrincipalDeatail(),
+            'school' => $this->commonModel->getSchoolDeatail(),
+            'principal_count' => $this->commonModel->getPrincipalCount(),
+        ];
+
+        $this->view('adminclerks/principal_Reports', $data);
+    }
+
+    public function volunteer_Reports()
+    {
+        $data = [
+            'volunteer' => $this->adminClerkModel->getVolunteerDetail(),
+            'volunteer_count' => $this->commonModel->getVolunteerCount(),
+        ];
+
+        $this->view('adminclerks/volunteer_reports', $data);
+    }
+
+    public function school_Reports()
+    {
+        $data = [
+            'school' => $this->commonModel->getSchoolDeatail(),
+            'schools_count' => $this->commonModel->getSchoolCount(),
+        ];
+
+        $this->view('adminclerks/school_reports', $data);
+    }
+
+    //End Reports ---------------------------------------------------------------------------------
 
     public function sendEmail($to, $subject, $message)
     {

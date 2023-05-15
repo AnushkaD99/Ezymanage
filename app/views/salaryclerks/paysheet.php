@@ -44,28 +44,26 @@
 
             <div class="content">
 
-            <button><a href="<?php echo URLROOT; ?>/salaryclerks/all_paysheet">All paysheets</a></button>
-
-                <table id="table-customize">
-                    <tr>
-                        <th><input type="checkbox" onClick="toggle(this)" /></th>
-                        <th>Employee ID</th>
-                        <th>Employee Name</th>
-                        <th>Designation</th>
-                        <th>Actions</th>
-                    </tr>
-                    <?php foreach ($data['paysheet'] as $paysheet) : ?>
+                <button><a href="<?php echo URLROOT; ?>/salaryclerks/all_paysheet">All paysheets</a></button>
+                <form action="<?php echo URLROOT; ?>/salaryclerks/pay_slip_actions" method="POST">
+                    <table id="table-customize">
                         <tr>
-                            <td> <input type="checkbox" name="chkId[]" value="<?php echo $paysheet->emp_no; ?>" /> </td>
-                            <td><?php echo $paysheet->emp_no; ?></td>
-                            <td><?php echo $paysheet->full_name; ?></td>
-                            <td><?php echo $paysheet->designation; ?></td>
-                            <td>
-                                <a href="<?php echo URLROOT; ?>/salaryclerks/generate_payslip/<?php echo $paysheet->emp_no; ?>"><button class="btn btn-primary"><i class="fa-solid fa-gears"></i></a></button>
-                            </td>
+                            <th><input type="checkbox" onClick="toggle(this)" /></th>
+                            <th>Employee ID</th>
+                            <th>Employee Name</th>
+                            <th>Designation</th>
                         </tr>
-                    <?php endforeach; ?>
-                </table>
+                        <?php foreach ($data['paysheet'] as $paysheet) : ?>
+                            <tr>
+                                <td> <input type="checkbox" name="chkId[]" value="<?php echo $paysheet->emp_no; ?>" /> </td>
+                                <td><?php echo $paysheet->emp_no; ?></td>
+                                <td><?php echo $paysheet->full_name; ?></td>
+                                <td><?php echo $paysheet->designation; ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </table>
+                    <button type="submit" name="calculate">Generate paysheets</button>
+                </form>
             </div>
     </div>
 </div>
@@ -101,7 +99,6 @@
             });
         });
     });
-    
 </script>
 
 <?php require APPROOT . '/views/inc/footer.php'; ?>

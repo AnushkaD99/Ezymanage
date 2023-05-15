@@ -9,11 +9,11 @@
     </div>
     <div class="navbar__right">
         <ul>
-            <li>
+            <!-- <li>
                 <a href="#">
                     <i class="fa-solid fa-bell"></i>
                 </a>
-            </li>
+            </li> -->
             <li>
                 <a href="#">
                     <img src="<?php echo URLROOT; ?>/img/uploads/<?php echo $_SESSION['dp'] ?>" alt="user" class="user_nav">

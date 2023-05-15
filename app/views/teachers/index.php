@@ -1,4 +1,11 @@
-<?php require_once APPROOT . '/views/inc/header1.php'; ?>
+
+
+
+<?php require_once APPROOT . '/views/inc/header.php'; ?>
+<div class="container">
+    <!-- Start navbar -->
+    <?php require_once APPROOT . '/views/inc/navbar.php'; ?>
+    <!-- Start sidebar -->
     <div class="sidebar">
         <ul>
             <li>
@@ -22,7 +29,7 @@
             <li>
                 <a href="<?php echo URLROOT; ?>/teachers/appointments"><i class="fa-solid fa-calendar-plus"></i><span class="link">Appointments</span></a>
             </li>
-            <li>
+            <!-- <li>
                 <a href="<?php echo URLROOT; ?>/teachers/promotions"><i class="fa-solid fa-angles-up"></i><span class="link">Promotions</span></a>
             </li>
             <li>
@@ -30,7 +37,7 @@
             </li>
             <li>
                 <a href="<?php echo URLROOT; ?>/teachers/transfers"><i class="fa-solid fa-arrows-rotate"></i><span class="link">Transfers</span></a>
-            </li>
+            </li> -->
             <li>
                 <a href="<?php echo URLROOT; ?>/teachers/profile"><i class="fa-solid fa-circle-user"></i><span class="link">Profile</span></a>
             </li>
@@ -40,83 +47,70 @@
             <a href="<?php echo URLROOT; ?>/users/logout"><i class="fa-solid fa-sign-out"></i><span class="link">Logout</span></a>
         </div>
     </div>
-<div class="content">
-<?php require_once APPROOT . '/views/inc/navbar.php'; ?>
-    <div class="container">
-        <div class="left">
-            <!-- <div class="topic">
-                <h1>Hey <?php echo $Username; ?>,<br>Welcome to Ezymanage System</h1>
-            </div> -->
-            <div class="forum">
-                <img src="<?php echo URLROOT; ?>/img/logo.png" alt="">
-                <h1>Hey <?php echo $_SESSION['user_name']; ?>,<br>Welcome to Ezymanage!</h1>
+    <!-- End sidebar -->
+    <div class="main">
+        <div class="main-single">
+            <div class="main-single-up">
+                <table>
+                    <tr>
+                        <td><img src="<?php echo URLROOT; ?>/img/logo.png" alt="logo"></td>
+                    </tr>
+                    <tr>
+                        <td>Hey<span id="userName"><?php echo $_SESSION['user_name']; ?>,</span></td>
+                    </tr>
+                    <tr>
+                        <td>Welcome to Ezymanage!</td>
+                    </tr>
+                </table>
             </div>
-            <div class="forum">
-                <div class="dtl">
-                    <h3>Number of days remaining in current school</h3>
-                    <div class="dtl-k">
-                        <div class="left">
-                            <div class="dtls-card">
-                                <span class="num">04</span>
-                                <span>Years</span>
-                            </div>
-                            <div  class="dtls-card">
-                                <span class="num">10</span>
-                                <span>Months</span>
-                            </div>
-                            <div class="dtls-card">
-                                <span class="num">22</span>
-                                <span>Days</span>
+            <div class="main-single-down-left">
+                <div class="card-set-margin">
+                    <h2>Status</h2>
+                    <div class="card-set">
+                        <div class="card">
+                            <h3>Remaining Leave Details</h3>
+                            <div class="details">
+                                <div class="details-card">
+                                    <span>Casual Leave</span>
+                                    <span class="num">42</span>
+                                </div>
+                                <div class="details-card">
+                                    <span>Medical Leave</span>
+                                    <span class="num">42</span>
+                                </div>
+                                <div class="details-card">
+                                    <span>Other Leave</span>
+                                    <span class="num">42</span>
+                                </div>
                             </div>
                         </div>
-                        <div class="right">
-                            <img src="../images/Calendar.svg" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="main-single-down-right">
+                <div class="card-set-margin">
+                    <div class="month">
+                        <i class="fas fa-angle-left prev"></i>
+                        <div class="date">
+                            <h1>Calender</h1>
+                            <span></span>
                         </div>
+                        <i class="fas fa-angle-right next"></i>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="right">
-            <div class="card">
-                <div class="month">
-                    <i class="fas fa-angle-left prev"></i>
-                    <div class="date">
-                        <h1>Calender</h1>
-                        <span></span>
+                    <div class="weekdays">
+                        <div>Sun</div>
+                        <div>Mon</div>
+                        <div>Tue</div>
+                        <div>Wed</div>
+                        <div>Thu</div>
+                        <div>Fri</div>
+                        <div>Sat</div>
                     </div>
-                    <i class="fas fa-angle-right next"></i>
-                </div>
-                <div class="weekdays">
-                    <div>Sun</div>
-                    <div>Mon</div>
-                    <div>Tue</div>
-                    <div>Wed</div>
-                    <div>Thu</div>
-                    <div>Fri</div>
-                    <div>Sat</div>
-                </div>
-                <div class="days"></div>
-            </div>
-            <div class="card">
-                <h3>Remaining Leave Details</h3>
-                <div class="details">
-                    <div class="details-card">
-                        <span>Casual Leave</span>
-                        <span class="num">42</span>
-                    </div>
-                    <div class="details-card">
-                        <span>Medical Leave</span>
-                        <span class="num">42</span>
-                    </div>
-                    <div class="details-card">
-                        <span>Other Leave</span>
-                        <span class="num">42</span>
-                    </div>
+                    <div class="days"></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
+<?php require_once APPROOT . '/views/inc/upload_successful_mzg.php'; ?>
 <?php require APPROOT . '/views/inc/footer.php'; ?>
